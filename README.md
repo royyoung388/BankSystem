@@ -1,6 +1,7 @@
 # external file structure
-db: store all the .db file  
-lib: include the sqlite JDBC  
+db: store all the .db file.  
+lib: include the sqlite JDBC.  
+sqlite: sqlite tools.  
 
 # project structure
 The project used MVC pattern.  

@@ -4,7 +4,7 @@ import bean.Stock;
 
 import java.util.List;
 
-public interface StockModel {
+public interface StockMarketModel {
 
     /***
      * query all stock in stock market
