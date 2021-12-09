@@ -1,5 +1,5 @@
 # external file structure
-db: store all the .db file.  
+dao: store all the .dao file.  
 lib: include the sqlite JDBC.  
 sqlite: sqlite tools.  
 

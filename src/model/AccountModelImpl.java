@@ -1,10 +1,10 @@
 package model;
 
-import bean.Account;
+import bean.user.Customer;
 
 public class AccountModelImpl implements AccountModel{
     @Override
-    public Account login(String username, String pwd) {
+    public Customer login(String username, String pwd) {
         return null;
     }
 

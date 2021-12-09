@@ -1,6 +1,6 @@
 package model;
 
-import bean.Account;
+import bean.user.Customer;
 
 public interface AccountModel {
     /**
@@ -9,7 +9,7 @@ public interface AccountModel {
      * @param pwd
      * @return null if login failed
      */
-    Account login(String username, String pwd);
+    Customer login(String username, String pwd);
 
     /***
      * is the user exists?

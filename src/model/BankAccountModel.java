@@ -1,6 +1,6 @@
 package model;
 
-import bean.BankAccount;
+import bean.account.Account;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public interface BankAccountModel {
      * @param aid
      * @return
      */
-    List<BankAccount> queryAllBankAccount(int aid);
+    List<Account> queryAllBankAccount(int aid);
 
     /***
      * query specific bank account
@@ -26,7 +26,7 @@ public interface BankAccountModel {
      * @param baid
      * @return
      */
-    BankAccount queryBankAccount(int aid, int baid);
+    Account queryBankAccount(int aid, int baid);
 
     /***
      * with draw cash from account
