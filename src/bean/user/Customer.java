@@ -5,7 +5,7 @@ package bean.user;
  */
 public class Customer extends User {
 
-    public Customer(int aid, String username, String pwd) {
-        super(aid, User.USER, username, pwd);
+    public Customer(int uid, String username, String pwd) {
+        super(uid, User.CUSTOMER, username, pwd);
     }
 }

@@ -10,16 +10,20 @@ public abstract class Account {
     // user id
     private int uid;
     // account type: saving, checking, security
-    private Type type;
-    private int balance;
-    private String currency;
+    private AccountType type;
+    private double balance;
+    private CurrencyType currency;
 
-    public Account(int aid, int uid, Type type, int balance, String currency) {
+    public Account(int aid, int uid, AccountType type, double balance, CurrencyType currency) {
         this.aid = aid;
         this.uid = uid;
         this.type = type;
         this.balance = balance;
         this.currency = currency;
+    }
+
+    public Account(int aid, int uid, AccountType type, int balance, String currency) {
+        this(aid, uid, type, balance, CurrencyType.valueOf(currency));
     }
 
     public int getAid() {
@@ -30,19 +34,51 @@ public abstract class Account {
         return uid;
     }
 
-    public Type getType() {
+    public AccountType getType() {
         return type;
     }
 
-    public int getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public String getCurrency() {
+    public CurrencyType getCurrency() {
         return currency;
     }
 
-    public enum Type {
-        SAVING, CHECKING, SECURITY, LOAN
+    public enum AccountType {
+        SAVING, CHECKING, SECURITY, LOAN;
+
+        @Override
+        public String toString() {
+            switch (this) {
+                case SAVING:
+                    return "SAVING";
+                case CHECKING:
+                    return "CHECKING";
+                case SECURITY:
+                    return "SECURITY";
+                case LOAN:
+                    return "LOAN";
+            }
+            return "";
+        }
+    }
+
+    public enum CurrencyType {
+        USD, RMB, EUR;
+
+        @Override
+        public String toString() {
+            switch (this) {
+                case USD:
+                    return "USD";
+                case RMB:
+                    return "RMB";
+                case EUR:
+                    return "EUR";
+            }
+            return "";
+        }
     }
 }

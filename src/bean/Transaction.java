@@ -1,6 +1,9 @@
 package bean;
 
-import java.util.Date;
+import bean.account.Account;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 /***
  * transaction
@@ -8,27 +11,40 @@ import java.util.Date;
 public class Transaction {
     // transaction id
     private int tid;
+    // user id
+    private int uid;
     // transaction happened from one bank account(fromAid) to another bank account(toAid)
     // toAid maybe null, depends on the transaction type
     private int fromAid, toAid;
     private TransType type;
+    private Account.CurrencyType currencyType;
     private int amount, fee;
-    private String note;
-    private Date date;
+    private String detail;
+    private LocalDateTime time;
 
-    public Transaction(int tid, int fromBAid, int toBAid, TransType type, int amount, int fee, String note, Date date) {
+    public Transaction(int tid, int uid, int fromBAid, int toBAid, TransType type, Account.CurrencyType currency, int amount, int fee, String detail, LocalDateTime time) {
         this.tid = tid;
+        this.uid = uid;
         this.fromAid = fromBAid;
         this.toAid = toBAid;
         this.type = type;
+        this.currencyType = currency;
         this.amount = amount;
         this.fee = fee;
-        this.note = note;
-        this.date = date;
+        this.detail = detail;
+        this.time = time;
+    }
+
+    public Transaction(int tid, int uid, int fromBAid, int toBAid, String type, String currency, int amount, int fee, String detail, LocalDateTime time) {
+        this(tid, uid, fromBAid, toBAid, TransType.valueOf(type), Account.CurrencyType.valueOf(currency), amount, fee, detail, time);
     }
 
     public int getTid() {
         return tid;
+    }
+
+    public int getUid() {
+        return uid;
     }
 
     public int getFromAid() {
@@ -43,6 +59,10 @@ public class Transaction {
         return type;
     }
 
+    public Account.CurrencyType getCurrencyType() {
+        return currencyType;
+    }
+
     public int getAmount() {
         return amount;
     }
@@ -51,8 +71,16 @@ public class Transaction {
         return fee;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDetail() {
+        return detail;
+    }
+
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    public long getTimestamp() {
+        return time.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() / 1000;
     }
 
     public void setTid(int tid) {
@@ -71,6 +99,10 @@ public class Transaction {
         this.type = type;
     }
 
+    public void setCurrencyType(Account.CurrencyType currencyType) {
+        this.currencyType = currencyType;
+    }
+
     public void setAmount(int amount) {
         this.amount = amount;
     }
@@ -79,12 +111,12 @@ public class Transaction {
         this.fee = fee;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 
     public enum TransType {
@@ -110,7 +142,7 @@ public class Transaction {
                 case INTEREST:
                     return "INTEREST";
             }
-            return super.toString();
+            return "";
         }
     }
 }

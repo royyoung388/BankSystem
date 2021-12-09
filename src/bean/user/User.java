@@ -2,14 +2,16 @@ package bean.user;
 
 public abstract class User {
     public static final int MANAGER = 0;
-    public static final int USER = 1;
+    public static final int CUSTOMER = 1;
 
     // account id
-    private final int uid, type;
+    private final int uid;
+    // type: 0 for manager, 1 for customer
+    private int type;
     private String username, pwd;
 
-    public User(int aid, int type, String username, String pwd) {
-        this.uid = aid;
+    public User(int uid, int type, String username, String pwd) {
+        this.uid = uid;
         this.type = type;
         this.username = username;
         this.pwd = pwd;

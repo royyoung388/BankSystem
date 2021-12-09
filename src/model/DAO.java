@@ -1,13 +1,31 @@
-package dao;
+package model;
+
+import bean.account.Account;
+import bean.user.User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
-public class BaseDAO {
-    private static volatile BaseDAO baseDAO;
-    protected Connection connection;
+public class DAO {
+    private static volatile DAO baseDAO;
+    private Connection connection;
+
+    private DAO() {
+        try {
+            connect();
+
+            createUser();
+            createAccount();
+            createTransaction();
+            createStock();
+            createHolding();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void connect() {
         try {
@@ -19,11 +37,11 @@ public class BaseDAO {
         System.out.println("Opened bank db successfully");
     }
 
-    public static BaseDAO getInstance() {
+    public static DAO getInstance() {
         if (baseDAO == null)
-            synchronized (AccountDB.class) {
+            synchronized (DAO.class) {
                 if (baseDAO == null)
-                    baseDAO = new BaseDAO();
+                    baseDAO = new DAO();
             }
         return baseDAO;
     }
@@ -37,9 +55,9 @@ public class BaseDAO {
         String sql = "CREATE TABLE IF NOT EXISTS account(\n" +
                 "    aid INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    uid INTEGER,\n" +
-                "    type INTEGER NOT NULL,\n" +
+                "    type TEXT,\n" +
                 "    balance INTEGER,\n" +
-                "    currency TEXT\n" +
+                "    currency TEXT,\n" +
                 "    FOREIGN KEY(uid) REFERENCES user(uid) " +
                 ")";
         statement.executeUpdate(sql);
@@ -52,7 +70,7 @@ public class BaseDAO {
                 "    sid INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    name TEXT,\n" +
                 "    price REAL,\n" +
-                "    quantity INTEGER,\n" +
+                "    quantity INTEGER\n" +
                 ")";
         statement.executeUpdate(sql);
         statement.close();
@@ -62,10 +80,10 @@ public class BaseDAO {
     private void createHolding() throws SQLException {
         Statement statement = connection.createStatement();
         String sql = "CREATE TABLE IF NOT EXISTS holding(\n" +
-                "    aid INTEGER,\n" +
+                "    uid INTEGER,\n" +
                 "    sid INTEGER,\n" +
                 "    quantity INTEGER,\n" +
-                "    PRIMARY KEY(aid, sid)\n" +
+                "    PRIMARY KEY(uid, sid)\n" +
                 ")";
         statement.executeUpdate(sql);
         statement.close();
@@ -73,16 +91,19 @@ public class BaseDAO {
 
     private void createTransaction() throws SQLException {
         Statement statement = connection.createStatement();
-        String sql = "CREATE TABLE IF NOT EXISTS transaction(\n" +
+        String sql = "CREATE TABLE IF NOT EXISTS txn(\n" +
                 "    tid INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "    aid INTEGER,\n" +
+                "    uid INTEGER,\n" +
                 "    fromaid INTEGER,\n" +
                 "    toaid INTEGER,\n" +
-                "    type INTEGER NOT NULL,\n" +
+                "    type TEXT,\n" +
+                "    currency TEXT,\n" +
                 "    amount INTEGER,\n" +
                 "    fee INTEGER,\n" +
-                "    date TEXT,\n" +
-                "    FOREIGN KEY(aid, frombaid, tobaid) REFERENCES account(aid, aid, aid)\n" +
+                "    detail TEXT,\n" +
+                "    time INTEGER,\n" +
+                "    FOREIGN KEY(uid) REFERENCES user(uid),\n" +
+                "    FOREIGN KEY(fromaid, toaid) REFERENCES account(aid, aid)\n" +
                 ")";
         statement.executeUpdate(sql);
         statement.close();
@@ -91,11 +112,16 @@ public class BaseDAO {
     public void createUser() throws SQLException {
         Statement statement = connection.createStatement();
         String sql = "CREATE TABLE IF NOT EXISTS user (\n" +
-                "    aid INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                "    uid INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                "    type INTEGER,\n" +
                 "    username TEXT UNIQUE,\n" +
                 "    pwd TEXT\n" +
                 ")";
         statement.executeUpdate(sql);
         statement.close();
+    }
+
+    public static void main(String[] args) {
+        DAO.getInstance();
     }
 }

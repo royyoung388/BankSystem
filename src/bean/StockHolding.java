@@ -5,19 +5,19 @@ package bean;
  */
 public class StockHolding {
     // who holding the stock
-    private int aid;
+    private int uid;
     // stock id
     private int sid;
     private int quantity;
 
-    public StockHolding(int aid, int sid, int quantity) {
-        this.aid = aid;
+    public StockHolding(int uid, int sid, int quantity) {
+        this.uid = uid;
         this.sid = sid;
         this.quantity = quantity;
     }
 
-    public int getAid() {
-        return aid;
+    public int getUid() {
+        return uid;
     }
 
     public int getSid() {
@@ -26,5 +26,9 @@ public class StockHolding {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
