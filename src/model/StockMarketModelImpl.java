@@ -59,7 +59,7 @@ public class StockMarketModelImpl implements StockMarketModel {
     public boolean updateStock(Stock stock) {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            String sql = String.format("UPDATE stock SET name=%s, price=%f, quantity=%d WHERE sid=%d",
+            String sql = String.format("UPDATE stock SET name='%s', price=%f, quantity=%d WHERE sid=%d",
                     stock.getName(), stock.getPrice(), stock.getQuantity(), stock.getSid());
             statement.executeUpdate(sql);
             statement.close();
@@ -76,8 +76,8 @@ public class StockMarketModelImpl implements StockMarketModel {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
             for (Stock stock : stocks) {
-                String sql = String.format("INSERT INTO stock VALUES (%d, %s, %f, %d)",
-                        stock.getSid(), stock.getName(), stock.getPrice(), stock.getQuantity());
+                String sql = String.format("INSERT INTO stock VALUES (NULL, '%s', %f, %d)",
+                        stock.getName(), stock.getPrice(), stock.getQuantity());
                 count += statement.executeUpdate(sql);
             }
             statement.close();
@@ -135,5 +135,32 @@ public class StockMarketModelImpl implements StockMarketModel {
         return result;
     }
 
+    public static void main(String[] args) {
+        StockMarketModel stockMarketModel = new StockMarketModelImpl();
+        AccountModel accountModel = new AccountModelImpl();
+        StockHoldingModel holdingModel = new StockHoldingModelImpl();
 
+        Stock s1 = new Stock(1, "1", 1.5, 100);
+        Stock s2 = new Stock(2, "2", 3, 100);
+        List<Stock> stocks = new ArrayList<>();
+        stocks.add(s1);
+        stocks.add(s2);
+
+        System.out.println(stockMarketModel.insertStocks(stocks));
+        System.out.println(stockMarketModel.queryMarket());
+        System.out.println(stockMarketModel.queryStock(1));
+
+        s1.setName("new1");
+        System.out.println(stockMarketModel.updateStocks(stocks));
+        System.out.println(stockMarketModel.queryMarket());
+
+        System.out.println(stockMarketModel.buyStock(1, 1, 10));
+        System.out.println(stockMarketModel.queryMarket());
+        System.out.println(accountModel.queryAccount(1));
+        System.out.println(holdingModel.queryHolding(1, 1));
+        System.out.println(stockMarketModel.sellStock(1, 1, 10));
+        System.out.println(stockMarketModel.queryMarket());
+        System.out.println(accountModel.queryAccount(1));
+        System.out.println(holdingModel.queryAll(1));
+    }
 }

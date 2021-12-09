@@ -1,6 +1,7 @@
 package model;
 
 import bean.Transaction;
+import bean.account.Account;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,8 +17,8 @@ public class TransactionModelImpl implements TransactionModel {
     public boolean insertTransaction(Transaction transaction) {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            String sql = String.format("INSERT INTO txn VALUES (%d, %d, %d, %d, %s, %s, %d, %d, %s, %d)",
-                    transaction.getTid(), transaction.getUid(), transaction.getFromAid(), transaction.getToAid(),
+            String sql = String.format("INSERT INTO txn VALUES (NULL, %d, %d, %d, '%s', '%s', %d, %d, '%s', %d)",
+                    transaction.getUid(), transaction.getFromAid(), transaction.getToAid(),
                     transaction.getType(), transaction.getCurrencyType(), transaction.getAmount(),
                     transaction.getFee(), transaction.getDetail(), transaction.getTimestamp());
             statement.executeUpdate(sql);
@@ -71,5 +72,15 @@ public class TransactionModelImpl implements TransactionModel {
             e.printStackTrace();
         }
         return transactions;
+    }
+
+    public static void main(String[] args) {
+        TransactionModel transactionModel = new TransactionModelImpl();
+        LocalDateTime localDateTime = LocalDateTime.now();
+        Transaction transaction = new Transaction(0, 1, 1, 2, Transaction.TransType.TRANSFER,
+                Account.CurrencyType.USD, 50, 5, "transfer", localDateTime);
+        transactionModel.insertTransaction(transaction);
+        System.out.println(transactionModel.queryTransactionByUser(1));
+        System.out.println(transactionModel.queryTransactionByDay(localDateTime));
     }
 }

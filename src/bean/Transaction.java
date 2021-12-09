@@ -145,4 +145,20 @@ public class Transaction {
             return "";
         }
     }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "tid=" + tid +
+                ", uid=" + uid +
+                ", fromAid=" + fromAid +
+                ", toAid=" + toAid +
+                ", type=" + type +
+                ", currencyType=" + currencyType +
+                ", amount=" + amount +
+                ", fee=" + fee +
+                ", detail='" + detail + '\'' +
+                ", time=" + time +
+                '}';
+    }
 }

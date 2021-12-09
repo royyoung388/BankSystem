@@ -81,4 +81,15 @@ public abstract class Account {
             return "";
         }
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "aid=" + aid +
+                ", uid=" + uid +
+                ", type=" + type +
+                ", balance=" + balance +
+                ", currency=" + currency +
+                '}';
+    }
 }

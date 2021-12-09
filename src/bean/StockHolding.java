@@ -31,4 +31,14 @@ public class StockHolding {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    @Override
+    public String toString() {
+        return "StockHolding{" +
+                "uid=" + uid +
+                ", sid=" + sid +
+                ", quantity=" + quantity +
+                '}';
+    }
 }
+

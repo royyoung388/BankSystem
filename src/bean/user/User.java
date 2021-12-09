@@ -36,4 +36,14 @@ public abstract class User {
     public void setPwd(String pwd) {
         this.pwd = pwd;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid=" + uid +
+                ", type=" + type +
+                ", username='" + username + '\'' +
+                ", pwd='" + pwd + '\'' +
+                '}';
+    }
 }

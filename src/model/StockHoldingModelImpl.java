@@ -48,8 +48,13 @@ public class StockHoldingModelImpl implements StockHoldingModel {
     public boolean updateHolding(StockHolding holding) {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            String sql = String.format("REPLACE INTO holding VALUES (%d, %d, %d)",
-                    holding.getUid(), holding.getSid(), holding.getQuantity());
+            String sql = null;
+            if (holding.getQuantity() != 0)
+                sql = String.format("REPLACE INTO holding VALUES (%d, %d, %d)",
+                        holding.getUid(), holding.getSid(), holding.getQuantity());
+            else
+                sql = String.format("DELETE FROM holding WHERE uid=%d AND sid=%d", holding.getUid(), holding.getSid());
+
             statement.executeUpdate(sql);
             statement.close();
             return true;

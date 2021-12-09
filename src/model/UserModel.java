@@ -20,11 +20,13 @@ public interface UserModel {
 
     /***
      * create new account
+     *
+     * @param type
      * @param username
      * @param pwd
      * @return
      */
-    boolean signUp(String username, String pwd);
+    boolean signUp(int type, String username, String pwd);
 
     /**
      * query manager

@@ -13,7 +13,7 @@ public class AccountModelImpl implements AccountModel {
     public boolean createAccount(int uid, Account.AccountType type, Account.CurrencyType currency) {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            String sql = String.format("INSERT INTO account VALUES (NULL, %d, %s, 0, %s)",
+            String sql = String.format("INSERT INTO account VALUES (NULL, %d, '%s', 0, '%s')",
                     uid, type, currency);
             statement.executeUpdate(sql);
             statement.close();
@@ -119,5 +119,19 @@ public class AccountModelImpl implements AccountModel {
     @Override
     public boolean transfer(int fromBAid, int toBAid, int amount) {
         return withdraw(fromBAid, amount) && deposit(toBAid, amount);
+    }
+
+    public static void main(String[] args) {
+        AccountModel accountModel = new AccountModelImpl();
+        System.out.println(accountModel.createAccount(1, Account.AccountType.SECURITY, Account.CurrencyType.USD));
+        System.out.println(accountModel.createAccount(1, Account.AccountType.SAVING, Account.CurrencyType.USD));
+        System.out.println(accountModel.queryAllAccount(1));
+        System.out.println(accountModel.queryAccount(1));
+        System.out.println(accountModel.deposit(1, 100));
+        System.out.println(accountModel.queryAccount(1));
+        System.out.println(accountModel.withdraw(1, 10));
+        System.out.println(accountModel.queryAccount(1));
+        System.out.println(accountModel.transfer(1, 2, 50));
+        System.out.println(accountModel.queryAllAccount(1));
     }
 }
