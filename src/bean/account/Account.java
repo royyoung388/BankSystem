@@ -6,14 +6,14 @@ package bean.account;
  */
 public abstract class Account {
     // account id
-    private int aid;
+    protected int aid;
     // user id
-    private int uid;
+    protected int uid;
     // account type: saving, checking, security
-    private AccountType type;
-    private double balance;
-    private CurrencyType currency;
-    private String accountName;
+    protected AccountType type;
+    protected double balance;
+    protected CurrencyType currency;
+    protected String accountName;
 
     public Account(int aid, int uid, AccountType type, double balance, CurrencyType currency,
                    String accountName) {
