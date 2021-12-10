@@ -16,12 +16,12 @@ public class DAO {
     private DAO() {
         try {
             connect();
-
             createUser();
             createAccount();
             createTransaction();
             createStock();
             createHolding();
+            createCollateral();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -56,8 +56,9 @@ public class DAO {
                 "    aid INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    uid INTEGER,\n" +
                 "    type TEXT,\n" +
-                "    balance INTEGER,\n" +
+                "    balance REAL,\n" +
                 "    currency TEXT,\n" +
+                "    name TEXT,\n" +
                 "    FOREIGN KEY(uid) REFERENCES user(uid) " +
                 ")";
         statement.executeUpdate(sql);
@@ -98,12 +99,24 @@ public class DAO {
                 "    toaid INTEGER,\n" +
                 "    type TEXT,\n" +
                 "    currency TEXT,\n" +
-                "    amount INTEGER,\n" +
-                "    fee INTEGER,\n" +
+                "    amount REAL,\n" +
+                "    fee REAL,\n" +
                 "    detail TEXT,\n" +
                 "    time INTEGER,\n" +
                 "    FOREIGN KEY(uid) REFERENCES user(uid),\n" +
                 "    FOREIGN KEY(fromaid, toaid) REFERENCES account(aid, aid)\n" +
+                ")";
+        statement.executeUpdate(sql);
+        statement.close();
+    }
+
+    private void createCollateral() throws SQLException {
+        Statement statement = connection.createStatement();
+        String sql = "CREATE TABLE IF NOT EXISTS collateral(\n" +
+                "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                "    uid INTEGER,\n" +
+                "    name TEXT,\n" +
+                "    value REAL\n" +
                 ")";
         statement.executeUpdate(sql);
         statement.close();

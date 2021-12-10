@@ -49,12 +49,12 @@ public class StockHoldingModelImpl implements StockHoldingModel {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
             String sql = null;
-            if (holding.getQuantity() != 0)
+            if (holding.getQuantity() != 0) {
                 sql = String.format("REPLACE INTO holding VALUES (%d, %d, %d)",
                         holding.getUid(), holding.getSid(), holding.getQuantity());
-            else
+            } else {
                 sql = String.format("DELETE FROM holding WHERE uid=%d AND sid=%d", holding.getUid(), holding.getSid());
-
+            }
             statement.executeUpdate(sql);
             statement.close();
             return true;

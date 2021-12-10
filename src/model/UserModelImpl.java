@@ -46,7 +46,7 @@ public class UserModelImpl implements UserModel {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class UserModelImpl implements UserModel {
         User manager = null;
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM user WHERE type=" + User.MANAGER);
+            ResultSet rs = statement.executeQuery("SELECT * FROM user WHERE type =" + User.MANAGER);
             if (rs.next()) {
                 manager = new Manager(rs.getInt(1), rs.getString(2), rs.getString(3));
             }
@@ -79,19 +79,21 @@ public class UserModelImpl implements UserModel {
         }
         return manager;
     }
-
-    public static void main(String[] args) {
-        UserModel userModel = new UserModelImpl();
-        userModel.signUp(User.CUSTOMER, "test1", "test1");
-        userModel.signUp(User.CUSTOMER, "test2", "test2");
-        userModel.signUp(User.MANAGER, "m1", "m1");
-
-        System.out.println(userModel.isUserExists("test1"));
-        System.out.println(userModel.isUserExists("test2"));
-        System.out.println(userModel.isUserExists("m1"));
-        System.out.println(userModel.isUserExists("m2"));
-
-        System.out.println(userModel.login("test1", "test1"));
-        System.out.println(userModel.queryManager());
-    }
+//
+//    public static void main(String[] args) {
+//        UserModel userModel = new UserModelImpl();
+////        userModel.signUp(User.CUSTOMER, "test1", "test1");
+//        System.out.println(userModel.isUserExists("test1"));
+//
+////        userModel.signUp(User.CUSTOMER, "test2", "test2");
+////        userModel.signUp(User.MANAGER, "m1", "m1");
+////
+////        System.out.println(userModel.isUserExists("test1"));
+////        System.out.println(userModel.isUserExists("test2"));
+////        System.out.println(userModel.isUserExists("m1"));
+////        System.out.println(userModel.isUserExists("m2"));
+////
+////        System.out.println(userModel.login("test1", "test1"));
+////        System.out.println(userModel.queryManager());
+//    }
 }

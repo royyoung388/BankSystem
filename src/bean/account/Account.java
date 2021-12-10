@@ -13,18 +13,51 @@ public abstract class Account {
     private AccountType type;
     private double balance;
     private CurrencyType currency;
+    private String accountName;
 
-    public Account(int aid, int uid, AccountType type, double balance, CurrencyType currency) {
+    public Account(int aid, int uid, AccountType type, double balance, CurrencyType currency,
+                   String accountName) {
         this.aid = aid;
         this.uid = uid;
         this.type = type;
         this.balance = balance;
         this.currency = currency;
+        this.accountName = accountName;
     }
 
-    public Account(int aid, int uid, AccountType type, int balance, String currency) {
-        this(aid, uid, type, balance, CurrencyType.valueOf(currency));
+    public Account(int aid, int uid, AccountType type, double balance, String currency,
+                   String accountName) {
+        this(aid, uid, type, balance, CurrencyType.valueOf(currency), accountName);
     }
+
+    public void setAid(int aid) {
+        this.aid = aid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+
+    public void setType(AccountType type) {
+        this.type = type;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public void setCurrency(CurrencyType currency) {
+        this.currency = currency;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
 
     public int getAid() {
         return aid;
@@ -85,11 +118,12 @@ public abstract class Account {
     @Override
     public String toString() {
         return "Account{" +
-                "aid=" + aid +
-                ", uid=" + uid +
-                ", type=" + type +
-                ", balance=" + balance +
-                ", currency=" + currency +
+                "aid = " + aid +
+                ", uid = " + uid +
+                ", name = " + accountName +
+                ", type = " + type +
+                ", balance = " + balance +
+                ", currency = " + currency +
                 '}';
     }
 }

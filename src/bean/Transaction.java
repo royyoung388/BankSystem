@@ -18,11 +18,13 @@ public class Transaction {
     private int fromAid, toAid;
     private TransType type;
     private Account.CurrencyType currencyType;
-    private int amount, fee;
+    private double amount, fee;
     private String detail;
     private LocalDateTime time;
 
-    public Transaction(int tid, int uid, int fromBAid, int toBAid, TransType type, Account.CurrencyType currency, int amount, int fee, String detail, LocalDateTime time) {
+    public Transaction(int tid, int uid, int fromBAid, int toBAid,
+                       TransType type, Account.CurrencyType currency, double amount,
+                       double fee, String detail, LocalDateTime time) {
         this.tid = tid;
         this.uid = uid;
         this.fromAid = fromBAid;
@@ -35,7 +37,7 @@ public class Transaction {
         this.time = time;
     }
 
-    public Transaction(int tid, int uid, int fromBAid, int toBAid, String type, String currency, int amount, int fee, String detail, LocalDateTime time) {
+    public Transaction(int tid, int uid, int fromBAid, int toBAid, String type, String currency, double amount, double fee, String detail, LocalDateTime time) {
         this(tid, uid, fromBAid, toBAid, TransType.valueOf(type), Account.CurrencyType.valueOf(currency), amount, fee, detail, time);
     }
 
@@ -63,11 +65,11 @@ public class Transaction {
         return currencyType;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public int getFee() {
+    public double getFee() {
         return fee;
     }
 

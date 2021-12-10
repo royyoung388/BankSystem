@@ -17,7 +17,8 @@ public class StockMarketModelImpl implements StockMarketModel {
             Statement statement = DAO.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM stock");
             while (rs.next()) {
-                stocks.add(new Stock(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getInt(4)));
+                stocks.add(new Stock(rs.getInt(1), rs.getString(2), rs.getDouble(3),
+                        rs.getInt(4)));
             }
             rs.close();
             statement.close();
@@ -34,7 +35,8 @@ public class StockMarketModelImpl implements StockMarketModel {
             Statement statement = DAO.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM stock WHERE sid=" + sid);
             if (rs.next()) {
-                stock = new Stock(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getInt(4));
+                stock = new Stock(rs.getInt(1), rs.getString(2), rs.getDouble(3),
+                        rs.getInt(4));
             }
             rs.close();
             statement.close();

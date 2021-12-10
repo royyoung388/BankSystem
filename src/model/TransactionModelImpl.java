@@ -17,7 +17,7 @@ public class TransactionModelImpl implements TransactionModel {
     public boolean insertTransaction(Transaction transaction) {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            String sql = String.format("INSERT INTO txn VALUES (NULL, %d, %d, %d, '%s', '%s', %d, %d, '%s', %d)",
+            String sql = String.format("INSERT INTO txn VALUES (NULL, %d, %d, %d, '%s', '%s', %.2f, %.2f, '%s', %d)",
                     transaction.getUid(), transaction.getFromAid(), transaction.getToAid(),
                     transaction.getType(), transaction.getCurrencyType(), transaction.getAmount(),
                     transaction.getFee(), transaction.getDetail(), transaction.getTimestamp());
@@ -40,7 +40,7 @@ public class TransactionModelImpl implements TransactionModel {
                 LocalDateTime time = Instant.ofEpochMilli(rs.getLong(10)).atZone(ZoneId.systemDefault()).toLocalDateTime();
                 transactions.add(new Transaction(rs.getInt(1), rs.getInt(2), rs.getInt(3),
                         rs.getInt(4), rs.getString(5), rs.getString(6),
-                        rs.getInt(7), rs.getInt(8), rs.getString(9), time));
+                        rs.getFloat(7), rs.getFloat(8), rs.getString(9), time));
             }
             rs.close();
             statement.close();
@@ -64,7 +64,7 @@ public class TransactionModelImpl implements TransactionModel {
                 LocalDateTime localDateTime = Instant.ofEpochMilli(rs.getLong(10)).atZone(ZoneId.systemDefault()).toLocalDateTime();
                 transactions.add(new Transaction(rs.getInt(1), rs.getInt(2), rs.getInt(3),
                         rs.getInt(4), rs.getString(5), rs.getString(6),
-                        rs.getInt(7), rs.getInt(8), rs.getString(9), localDateTime));
+                        rs.getFloat(7), rs.getFloat(8), rs.getString(9), localDateTime));
             }
             rs.close();
             statement.close();
