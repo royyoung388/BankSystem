@@ -1,6 +1,8 @@
 package model;
 
+import bean.Transaction;
 import bean.account.Account;
+import bean.account.SavingAccount;
 import bean.user.User;
 
 import java.sql.Connection;
@@ -134,7 +136,20 @@ public class DAO {
         statement.close();
     }
 
+    public static void createManager(){
+        UserModelImpl userModel=new UserModelImpl();
+        userModel.signUp(0,"admin","admin");
+        int userID=userModel.queryManager().getUid();
+        AccountModelImpl accountModel=new AccountModelImpl();
+        accountModel.createAccount(userID,Account.AccountType.SAVING,100000,Account.CurrencyType.USD,"USD");
+        accountModel.createAccount(userID,Account.AccountType.SAVING,100000,Account.CurrencyType.RMB,"RMB");
+        accountModel.createAccount(userID,Account.AccountType.SAVING,100000,Account.CurrencyType.EUR,"EUR");
+
+
+    }
+
     public static void main(String[] args) {
         DAO.getInstance();
+        createManager();
     }
 }

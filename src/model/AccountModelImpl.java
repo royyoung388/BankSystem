@@ -10,11 +10,11 @@ import java.util.List;
 
 public class AccountModelImpl implements AccountModel {
     @Override
-    public boolean createAccount(int uid, Account.AccountType type, Account.CurrencyType currency, String accountName) {
+    public boolean createAccount(int uid, Account.AccountType type, double balance, Account.CurrencyType currency, String accountName) {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            String sql = String.format("INSERT INTO account VALUES (NULL, %d, '%s', 0, '%s','%s')",
-                    uid, type, currency, accountName);
+            String sql = String.format("INSERT INTO account VALUES (NULL, %d, '%s', %f, '%s','%s')",
+                    uid, type, balance, currency, accountName);
             statement.executeUpdate(sql);
             statement.close();
             return true;
@@ -50,6 +50,40 @@ public class AccountModelImpl implements AccountModel {
                                 rs.getFloat(4), rs.getString(5), rs.getString(6)));
                         break;
                 }
+            }
+            rs.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return accounts;
+    }
+
+    public List<LoanAccount> queryLoanAccounts() {
+        List<LoanAccount> accounts = new ArrayList<>();
+        try {
+            Statement statement = DAO.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM account WHERE type=" + Account.AccountType.LOAN);
+            while (rs.next()) {
+                accounts.add(new LoanAccount(rs.getInt(1), rs.getInt(2),
+                        rs.getFloat(4), rs.getString(5), rs.getString(6)));
+            }
+            rs.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return accounts;
+    }
+
+    public List<SavingAccount> querySavingAccounts() {
+        List<SavingAccount> accounts = new ArrayList<>();
+        try {
+            Statement statement = DAO.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM account WHERE type=" + Account.AccountType.SAVING);
+            while (rs.next()) {
+                accounts.add(new SavingAccount(rs.getInt(1), rs.getInt(2),
+                        rs.getFloat(4), rs.getString(5), rs.getString(6)));
             }
             rs.close();
             statement.close();
@@ -107,6 +141,7 @@ public class AccountModelImpl implements AccountModel {
         }
         return false;
     }
+
 
     @Override
     public boolean withdraw(int aid, double amount) {

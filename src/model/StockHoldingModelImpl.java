@@ -78,7 +78,7 @@ public class StockHoldingModelImpl implements StockHoldingModel {
     @Override
     public boolean sellStock(int uid, int sid, int quantity) {
         StockHolding holding = queryHolding(uid, sid);
-        if (holding != null)
+        if (holding != null && holding.getQuantity() >= quantity)
             holding.setQuantity(holding.getQuantity() - quantity);
         else
             return false;

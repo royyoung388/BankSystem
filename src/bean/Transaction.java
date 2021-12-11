@@ -122,7 +122,7 @@ public class Transaction {
     }
 
     public enum TransType {
-        TRANSFER, WITHDRAW, DEPOSIT, LOAN, REPAY, BUY_STOCK, SELL_STOCK, INTEREST;
+        TRANSFER, WITHDRAW, DEPOSIT, LOAN, REPAY, BUY_STOCK, SELL_STOCK, INTEREST,FEE;
 
         @Override
         public String toString() {
@@ -143,6 +143,8 @@ public class Transaction {
                     return "SELL_STOCK";
                 case INTEREST:
                     return "INTEREST";
+                case FEE:
+                    return "FEE";
             }
             return "";
         }

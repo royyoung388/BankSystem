@@ -13,7 +13,7 @@ public interface AccountModel {
      * @param currency  currency type
      * @return
      */
-    boolean createAccount(int uid, Account.AccountType type, Account.CurrencyType currency,String accountName);
+    boolean createAccount(int uid, Account.AccountType type, double balance,Account.CurrencyType currency,String accountName);
 
     /***
      * query someone's all bank account

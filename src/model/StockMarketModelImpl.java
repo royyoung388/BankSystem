@@ -89,6 +89,19 @@ public class StockMarketModelImpl implements StockMarketModel {
         return count;
     }
 
+    public boolean deleteStock(int id){
+        try {
+            Statement statement = DAO.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("DELETE * FROM stock WHERE sid=" + id);
+            rs.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public boolean buyStock(int aid, int sid, int quantity) {
         AccountModel accountModel = new AccountModelImpl();

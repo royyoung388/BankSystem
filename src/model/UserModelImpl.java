@@ -7,6 +7,8 @@ import bean.user.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserModelImpl implements UserModel {
     @Override
@@ -78,6 +80,22 @@ public class UserModelImpl implements UserModel {
             e.printStackTrace();
         }
         return manager;
+    }
+
+    public List<Customer> queryAllCustomer(){
+        List<Customer> result=new ArrayList<>();
+        try {
+            Statement statement = DAO.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM user WHERE type =" + User.CUSTOMER);
+            if (rs.next()) {
+                result.add( new Customer(rs.getInt(1), rs.getString(2), rs.getString(3)));
+            }
+            rs.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 //
 //    public static void main(String[] args) {
