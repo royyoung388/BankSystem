@@ -1,6 +1,7 @@
 package controller;
 
 import bean.account.Account;
+import model.AccountModel;
 import model.AccountModelImpl;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public class AccountOverviewController {
     private int uID;
     private String userName;
     private List<Account> accountList;
-    private AccountModelImpl accountModel;
+    private AccountModel accountModel;
 
     public AccountOverviewController(int uID, String userName) {
         this.uID = uID;
@@ -30,11 +31,11 @@ public class AccountOverviewController {
         return accountList;
     }
 
-    public boolean createAccount(int uid, Account.AccountType type, double balance,Account.CurrencyType currency,String accountName){
+    public boolean createAccount(int uid, Account.AccountType type, double balance, Account.CurrencyType currency, String accountName) {
         return accountModel.createAccount(uid, type, balance, currency, accountName);
     }
 
-    public boolean addAccount(int uid, Account.AccountType type, double balance,Account.CurrencyType currency,String accountName) {
+    public boolean addAccount(int uid, Account.AccountType type, double balance, Account.CurrencyType currency, String accountName) {
         if (type == Account.AccountType.SECURITY) {
             if (currency != Account.CurrencyType.USD) {
                 return false;
@@ -45,7 +46,7 @@ public class AccountOverviewController {
                     totalValue += a.getBalance();
                 }
             }
-            if(totalValue<5000) {
+            if (totalValue < 5000) {
                 return false;
             }
         }
@@ -56,8 +57,9 @@ public class AccountOverviewController {
         return false;
     }
 
-    public void deleteAccount(int aid){
+    public boolean deleteAccount(int aid) {
         // already check account balance = 0, just remove it from database
+        return accountModel.deleteAccount(aid);
     }
 
     private void updateAccountList() {

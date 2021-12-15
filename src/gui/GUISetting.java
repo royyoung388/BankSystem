@@ -53,9 +53,12 @@ public class GUISetting extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String newUserName = usernameInput.getText();
                 if (newUserName != "") {
-                    if (controller.setUserName(u, newUserName)) {
+                    String old = u.getUsername();
+                    u.setUsername(newUserName);
+                    if (controller.updateUser(u)) {
                         curUserNameTxt.setText(newUserName);
                     } else {
+                        u.setUsername(old);
                         JOptionPane.showMessageDialog(null, "User name already exists.", "Error", JOptionPane.WARNING_MESSAGE);
                     }
                 } else {
@@ -82,8 +85,13 @@ public class GUISetting extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String newPwd = String.valueOf(pwdInput.getPassword());
                 if (newPwd != "") {
-                    if (controller.setPwd(u, newPwd)) {
+                    String old = u.getPwd();
+                    u.setPwd(newPwd);
+                    if (controller.updateUser(u)) {
                         curPwd.setText(newPwd);
+                    } else {
+                        u.setPwd(old);
+                        JOptionPane.showMessageDialog(null, "Update password failed.", "Error", JOptionPane.WARNING_MESSAGE);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Empty password.", "Error", JOptionPane.WARNING_MESSAGE);

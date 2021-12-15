@@ -74,6 +74,7 @@ public class TransactionModelImpl implements TransactionModel {
         return transactions;
     }
 
+    @Override
     public List<Transaction> queryTransactionByAccountAndTime(LocalDateTime startTime, LocalDateTime endTime, int aid, int uid) {
         List<Transaction> transactions = new ArrayList<>();
         try {
@@ -97,6 +98,7 @@ public class TransactionModelImpl implements TransactionModel {
         return transactions;
     }
 
+    @Override
     public List<Transaction> queryTransactionByAccount(int aid, int uid) {
         List<Transaction> transactions = new ArrayList<>();
         try {

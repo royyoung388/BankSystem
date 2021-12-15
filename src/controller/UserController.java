@@ -1,7 +1,6 @@
 package controller;
 
 import bean.user.User;
-import model.UserModel;
 import model.UserModelImpl;
 
 public class UserController {
@@ -21,21 +20,7 @@ public class UserController {
         return userModel.signUp(type,userName,pwd);
     }
 
-    public boolean setPwd(User u, String newPwd){
-        if(userModel.setPwd(u, newPwd)){
-            return true;
-        }
-        return false;
+    public boolean updateUser(User user) {
+        return userModel.updateUser(user);
     }
-
-    public boolean setUserName(User u, String userName){
-        if (userModel.setUserName(u, userName)) {
-            return true;
-        }
-        return false;
-    }
-
-
-
-
 }

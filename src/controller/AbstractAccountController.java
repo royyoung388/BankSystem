@@ -3,7 +3,9 @@ package controller;
 import bean.Transaction;
 import bean.account.Account;
 import bean.user.Manager;
+import model.AccountModel;
 import model.AccountModelImpl;
+import model.TransactionModel;
 import model.TransactionModelImpl;
 
 import java.time.LocalDateTime;
@@ -16,8 +18,8 @@ public abstract class AbstractAccountController {
 
 
     protected Account account;
-    protected AccountModelImpl accountModel = new AccountModelImpl();
-    protected TransactionModelImpl transactionModel = new TransactionModelImpl();
+    protected AccountModel accountModel = new AccountModelImpl();
+    protected TransactionModel transactionModel = new TransactionModelImpl();
 
     public AbstractAccountController(Account account) {
         this.account = account;

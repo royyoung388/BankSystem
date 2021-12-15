@@ -31,15 +31,13 @@ public class GUIHomePage extends JFrame {
     GUIStockManagement stockManagement;
 
     public GUIHomePage(User u) {
-        setContentPane(new GUIHomePage(u).managerPanel);
+        setContentPane(this.mainPanel);
         setTitle("Home page.");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
         setVisible(true);
 
         this.user = u;
-
-
     }
 
     public void update() {

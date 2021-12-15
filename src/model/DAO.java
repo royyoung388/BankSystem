@@ -1,15 +1,11 @@
 package model;
 
-import bean.Transaction;
 import bean.account.Account;
-import bean.account.SavingAccount;
-import bean.user.User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 
 public class DAO {
     private static volatile DAO baseDAO;
@@ -136,14 +132,14 @@ public class DAO {
         statement.close();
     }
 
-    public static void createManager(){
-        UserModelImpl userModel=new UserModelImpl();
-        userModel.signUp(0,"admin","admin");
-        int userID=userModel.queryManager().getUid();
-        AccountModelImpl accountModel=new AccountModelImpl();
-        accountModel.createAccount(userID,Account.AccountType.SAVING,100000,Account.CurrencyType.USD,"USD");
-        accountModel.createAccount(userID,Account.AccountType.SAVING,100000,Account.CurrencyType.RMB,"RMB");
-        accountModel.createAccount(userID,Account.AccountType.SAVING,100000,Account.CurrencyType.EUR,"EUR");
+    public static void createManager() {
+        UserModelImpl userModel = new UserModelImpl();
+        userModel.signUp(0, "admin", "admin");
+        int userID = userModel.queryManager().getUid();
+        AccountModelImpl accountModel = new AccountModelImpl();
+        accountModel.createAccount(userID, Account.AccountType.SAVING, 100000, Account.CurrencyType.USD, "USD");
+        accountModel.createAccount(userID, Account.AccountType.SAVING, 100000, Account.CurrencyType.RMB, "RMB");
+        accountModel.createAccount(userID, Account.AccountType.SAVING, 100000, Account.CurrencyType.EUR, "EUR");
 
 
     }

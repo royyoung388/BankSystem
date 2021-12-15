@@ -82,13 +82,29 @@ public class UserModelImpl implements UserModel {
         return manager;
     }
 
-    public List<Customer> queryAllCustomer(){
-        List<Customer> result=new ArrayList<>();
+    @Override
+    public boolean updateUser(User user) {
+        User manager = null;
+        try {
+            Statement statement = DAO.getInstance().getConnection().createStatement();
+            String sql = String.format("UPDATE user SET username=%s, pwd=%s  WHERE uid=%s",
+                    user.getUsername(), user.getPwd(), user.getUid());
+            int result = statement.executeUpdate(sql);
+            statement.close();
+            return result > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public List<Customer> queryAllCustomer() {
+        List<Customer> result = new ArrayList<>();
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM user WHERE type =" + User.CUSTOMER);
             if (rs.next()) {
-                result.add( new Customer(rs.getInt(1), rs.getString(2), rs.getString(3)));
+                result.add(new Customer(rs.getInt(1), rs.getString(2), rs.getString(3)));
             }
             rs.close();
             statement.close();
@@ -98,12 +114,12 @@ public class UserModelImpl implements UserModel {
         return result;
     }
 
-    public boolean setPwd(User u, String newPwd){
+    public boolean setPwd(User u, String newPwd) {
         u.setPwd(newPwd);
         return true;
     }
 
-    public boolean setUserName(User u, String newUserName){
+    public boolean setUserName(User u, String newUserName) {
         u.setUsername(newUserName);
         return true;
     }

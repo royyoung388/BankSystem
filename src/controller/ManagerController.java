@@ -6,10 +6,7 @@ import bean.account.Account;
 import bean.account.LoanAccount;
 import bean.account.SavingAccount;
 import bean.user.Customer;
-import model.AccountModelImpl;
-import model.StockMarketModelImpl;
-import model.TransactionModelImpl;
-import model.UserModelImpl;
+import model.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,9 +18,9 @@ public class ManagerController {
     private final SavingAccount RMB_ACCOUNT;
     private final SavingAccount EUR_ACCOUNT;
 
-    private AccountModelImpl accountModel;
-    private StockMarketModelImpl stockMarketModel;
-    private TransactionModelImpl transactionModel = new TransactionModelImpl();
+    private AccountModel accountModel;
+    private StockMarketModel stockMarketModel;
+    private TransactionModel transactionModel = new TransactionModelImpl();
 
     public ManagerController() {
         accountModel = new AccountModelImpl();

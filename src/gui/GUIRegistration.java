@@ -37,6 +37,8 @@ public class GUIRegistration extends JFrame {
         String username = usernameInput.getText();
         String pwd = String.valueOf(pwdInput.getPassword());
         User u = null;
+        if (username.isEmpty() || pwd.isEmpty())
+            return null;
         if (this.controller.signUp(username, pwd, 1)) {
             u = this.controller.login(username, pwd);
         } else { // didn't sign up because user exists

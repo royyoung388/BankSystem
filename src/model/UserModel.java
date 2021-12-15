@@ -1,10 +1,12 @@
 package model;
 
+import bean.user.Customer;
 import bean.user.User;
+
+import java.util.List;
 
 public interface UserModel {
     /**
-     *
      * @param username
      * @param pwd
      * @return null if login failed or not found
@@ -30,7 +32,21 @@ public interface UserModel {
 
     /**
      * query manager
+     *
      * @return
      */
     User queryManager();
+
+    /**
+     * update pwd
+     */
+    boolean updateUser(User user);
+
+    /**
+     * query all customer
+     *
+     * @return
+     */
+    public List<Customer> queryAllCustomer();
+
 }

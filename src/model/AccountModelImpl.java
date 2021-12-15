@@ -59,6 +59,7 @@ public class AccountModelImpl implements AccountModel {
         return accounts;
     }
 
+    @Override
     public List<LoanAccount> queryLoanAccounts() {
         List<LoanAccount> accounts = new ArrayList<>();
         try {
@@ -76,6 +77,7 @@ public class AccountModelImpl implements AccountModel {
         return accounts;
     }
 
+    @Override
     public List<SavingAccount> querySavingAccounts() {
         List<SavingAccount> accounts = new ArrayList<>();
         try {
@@ -129,6 +131,20 @@ public class AccountModelImpl implements AccountModel {
     }
 
     @Override
+    public boolean deleteAccount(int aid) {
+        try {
+            Statement statement = DAO.getInstance().getConnection().createStatement();
+            String sql = String.format("DELETE FROM account WHERE aid=%d", aid);
+            int result = statement.executeUpdate(sql);
+            statement.close();
+            return result > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
     public boolean updateBalance(int aid, double balance) {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
@@ -163,6 +179,7 @@ public class AccountModelImpl implements AccountModel {
     public boolean transfer(int fromBAid, int toBAid, double amount) {
         return withdraw(fromBAid, amount) && deposit(toBAid, amount);
     }
+
 
 //    public static void main(String[] args) {
 //        AccountModel accountModel = new AccountModelImpl();
