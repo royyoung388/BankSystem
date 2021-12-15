@@ -21,5 +21,21 @@ public class UserController {
         return userModel.signUp(type,userName,pwd);
     }
 
+    public boolean setPwd(User u, String newPwd){
+        if(userModel.setPwd(u, newPwd)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean setUserName(User u, String userName){
+        if (userModel.setUserName(u, userName)) {
+            return true;
+        }
+        return false;
+    }
+
+
+
 
 }

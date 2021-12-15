@@ -30,9 +30,13 @@ public class AccountOverviewController {
         return accountList;
     }
 
-    public boolean addAccount(Account account) {
-        if (account.getType() == Account.AccountType.SECURITY) {
-            if (account.getCurrency() != Account.CurrencyType.USD) {
+    public boolean createAccount(int uid, Account.AccountType type, double balance,Account.CurrencyType currency,String accountName){
+        return accountModel.createAccount(uid, type, balance, currency, accountName);
+    }
+
+    public boolean addAccount(int uid, Account.AccountType type, double balance,Account.CurrencyType currency,String accountName) {
+        if (type == Account.AccountType.SECURITY) {
+            if (currency != Account.CurrencyType.USD) {
                 return false;
             }
             int totalValue = 0;
@@ -45,16 +49,20 @@ public class AccountOverviewController {
                 return false;
             }
         }
-        if (accountModel.createAccount(account.getUid(), account.getType(), account.getBalance(), account.getCurrency(), account.getAccountName())) {
+        if (accountModel.createAccount(uid, type, balance, currency, accountName)) {
             updateAccountList();
             return true;
         }
         return false;
     }
 
+    public void deleteAccount(int aid){
+        // already check account balance = 0, just remove it from database
+    }
 
     private void updateAccountList() {
         accountList = accountModel.queryAllAccount(uID);
     }
+
 
 }

@@ -97,6 +97,16 @@ public class UserModelImpl implements UserModel {
         }
         return result;
     }
+
+    public boolean setPwd(User u, String newPwd){
+        u.setPwd(newPwd);
+        return true;
+    }
+
+    public boolean setUserName(User u, String newUserName){
+        u.setUsername(newUserName);
+        return true;
+    }
 //
 //    public static void main(String[] args) {
 //        UserModel userModel = new UserModelImpl();

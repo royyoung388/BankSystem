@@ -166,8 +166,8 @@ public class AccountModelImpl implements AccountModel {
 
 //    public static void main(String[] args) {
 //        AccountModel accountModel = new AccountModelImpl();
-//        System.out.println(accountModel.createAccount(1, Account.AccountType.SECURITY, Account.CurrencyType.USD));
-//        System.out.println(accountModel.createAccount(1, Account.AccountType.SAVING, Account.CurrencyType.USD));
+//        System.out.println(accountModel.createAccount(1, Account.AccountType.SECURITY,0, Account.CurrencyType.USD));
+//        System.out.println(accountModel.createAccount(1, Account.AccountType.SAVING,0, Account.CurrencyType.USD));
 //        System.out.println(accountModel.queryAllAccount(1));
 //        System.out.println(accountModel.queryAccount(1));
 //        System.out.println(accountModel.deposit(1, 100));
