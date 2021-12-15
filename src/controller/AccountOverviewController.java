@@ -32,7 +32,7 @@ public class AccountOverviewController {
     }
 
     public boolean createAccount(int uid, Account.AccountType type, double balance, Account.CurrencyType currency, String accountName) {
-        return accountModel.createAccount(uid, type, balance, currency, accountName);
+        return accountModel.createAccount(uid, accountName, type, balance, currency);
     }
 
     public boolean addAccount(int uid, Account.AccountType type, double balance, Account.CurrencyType currency, String accountName) {
@@ -50,7 +50,7 @@ public class AccountOverviewController {
                 return false;
             }
         }
-        if (accountModel.createAccount(uid, type, balance, currency, accountName)) {
+        if (accountModel.createAccount(uid, accountName, type, balance, currency)) {
             updateAccountList();
             return true;
         }

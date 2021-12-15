@@ -127,7 +127,7 @@ public class DAO {
                 "    uid INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    type INTEGER,\n" +
                 "    username TEXT UNIQUE,\n" +
-                "    pwd TEXT\n" +
+                "    pwd TEXT,\n" +
                 "    status TEXT\n" +
                 ")";
         statement.executeUpdate(sql);
@@ -139,9 +139,9 @@ public class DAO {
         userModel.signUp(0, "admin", "admin");
         int userID = userModel.queryManager().getUid();
         AccountModelImpl accountModel = new AccountModelImpl();
-        accountModel.createAccount(userID, Account.AccountType.SAVING, 100000, Account.CurrencyType.USD, "USD");
-        accountModel.createAccount(userID, Account.AccountType.SAVING, 100000, Account.CurrencyType.RMB, "RMB");
-        accountModel.createAccount(userID, Account.AccountType.SAVING, 100000, Account.CurrencyType.EUR, "EUR");
+        accountModel.createAccount(userID, "USD", Account.AccountType.SAVING, 100000, Account.CurrencyType.USD);
+        accountModel.createAccount(userID, "RMB", Account.AccountType.SAVING, 100000, Account.CurrencyType.RMB);
+        accountModel.createAccount(userID, "EUR", Account.AccountType.SAVING, 100000, Account.CurrencyType.EUR);
     }
 
     public static void main(String[] args) {

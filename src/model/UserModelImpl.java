@@ -128,21 +128,21 @@ public class UserModelImpl implements UserModel {
 //        return false;
 //    }
 
-//
-//    public static void main(String[] args) {
-//        UserModel userModel = new UserModelImpl();
-////        userModel.signUp(User.CUSTOMER, "test1", "test1");
-//        System.out.println(userModel.isUserExists("test1"));
-//
-////        userModel.signUp(User.CUSTOMER, "test2", "test2");
-////        userModel.signUp(User.MANAGER, "m1", "m1");
-////
-////        System.out.println(userModel.isUserExists("test1"));
-////        System.out.println(userModel.isUserExists("test2"));
-////        System.out.println(userModel.isUserExists("m1"));
-////        System.out.println(userModel.isUserExists("m2"));
-////
-////        System.out.println(userModel.login("test1", "test1"));
-////        System.out.println(userModel.queryManager());
-//    }
+
+    public static void main(String[] args) {
+        UserModel userModel = new UserModelImpl();
+        userModel.signUp(User.CUSTOMER, "test1", "test1");
+        System.out.println(userModel.isUserExists("test1"));
+
+        userModel.signUp(User.CUSTOMER, "test2", "test2");
+        userModel.signUp(User.MANAGER, "m1", "m1");
+
+        System.out.println(userModel.isUserExists("test1"));
+        System.out.println(userModel.isUserExists("test2"));
+        System.out.println(userModel.isUserExists("m1"));
+        System.out.println(userModel.isUserExists("m2"));
+
+        System.out.println(userModel.login("test1", "test1"));
+        System.out.println(userModel.queryManager());
+    }
 }

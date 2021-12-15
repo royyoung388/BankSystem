@@ -10,7 +10,7 @@ import java.util.List;
 
 public class AccountModelImpl implements AccountModel {
     @Override
-    public boolean createAccount(int uid, Account.AccountType type, double balance, Account.CurrencyType currency, String accountName) {
+    public boolean createAccount(int uid, String accountName, Account.AccountType type, double balance, Account.CurrencyType currency) {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
             String sql = String.format("INSERT INTO account VALUES (NULL, %d, '%s','%s', %f, '%s', '%d')",
@@ -32,7 +32,7 @@ public class AccountModelImpl implements AccountModel {
             String sql = String.format("SELECT * FROM account WHERE uid=%d AND status=1", uid);
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
-                Account.AccountType type = Account.AccountType.valueOf(rs.getString(3));
+                Account.AccountType type = Account.AccountType.valueOf(rs.getString(4));
                 switch (type) {
                     case SAVING:
                         accounts.add(new SavingAccount(rs.getInt(1), rs.getInt(2),
@@ -103,7 +103,7 @@ public class AccountModelImpl implements AccountModel {
             Statement statement = DAO.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM account WHERE status=1 AND aid=" + aid);
             if (rs.next()) {
-                Account.AccountType type = Account.AccountType.valueOf(rs.getString(3));
+                Account.AccountType type = Account.AccountType.valueOf(rs.getString(4));
                 switch (type) {
                     case SAVING:
                         account = new SavingAccount(rs.getInt(1), rs.getInt(2),
@@ -182,17 +182,17 @@ public class AccountModelImpl implements AccountModel {
     }
 
 
-//    public static void main(String[] args) {
-//        AccountModel accountModel = new AccountModelImpl();
-//        System.out.println(accountModel.createAccount(1, Account.AccountType.SECURITY,0, Account.CurrencyType.USD));
-//        System.out.println(accountModel.createAccount(1, Account.AccountType.SAVING,0, Account.CurrencyType.USD));
-//        System.out.println(accountModel.queryAllAccount(1));
-//        System.out.println(accountModel.queryAccount(1));
-//        System.out.println(accountModel.deposit(1, 100));
-//        System.out.println(accountModel.queryAccount(1));
-//        System.out.println(accountModel.withdraw(1, 10));
-//        System.out.println(accountModel.queryAccount(1));
-//        System.out.println(accountModel.transfer(1, 2, 50));
-//        System.out.println(accountModel.queryAllAccount(1));
-//    }
+    public static void main(String[] args) {
+        AccountModel accountModel = new AccountModelImpl();
+        System.out.println(accountModel.createAccount(1, "test1", Account.AccountType.SECURITY, 0, Account.CurrencyType.USD));
+        System.out.println(accountModel.createAccount(1, "test2", Account.AccountType.SAVING, 0, Account.CurrencyType.USD));
+        System.out.println(accountModel.queryAllAccount(1));
+        System.out.println(accountModel.queryAccount(1));
+        System.out.println(accountModel.deposit(1, 100));
+        System.out.println(accountModel.queryAccount(1));
+        System.out.println(accountModel.withdraw(1, 10));
+        System.out.println(accountModel.queryAccount(1));
+        System.out.println(accountModel.transfer(1, 2, 50));
+        System.out.println(accountModel.queryAllAccount(1));
+    }
 }
