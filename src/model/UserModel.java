@@ -47,6 +47,12 @@ public interface UserModel {
      *
      * @return
      */
-    public List<Customer> queryAllCustomer();
+    List<Customer> queryAllCustomer();
 
+//    /**
+//     * delete user
+//     * @param uid
+//     * @return
+//     */
+//    boolean deleteUser(int uid);
 }

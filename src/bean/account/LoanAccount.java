@@ -8,17 +8,15 @@ import java.util.List;
 public class LoanAccount extends Account {
 
 
-
-
     private List<Collateral> collateralList;
-    CollateralModelImpl collateralModel=new CollateralModelImpl();
+    CollateralModelImpl collateralModel = new CollateralModelImpl();
 
-    public LoanAccount(int aid, int uid, double balance, CurrencyType currency, String Name) {
-        super(aid, uid, AccountType.LOAN, balance, currency, Name);
+    public LoanAccount(int aid, int uid, String accountName, double balance, CurrencyType currency) {
+        super(aid, uid, accountName, AccountType.LOAN, balance, currency);
     }
 
-    public LoanAccount(int aid, int uid, double balance, String currency, String name) {
-        super(aid, uid, AccountType.LOAN, balance, currency, name);
+    public LoanAccount(int aid, int uid, String accountName, double balance, String currency) {
+        super(aid, uid, accountName, AccountType.LOAN, balance, currency);
     }
 
     public List<Collateral> getCollateralList() {
@@ -26,7 +24,7 @@ public class LoanAccount extends Account {
         return collateralList;
     }
 
-    public void updateList(){
-        collateralList=collateralModel.queryAllCollateral(uid);
+    public void updateList() {
+        collateralList = collateralModel.queryAllCollateral(uid);
     }
 }

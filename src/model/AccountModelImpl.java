@@ -13,8 +13,8 @@ public class AccountModelImpl implements AccountModel {
     public boolean createAccount(int uid, Account.AccountType type, double balance, Account.CurrencyType currency, String accountName) {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            String sql = String.format("INSERT INTO account VALUES (NULL, %d, '%s', %f, '%s','%s')",
-                    uid, type, balance, currency, accountName);
+            String sql = String.format("INSERT INTO account VALUES (NULL, %d, '%s','%s', %f, '%s', '%d')",
+                    uid, accountName, type, balance, currency, 1);
             statement.executeUpdate(sql);
             statement.close();
             return true;
@@ -29,25 +29,26 @@ public class AccountModelImpl implements AccountModel {
         List<Account> accounts = new ArrayList<>();
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM account WHERE uid=" + uid);
+            String sql = String.format("SELECT * FROM account WHERE uid=%d AND status=1", uid);
+            ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
                 Account.AccountType type = Account.AccountType.valueOf(rs.getString(3));
                 switch (type) {
                     case SAVING:
                         accounts.add(new SavingAccount(rs.getInt(1), rs.getInt(2),
-                                rs.getFloat(4), rs.getString(5), rs.getString(6)));
+                                rs.getString(3), rs.getDouble(5), rs.getString(6)));
                         break;
                     case CHECKING:
                         accounts.add(new CheckingAccount(rs.getInt(1), rs.getInt(2),
-                                rs.getFloat(4), rs.getString(5), rs.getString(6)));
+                                rs.getString(3), rs.getDouble(5), rs.getString(6)));
                         break;
                     case SECURITY:
                         accounts.add(new SecurityAccount(rs.getInt(1), rs.getInt(2),
-                                rs.getFloat(4), rs.getString(5), rs.getString(6)));
+                                rs.getString(3), rs.getDouble(5), rs.getString(6)));
                         break;
                     case LOAN:
                         accounts.add(new LoanAccount(rs.getInt(1), rs.getInt(2),
-                                rs.getFloat(4), rs.getString(5), rs.getString(6)));
+                                rs.getString(3), rs.getDouble(5), rs.getString(6)));
                         break;
                 }
             }
@@ -64,10 +65,10 @@ public class AccountModelImpl implements AccountModel {
         List<LoanAccount> accounts = new ArrayList<>();
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM account WHERE type=" + Account.AccountType.LOAN);
+            ResultSet rs = statement.executeQuery("SELECT * FROM account WHERE status=1 AND type=" + Account.AccountType.LOAN);
             while (rs.next()) {
                 accounts.add(new LoanAccount(rs.getInt(1), rs.getInt(2),
-                        rs.getFloat(4), rs.getString(5), rs.getString(6)));
+                        rs.getString(3), rs.getDouble(5), rs.getString(6)));
             }
             rs.close();
             statement.close();
@@ -82,10 +83,10 @@ public class AccountModelImpl implements AccountModel {
         List<SavingAccount> accounts = new ArrayList<>();
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM account WHERE type=" + Account.AccountType.SAVING);
+            ResultSet rs = statement.executeQuery("SELECT * FROM account WHERE status=1 AND type=" + Account.AccountType.SAVING);
             while (rs.next()) {
                 accounts.add(new SavingAccount(rs.getInt(1), rs.getInt(2),
-                        rs.getFloat(4), rs.getString(5), rs.getString(6)));
+                        rs.getString(3), rs.getDouble(5), rs.getString(6)));
             }
             rs.close();
             statement.close();
@@ -100,25 +101,25 @@ public class AccountModelImpl implements AccountModel {
         Account account = null;
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM account WHERE aid=" + aid);
+            ResultSet rs = statement.executeQuery("SELECT * FROM account WHERE status=1 AND aid=" + aid);
             if (rs.next()) {
                 Account.AccountType type = Account.AccountType.valueOf(rs.getString(3));
                 switch (type) {
                     case SAVING:
                         account = new SavingAccount(rs.getInt(1), rs.getInt(2),
-                                rs.getFloat(4), rs.getString(5), rs.getString(6));
+                                rs.getString(3), rs.getDouble(5), rs.getString(6));
                         break;
                     case CHECKING:
                         account = new CheckingAccount(rs.getInt(1), rs.getInt(2),
-                                rs.getFloat(4), rs.getString(5), rs.getString(6));
+                                rs.getString(3), rs.getDouble(5), rs.getString(6));
                         break;
                     case SECURITY:
                         account = new SecurityAccount(rs.getInt(1), rs.getInt(2),
-                                rs.getFloat(4), rs.getString(5), rs.getString(6));
+                                rs.getString(3), rs.getDouble(5), rs.getString(6));
                         break;
                     case LOAN:
                         account = new LoanAccount(rs.getInt(1), rs.getInt(2),
-                                rs.getFloat(4), rs.getString(5), rs.getString(6));
+                                rs.getString(3), rs.getDouble(5), rs.getString(6));
                         break;
                 }
             }
@@ -134,7 +135,7 @@ public class AccountModelImpl implements AccountModel {
     public boolean deleteAccount(int aid) {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            String sql = String.format("DELETE FROM account WHERE aid=%d", aid);
+            String sql = String.format("UPDATE account SET status=0 WHERE aid=%d", aid);
             int result = statement.executeUpdate(sql);
             statement.close();
             return result > 0;

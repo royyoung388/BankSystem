@@ -53,10 +53,11 @@ public class DAO {
         String sql = "CREATE TABLE IF NOT EXISTS account(\n" +
                 "    aid INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "    uid INTEGER,\n" +
+                "    name TEXT,\n" +
                 "    type TEXT,\n" +
                 "    balance REAL,\n" +
                 "    currency TEXT,\n" +
-                "    name TEXT,\n" +
+                "    status TEXT,\n" +
                 "    FOREIGN KEY(uid) REFERENCES user(uid) " +
                 ")";
         statement.executeUpdate(sql);
@@ -127,6 +128,7 @@ public class DAO {
                 "    type INTEGER,\n" +
                 "    username TEXT UNIQUE,\n" +
                 "    pwd TEXT\n" +
+                "    status TEXT\n" +
                 ")";
         statement.executeUpdate(sql);
         statement.close();
@@ -140,8 +142,6 @@ public class DAO {
         accountModel.createAccount(userID, Account.AccountType.SAVING, 100000, Account.CurrencyType.USD, "USD");
         accountModel.createAccount(userID, Account.AccountType.SAVING, 100000, Account.CurrencyType.RMB, "RMB");
         accountModel.createAccount(userID, Account.AccountType.SAVING, 100000, Account.CurrencyType.EUR, "EUR");
-
-
     }
 
     public static void main(String[] args) {

@@ -9,25 +9,25 @@ public abstract class Account {
     protected int aid;
     // user id
     protected int uid;
+    protected String accountName;
     // account type: saving, checking, security
     protected AccountType type;
     protected double balance;
     protected CurrencyType currency;
-    protected String accountName;
+    // account status: 1 open. 0 closed.
+//    protected int status;
 
-    public Account(int aid, int uid, AccountType type, double balance, CurrencyType currency,
-                   String accountName) {
+    public Account(int aid, int uid, String accountName, AccountType type, double balance, CurrencyType currency) {
         this.aid = aid;
         this.uid = uid;
+        this.accountName = accountName;
         this.type = type;
         this.balance = balance;
         this.currency = currency;
-        this.accountName = accountName;
     }
 
-    public Account(int aid, int uid, AccountType type, double balance, String currency,
-                   String accountName) {
-        this(aid, uid, type, balance, CurrencyType.valueOf(currency), accountName);
+    public Account(int aid, int uid, String accountName, AccountType type, double balance, String currency) {
+        this(aid, uid, accountName, type, balance, CurrencyType.valueOf(currency));
     }
 
     public void setAid(int aid) {
@@ -36,6 +36,10 @@ public abstract class Account {
 
     public void setUid(int uid) {
         this.uid = uid;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public void setType(AccountType type) {
@@ -50,21 +54,16 @@ public abstract class Account {
         this.currency = currency;
     }
 
-    public String getAccountName() {
-        return accountName;
-    }
-
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
-    }
-
-
     public int getAid() {
         return aid;
     }
 
     public int getUid() {
         return uid;
+    }
+
+    public String getAccountName() {
+        return accountName;
     }
 
     public AccountType getType() {
