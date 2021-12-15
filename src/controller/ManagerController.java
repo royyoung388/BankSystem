@@ -124,5 +124,9 @@ public class ManagerController {
         return true;
     }
 
+    public List<Transaction> showTransactionByDay(LocalDateTime day){
+        return transactionModel.queryTransactionByDay(day);
+    }
+
 
 }
