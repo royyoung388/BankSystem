@@ -16,7 +16,7 @@ public class GUITransactionOverView extends JFrame {
 
     private JPanel transactionsPanel;
     private JButton refreshButton;
-    private JScrollPane transPanel;
+    private JPanel transPanel;
     private List<Transaction> transactions;
     private ManagerController controller;
 
@@ -73,7 +73,7 @@ public class GUITransactionOverView extends JFrame {
         refreshButton = new JButton();
         refreshButton.setText("refresh");
         transactionsPanel.add(refreshButton, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        transPanel = new JScrollPane();
+        transPanel = new JPanel();
         transactionsPanel.add(transPanel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         transPanel.setBorder(BorderFactory.createTitledBorder(null, "Transactions by day", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
     }
