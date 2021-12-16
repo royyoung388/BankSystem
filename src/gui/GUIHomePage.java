@@ -52,7 +52,6 @@ public class GUIHomePage extends JFrame {
             stockManagement = new GUIStockManagement(home);
             managerTabs.addTab("Stock Management", stockManagement.getStocksPanel());
 
-            add(managerTabs);
 
         } else {
 

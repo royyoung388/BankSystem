@@ -119,6 +119,7 @@ public class GUIAccount extends JFrame {
                 });
             }
         });
+
         loanButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

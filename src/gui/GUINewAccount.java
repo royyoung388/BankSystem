@@ -10,6 +10,8 @@ import javax.swing.event.PopupMenuListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +24,7 @@ public class GUINewAccount extends JFrame {
     private JTextField accBalanceInput;
     private JTextField accNameInput;
     private JPanel accTypePanel;
+    private JPanel accCBPanel;
     private JPanel accTypeCB;
     private AccountOverviewController controller;
     private User u;
@@ -73,8 +76,22 @@ public class GUINewAccount extends JFrame {
                                 Account.AccountType type = accTypeMap.get(accType.getSelectedItem());
                                 Account.CurrencyType cur = curTypeMap.get(accCurType.getSelectedItem());
 
-
-
+                                accType.addItemListener(new ItemListener()
+                                {
+                                    @Override
+                                    public void itemStateChanged(ItemEvent e)
+                                    {
+                                        if(e.getID() == ItemEvent.ITEM_STATE_CHANGED)
+                                        {
+                                            if(e.getStateChange() == ItemEvent.SELECTED)
+                                            {
+                                                JComboBox<String> accType = (JComboBox<String>) e.getSource();
+                                                String newSelection = (String) accType.getSelectedItem();
+                                                System.out.println("newSelection: " + newSelection);
+                                            }
+                                        }
+                                    }
+                                });
 
                                 if (!controller.addAccount(u.getUid(), type, accBalance, cur, accName)) {
                                     JOptionPane.showMessageDialog(null,
@@ -97,6 +114,7 @@ public class GUINewAccount extends JFrame {
             }
         });
     }
+
 
     public JPanel getNewAccPanel() {
         return newAccPanel;
@@ -219,6 +237,7 @@ public class GUINewAccount extends JFrame {
         accType = new JComboBox<>();
         accTypeMap = getAccTypeMap();
         this.accType.setModel(new DefaultComboBoxModel<String>(getAccTypeKeys(accTypeMap)));
+
         accCurType = new JComboBox<>();
         curTypeMap = getCurTypeMap();
         this.accCurType.setModel(new DefaultComboBoxModel<String>(getCurTypeKeys(curTypeMap)));
