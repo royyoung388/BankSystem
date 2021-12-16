@@ -30,10 +30,6 @@ public class GUIHomePage extends JFrame {
 
     public GUIHomePage(User u, GUIMain home) {
         setContentPane(this.mainPanel);
-//        setTitle("Home page.");
-//        setDefaultCloseOperation(EXIT_ON_CLOSE);
-//        pack();
-//        setVisible(false);
 
         this.user = u;
         this.managerTabs = new JTabbedPane();
@@ -59,7 +55,6 @@ public class GUIHomePage extends JFrame {
 
             add(managerTabs);
         } else {
-
             allAccounts = new GUIAllAccounts(u, home);
             userTabs.addTab("All Accounts", allAccounts.getMainPanel());
 
@@ -72,7 +67,6 @@ public class GUIHomePage extends JFrame {
             newAccount = new GUINewAccount(u, home);
             userTabs.addTab("Create New Account", newAccount.getNewAccPanel());
         }
-
 
     }
 
