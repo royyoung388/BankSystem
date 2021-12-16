@@ -11,6 +11,7 @@ import controller.SavingAccountController;
 import controller.SecurityAccountController;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,78 +23,86 @@ public class GUIWithdraw extends JFrame {
     private JTextField inputTxt;
     private JButton submitButton;
     private JPanel mainPanel;
-    private User u;
+    private JButton goBackButton;
+    private Account account;
+
 
     HashMap<String, Account> accMap;
 
-    public GUIWithdraw(User u, GUIHomePage home) {
-        this.u = u;
+    public GUIWithdraw(Account a) {
+        this.account = a;
+
         setContentPane(mainPanel);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        pack();
-        setVisible(false);
-
-        AccountOverviewController controller = new AccountOverviewController(u.getUid(), u.getUsername());
-
 
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Account account = accMap.get(accComboBox.getSelectedItem());
-                double amountWithdraw = Double.parseDouble(inputTxt.getText());
-                if (amountWithdraw <= 0) {
-                    JOptionPane.showMessageDialog(null, "Please enter value greater than 0", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                if (account.getType() == Account.AccountType.SAVING) {
-                    SavingAccountController savController = new SavingAccountController((SavingAccount) account);
-                    if (!savController.withdraw(amountWithdraw)) {
-                        JOptionPane.showMessageDialog(null, "Insufficient funds.", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                } else if (account.getType() == Account.AccountType.SECURITY) {
-                    CheckingAccountController ckController = new CheckingAccountController((CheckingAccount) account);
-                    if (!ckController.withdraw(amountWithdraw)) {
-                        JOptionPane.showMessageDialog(null, "Insufficient funds.", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-
-                } else if (account.getType() == Account.AccountType.CHECKING) {
-                    SecurityAccountController secController = new SecurityAccountController((SecurityAccount) account);
-                    if (!secController.withdraw(amountWithdraw)) {
-                        JOptionPane.showMessageDialog(null, "Insufficient funds.", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
+                String amt = inputTxt.getText();
+                if (amt == "") {
+                    JOptionPane.showMessageDialog(null,
+                            "Missing withdraw amount",
+                            "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(null, "cannot withdraw money from loan account", "Error", JOptionPane.ERROR_MESSAGE);
+                    double amountWithdraw = Double.parseDouble(inputTxt.getText());
+                    if (amountWithdraw <= 0) {
+                        JOptionPane.showMessageDialog(null,
+                                "Please enter withdraw amount greater than 0",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    if (account.getType() == Account.AccountType.SAVING) {
+                        SavingAccountController savController = new SavingAccountController((SavingAccount) account);
+                        if (!savController.withdraw(amountWithdraw)) {
+                            JOptionPane.showMessageDialog(null,
+                                    "Insufficient funds to withdraw.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else if (account.getType() == Account.AccountType.CHECKING) {
+                        CheckingAccountController ckController = new CheckingAccountController((CheckingAccount) account);
+                        if (!ckController.withdraw(amountWithdraw)) {
+                            JOptionPane.showMessageDialog(null,
+                                    "Insufficient funds to withdraw.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+
+                    } else if (account.getType() == Account.AccountType.SECURITY) {
+                        SecurityAccountController secController = new SecurityAccountController((SecurityAccount) account);
+                        if (!secController.withdraw(amountWithdraw)) {
+                            JOptionPane.showMessageDialog(null,
+                                    "Insufficient funds to withdraw.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "cannot withdraw money from loan account", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });
     }
 
-    public void update() {
-        inputTxt.setText("");
-        accComboBox.removeAllItems();
-        accMap = getAccMap(u);
-        for (String a : getAccKeys(accMap)) {
-            accComboBox.addItem(a);
-        }
-    }
+//    public void update() {
+//        inputTxt.setText("");
+//    }
 
+
+    public JButton getGoBackButton() {
+        return goBackButton;
+    }
 
     public JPanel getMainPanel() {
         return mainPanel;
     }
 
-    public static HashMap<String, Account> getAccMap(User u) {
-        AccountOverviewController controller = new AccountOverviewController(u.getUid(), u.getUsername());
-        java.util.List<Account> accounts = controller.getAccountList();
-        HashMap<String, Account> accMap = new HashMap<>();
-        for (Account a : accounts) {
-            accMap.put(a.toString(), a);
-        }
-        return accMap;
-    }
-
-    public static String[] getAccKeys(HashMap<String, Account> accMap) {
-        return accMap.keySet().toArray(new String[0]);
-    }
+//    public static HashMap<String, Account> getAccMap(User u) {
+//        AccountOverviewController controller = new AccountOverviewController(u.getUid(), u.getUsername());
+//        java.util.List<Account> accounts = controller.getAccountList();
+//        HashMap<String, Account> accMap = new HashMap<>();
+//        for (Account a : accounts) {
+//            accMap.put(a.toString(), a);
+//        }
+//        return accMap;
+//    }
+//
+//    public static String[] getAccKeys(HashMap<String, Account> accMap) {
+//        return accMap.keySet().toArray(new String[0]);
+//    }
 
 
     {
@@ -113,21 +122,20 @@ public class GUIWithdraw extends JFrame {
     private void $$$setupUI$$$() {
         mainPanel = new JPanel();
         mainPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(4, 3, new Insets(0, 0, 0, 0), -1, -1));
+        mainPanel.setBorder(BorderFactory.createTitledBorder(null, "Withdraw", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
-        mainPanel.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 3, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        mainPanel.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(0, 2, 4, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        submitButton = new JButton();
+        submitButton.setText("Submit");
+        mainPanel.add(submitButton, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label1 = new JLabel();
         label1.setText("Please enter the withdraw amount:\n");
         mainPanel.add(label1, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label2 = new JLabel();
-        label2.setText("Please choose the account to withdrawl from");
-        mainPanel.add(label2, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        accComboBox = new JComboBox();
-        mainPanel.add(accComboBox, new com.intellij.uiDesigner.core.GridConstraints(0, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         inputTxt = new JTextField();
-        mainPanel.add(inputTxt, new com.intellij.uiDesigner.core.GridConstraints(1, 2, 2, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        submitButton = new JButton();
-        submitButton.setText("Submit");
-        mainPanel.add(submitButton, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainPanel.add(inputTxt, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        goBackButton = new JButton();
+        goBackButton.setText("go back");
+        mainPanel.add(goBackButton, new com.intellij.uiDesigner.core.GridConstraints(3, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

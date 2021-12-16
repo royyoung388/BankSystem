@@ -18,11 +18,7 @@ public class GUIRegistration extends JFrame {
     private UserController controller = new UserController();
 
     public GUIRegistration() {
-        UserController controller = new UserController();
         setContentPane(userPanel);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        pack();
-        setVisible(false);
     }
 
     public User getUser() {
@@ -45,6 +41,10 @@ public class GUIRegistration extends JFrame {
             JOptionPane.showMessageDialog(null, "User already exists, please login.", "Warning", JOptionPane.WARNING_MESSAGE);
         }
         return u;
+    }
+
+    public void regUpdate() {
+        setContentPane(userPanel);
     }
 
     public JPanel getUserPanel() {
@@ -102,4 +102,5 @@ public class GUIRegistration extends JFrame {
     public JComponent $$$getRootComponent$$$() {
         return userPanel;
     }
+
 }

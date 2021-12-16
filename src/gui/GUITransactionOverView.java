@@ -1,9 +1,56 @@
 package gui;
 
-import javax.swing.*;
-import java.awt.*;
+import bean.Transaction;
+import controller.ManagerController;
 
-public class GUITransactionOverView {
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
+import java.util.List;
+
+public class GUITransactionOverView extends JFrame {
+
+
+    private JPanel transactionsPanel;
+    private JButton refreshButton;
+    private JScrollPane transPanel;
+    private List<Transaction> transactions;
+    private ManagerController controller;
+
+    public GUITransactionOverView(GUIMain home) {
+        setContentPane(transactionsPanel);
+        this.controller = new ManagerController();
+        transactions = controller.showTransactionByDay(LocalDateTime.now());
+        transPanel.setLayout(new GridLayout(transactions.size(), 1));
+        for (Transaction t : transactions) {
+            GUITransaction trans = new GUITransaction(t);
+            transPanel.add(trans.getTransactionPanel());
+        }
+        refreshButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                update();
+            }
+        });
+    }
+
+    public JPanel getTransactionsPanel() {
+        return transactionsPanel;
+    }
+
+    public void update() {
+        setContentPane(transactionsPanel);
+        this.controller = new ManagerController();
+        transactions = controller.showTransactionByDay(LocalDateTime.now());
+        transPanel.setLayout(new GridLayout(transactions.size(), 1));
+        for (Transaction t : transactions) {
+            GUITransaction trans = new GUITransaction(t);
+            transPanel.add(trans.getTransactionPanel());
+        }
+    }
 
 
     {
@@ -21,7 +68,21 @@ public class GUITransactionOverView {
      * @noinspection ALL
      */
     private void $$$setupUI$$$() {
-        final JPanel panel1 = new JPanel();
-        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        transactionsPanel = new JPanel();
+        transactionsPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        refreshButton = new JButton();
+        refreshButton.setText("refresh");
+        transactionsPanel.add(refreshButton, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        transPanel = new JScrollPane();
+        transactionsPanel.add(transPanel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        transPanel.setBorder(BorderFactory.createTitledBorder(null, "Transactions by day", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
     }
+
+    /**
+     * @noinspection ALL
+     */
+    public JComponent $$$getRootComponent$$$() {
+        return transactionsPanel;
+    }
+
 }

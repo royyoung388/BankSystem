@@ -38,7 +38,7 @@ public class ManagerController {
         return RMB_ACCOUNT;
     }
 
-    public SavingAccount getEUR() {
+    public SavingAccount getEUR_ACCOUNT() {
         return EUR_ACCOUNT;
     }
 
@@ -58,13 +58,13 @@ public class ManagerController {
         return stockMarketModel.queryMarket();
     }
 
-    public boolean setStock(Stock stock) {
+    public boolean updateStock(Stock stock) {
         return stockMarketModel.updateStock(stock);
     }
 
-    public boolean addStock(Stock stock) {
+    public boolean addStock(int sid, String name, double price, int quantity) {
         List<Stock> list = new ArrayList<>();
-        list.add(stock);
+        list.add(new Stock(sid, name, price, quantity));
         return stockMarketModel.insertStocks(list) == 1;
     }
 

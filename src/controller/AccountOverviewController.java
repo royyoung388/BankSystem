@@ -31,9 +31,9 @@ public class AccountOverviewController {
         return accountList;
     }
 
-    public boolean createAccount(int uid, Account.AccountType type, double balance, Account.CurrencyType currency, String accountName) {
-        return accountModel.createAccount(uid, accountName, type, balance, currency);
-    }
+//    public boolean createAccount(int uid, Account.AccountType type, double balance, Account.CurrencyType currency, String accountName) {
+//        return accountModel.createAccount(uid, accountName, type, balance, currency);
+//    }
 
     public boolean addAccount(int uid, Account.AccountType type, double balance, Account.CurrencyType currency, String accountName) {
         if (type == Account.AccountType.SECURITY) {

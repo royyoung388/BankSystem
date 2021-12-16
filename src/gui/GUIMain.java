@@ -5,6 +5,8 @@ import model.DAO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GUIMain extends JFrame{
     Container c;
@@ -30,9 +32,16 @@ public class GUIMain extends JFrame{
         frame.setVisible(true);
     }
 
-    private void displayHomePage(User u){
-        GUIHomePage homePage = new GUIHomePage(u);
-
+    public void displayHomePage(User u){
+        GUIHomePage homePage = new GUIHomePage(u, this);
+        c.add(homePage.getContentPane(), "HomePage");
+        logOutButton = homePage.getLogOutButton();
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                displayRegistration();
+            }
+        });
     }
 
     private void displayRegistration(){
@@ -58,5 +67,7 @@ public class GUIMain extends JFrame{
         c.add(reg.getUserPanel(), "Registration");
     }
 
-
+    public CardLayout getCards() {
+        return cards;
+    }
 }

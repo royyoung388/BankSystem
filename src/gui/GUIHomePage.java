@@ -1,36 +1,34 @@
 package gui;
 
+import bean.user.Manager;
 import bean.user.User;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class GUIHomePage extends JFrame {
     private JTabbedPane userTabs;
-    private JPanel mainPanel;
     private JTabbedPane managerTabs;
-    private JPanel managerPanel;
+    private JPanel mainPanel;
     private JButton logOutButton;
 
     private User user;
 
-    GUIAccount account;
-    GUILoan loans;
-    GUIStock stock;
+    GUIUserStock stock;
     GUIAllAccounts allAccounts;
-    GUIDeposit deposit;
-    GUITransfer transfer;
-    GUIWithdraw withdraw;
     GUINewAccount newAccount;
+    GUISetting setting;
 
     // visible when user is manager
-    GUIUserOverView Users;
-    GUITransactionOverView Transactions;
+    GUIUserOverView users;
+    GUITransactionOverView transactions;
     GUIStockManagement stockManagement;
 
-    public GUIHomePage(User u) {
+    public GUIHomePage(User u, GUIMain home) {
         setContentPane(this.mainPanel);
         setTitle("Home page.");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -38,10 +36,55 @@ public class GUIHomePage extends JFrame {
         setVisible(true);
 
         this.user = u;
+        this.managerTabs = new JTabbedPane();
+
+        if (u instanceof Manager) {
+            userTabs.addTab("Manager", managerTabs);
+
+            allAccounts = new GUIAllAccounts(u, home);
+            userTabs.addTab("All Accounts", allAccounts.getMainPanel());
+
+            setting = new GUISetting(u);
+            userTabs.addTab("Settings", setting.getContentPane());
+
+            users = new GUIUserOverView(home);
+            managerTabs.addTab("Users Overview", users.getUsersPanel());
+
+            transactions = new GUITransactionOverView(home);
+            managerTabs.addTab("Transactions", transactions.getTransactionsPanel());
+
+            stockManagement = new GUIStockManagement(home);
+            managerTabs.addTab("Stock Management", stockManagement.getStocksPanel());
+
+
+            add(managerTabs);
+        } else {
+
+            allAccounts = new GUIAllAccounts(u, home);
+            userTabs.addTab("All Accounts", allAccounts.getMainPanel());
+
+            stock = new GUIUserStock(u);
+            userTabs.addTab("Stock", stock.getStockPanel());
+
+            setting = new GUISetting(u);
+            userTabs.addTab("Settings", setting.getContentPane());
+
+            newAccount = new GUINewAccount(u, home);
+            userTabs.addTab("Create New Account", newAccount.getNewAccPanel());
+        }
+
+
+    }
+
+    public JButton getLogOutButton() {
+        return logOutButton;
     }
 
     public void update() {
-
+        allAccounts.update();
+        stock.update();
+        setting.update();
+        newAccount.update();
     }
 
 
@@ -66,49 +109,6 @@ public class GUIHomePage extends JFrame {
         userTabs.setOpaque(false);
         userTabs.setVisible(true);
         mainPanel.add(userTabs, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(200, 200), null, 0, false));
-        final JPanel panel1 = new JPanel();
-        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
-        userTabs.addTab("All Accounts", panel1);
-        final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
-        panel1.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        final JPanel panel2 = new JPanel();
-        panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        userTabs.addTab("Loans", panel2);
-        final JPanel panel3 = new JPanel();
-        panel3.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        userTabs.addTab("Stock", panel3);
-        final JPanel panel4 = new JPanel();
-        panel4.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        userTabs.addTab("Settings", panel4);
-        final JPanel panel5 = new JPanel();
-        panel5.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        userTabs.addTab("Create new account", panel5);
-        final JPanel panel6 = new JPanel();
-        panel6.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        userTabs.addTab("Deposit", panel6);
-        final JPanel panel7 = new JPanel();
-        panel7.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        userTabs.addTab("Withdraw", panel7);
-        final JPanel panel8 = new JPanel();
-        panel8.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        userTabs.addTab("Transfer", panel8);
-        managerPanel = new JPanel();
-        managerPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        managerPanel.setOpaque(true);
-        managerPanel.setRequestFocusEnabled(true);
-        managerPanel.setVisible(true);
-        userTabs.addTab("Manager Overview", managerPanel);
-        managerTabs = new JTabbedPane();
-        managerPanel.add(managerTabs, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(200, 200), null, 0, false));
-        final JPanel panel9 = new JPanel();
-        panel9.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        managerTabs.addTab("Users ", panel9);
-        final JPanel panel10 = new JPanel();
-        panel10.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        managerTabs.addTab("Transactions", panel10);
-        final JPanel panel11 = new JPanel();
-        panel11.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        managerTabs.addTab("Stocks", panel11);
         logOutButton = new JButton();
         logOutButton.setAutoscrolls(false);
         logOutButton.setBorderPainted(true);
@@ -122,4 +122,5 @@ public class GUIHomePage extends JFrame {
     public JComponent $$$getRootComponent$$$() {
         return mainPanel;
     }
+
 }
