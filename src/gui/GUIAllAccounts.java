@@ -38,7 +38,8 @@ public class GUIAllAccounts extends JFrame {
             accountsPanel.add(aBtn);
 
             GUIAccount acc = new GUIAccount(a, this);
-            mainPanel.add(acc.getMainPanel(), i);
+            mainPanel.add(String.valueOf(i), acc.getMainPanel());
+//            mainPanel.add(acc.getMainPanel(), i);
 
             acc.getGoBackButton().addActionListener(e -> cards.show(mainPanel, "All Accounts"));
 
@@ -54,7 +55,7 @@ public class GUIAllAccounts extends JFrame {
                 }
             });
 
-            aBtn.addActionListener(e -> cards.show(mainPanel, String.valueOf(a.getAid())));
+            aBtn.addActionListener(e -> cards.show(mainPanel, String.valueOf("i")));
         }
 
         mainPanel.add(accountsPanel, "All Accounts");

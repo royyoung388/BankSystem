@@ -24,7 +24,6 @@ public class GUINewAccount extends JFrame {
     private JTextField accBalanceInput;
     private JTextField accNameInput;
     private JPanel accTypePanel;
-    private JPanel accCBPanel;
     private JPanel accTypeCB;
     private AccountOverviewController controller;
     private User u;
