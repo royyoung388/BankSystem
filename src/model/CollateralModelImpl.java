@@ -9,8 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollateralModelImpl {
+public class CollateralModelImpl implements CollateralModel{
 
+    @Override
     public boolean addCollateral(Collateral collateral) {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
@@ -25,6 +26,7 @@ public class CollateralModelImpl {
         return false;
     }
 
+    @Override
     public List<Collateral> queryAllCollateral(int uID) {
         List<Collateral> result = new ArrayList<>();
         try {
@@ -42,6 +44,7 @@ public class CollateralModelImpl {
         return result;
     }
 
+    @Override
     public boolean deleteCollateral(int cID) {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();

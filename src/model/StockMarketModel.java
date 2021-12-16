@@ -41,6 +41,13 @@ public interface StockMarketModel {
     int insertStocks(List<Stock> stocks);
 
     /***
+     * delete stock
+     * @param id
+     * @return
+     */
+    boolean deleteStock(int id);
+
+    /***
      * buy stock. This is the entrance for buy stock.
      * 1. update the stock quantity in market
      * 2. update account balance

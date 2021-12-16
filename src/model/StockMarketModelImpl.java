@@ -89,6 +89,7 @@ public class StockMarketModelImpl implements StockMarketModel {
         return count;
     }
 
+    @Override
     public boolean deleteStock(int id){
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();

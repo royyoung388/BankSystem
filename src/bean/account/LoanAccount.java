@@ -1,6 +1,7 @@
 package bean.account;
 
 import bean.Collateral;
+import model.CollateralModel;
 import model.CollateralModelImpl;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public class LoanAccount extends Account {
 
 
     private List<Collateral> collateralList;
-    CollateralModelImpl collateralModel = new CollateralModelImpl();
+    CollateralModel collateralModel = new CollateralModelImpl();
 
     public LoanAccount(int aid, int uid, String accountName, double balance, CurrencyType currency) {
         super(aid, uid, accountName, AccountType.LOAN, balance, currency);

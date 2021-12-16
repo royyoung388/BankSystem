@@ -99,3 +99,4 @@ fabric.properties
 /.idea/*
 db/*
 !lib/*
+.DS_Store

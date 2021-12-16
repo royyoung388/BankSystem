@@ -2,8 +2,8 @@ package controller;
 
 import bean.Collateral;
 import bean.Transaction;
-import bean.account.Account;
 import bean.account.LoanAccount;
+import model.CollateralModel;
 import model.CollateralModelImpl;
 
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class LoanAccountController extends AbstractAccountController {
 
-    private final CollateralModelImpl collateralModel = new CollateralModelImpl();
+    private final CollateralModel collateralModel = new CollateralModelImpl();
 
     public LoanAccountController(LoanAccount account) {
         super(account);
@@ -49,7 +49,7 @@ public class LoanAccountController extends AbstractAccountController {
             return false;
         }
         decreaseBalance(amount);
-        Transaction trans = new Transaction(-1, account.getUid(),  account.getAid(),-1, Transaction.TransType.LOAN,
+        Transaction trans = new Transaction(-1, account.getUid(), account.getAid(), -1, Transaction.TransType.LOAN,
                 account.getCurrency(), amount, 0, "", LocalDateTime.now());
         transactionModel.insertTransaction(trans);
         return true;
