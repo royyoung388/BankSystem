@@ -12,7 +12,7 @@ import java.util.List;
 
 public class GUIUser extends JFrame {
     private JPanel userPanel;
-    private JScrollPane accountsPanel;
+    private JPanel accountsPanel;
     private JLabel userNameTxt;
     private JLabel uidTxt;
     private JLabel pwdTxt;
@@ -61,7 +61,7 @@ public class GUIUser extends JFrame {
         final JLabel label2 = new JLabel();
         label2.setText("User Id");
         userPanel.add(label2, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        accountsPanel = new JScrollPane();
+        accountsPanel = new JPanel();
         userPanel.add(accountsPanel, new com.intellij.uiDesigner.core.GridConstraints(3, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         accountsPanel.setBorder(BorderFactory.createTitledBorder(null, "Accounts", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         userNameTxt = new JLabel();

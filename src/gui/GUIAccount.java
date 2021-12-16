@@ -26,7 +26,7 @@ public class GUIAccount extends JFrame {
     private JLabel Balance;
     private JLabel Currency;
     private JButton loanButton;
-    private JPanel mainPanel;
+    JPanel mainPanel;
     private AbstractAccountController controller;
     private User u;
     private GUITransfer transfer;

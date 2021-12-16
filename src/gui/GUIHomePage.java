@@ -37,7 +37,7 @@ public class GUIHomePage extends JFrame {
         if (u instanceof Manager) {
             userTabs.addTab("Manager", managerTabs);
 
-            allAccounts = new GUIAllAccounts(u, home);
+            allAccounts = new GUIAllAccounts(u, this);
             userTabs.addTab("All Accounts", allAccounts.getMainPanel());
 
             setting = new GUISetting(u);
@@ -52,10 +52,11 @@ public class GUIHomePage extends JFrame {
             stockManagement = new GUIStockManagement(home);
             managerTabs.addTab("Stock Management", stockManagement.getStocksPanel());
 
-
             add(managerTabs);
+
         } else {
-            allAccounts = new GUIAllAccounts(u, home);
+
+            allAccounts = new GUIAllAccounts(u, this);
             userTabs.addTab("All Accounts", allAccounts.getMainPanel());
 
             stock = new GUIUserStock(u);
