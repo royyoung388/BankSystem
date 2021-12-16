@@ -20,6 +20,7 @@ public class DAO {
             createStock();
             createHolding();
             createCollateral();
+            createManager();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -134,8 +135,10 @@ public class DAO {
         statement.close();
     }
 
-    public static void createManager() {
+    public void createManager() {
         UserModelImpl userModel = new UserModelImpl();
+        if (userModel.isUserExists("admin"))
+            return;
         userModel.signUp(0, "admin", "admin");
         int userID = userModel.queryManager().getUid();
         AccountModelImpl accountModel = new AccountModelImpl();
@@ -145,7 +148,6 @@ public class DAO {
     }
 
     public static void main(String[] args) {
-        DAO.getInstance();
-        createManager();
+        DAO.getInstance().createManager();
     }
 }
