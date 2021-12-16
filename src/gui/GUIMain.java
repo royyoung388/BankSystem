@@ -39,7 +39,7 @@ public class GUIMain extends JFrame{
         logOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                displayRegistration();
+                cards.show(c, "Registration");
             }
         });
     }

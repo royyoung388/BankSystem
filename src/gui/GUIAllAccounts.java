@@ -23,7 +23,35 @@ public class GUIAllAccounts extends JFrame {
         mainPanel.setLayout(cards);
         this.user = u;
         this.accountOverviewController = new AccountOverviewController(u.getUid(), u.getUsername());
-        update();
+
+        List<Account> accounts = accountOverviewController.getAccountList();
+        accountsPanel = new JPanel();
+        accountsPanel.setLayout(new GridLayout(accounts.size(), 1));
+        for (Account a : accounts) {
+            JButton aBtn = new JButton(a.toString());
+            accountsPanel.add(aBtn);
+
+            GUIAccount acc = new GUIAccount(a, this);
+            mainPanel.add(acc.getMainPanel(), a.getAid());
+
+            acc.getGoBackButton().addActionListener(e -> cards.show(mainPanel, "All Accounts"));
+
+            acc.getDeleteAccountButton().addActionListener(e -> {
+                // only delete account when balance == 0
+                if (a.getBalance() != 0) {
+                    JOptionPane.showMessageDialog(null, "Cannot delete account with nonzero balance.", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    accountOverviewController.deleteAccount(a.getAid());
+                    accountsPanel.remove(aBtn);
+                    cards.show(mainPanel, "All Accounts");
+                }
+            });
+
+            aBtn.addActionListener(e -> cards.show(mainPanel, String.valueOf(a.getAid())));
+        }
+
+        mainPanel.add(accountsPanel, "All Accounts");
+        cards.show(mainPanel, "All Accounts");
     }
 
     public void update() {

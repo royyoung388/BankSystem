@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 public class GUILoan extends JFrame {
     private JPanel loanPanel;
-    private JComboBox colComboBox;
+    private JComboBox<String> colComboBox;
     private JButton getCollatoralButton;
     private JTextField cName;
     private JTextField cPrice;
@@ -30,11 +30,13 @@ public class GUILoan extends JFrame {
     private JPanel getColBackPanel;
     private JLabel accCurType;
     private Account a;
+    private User u;
     private static LoanAccountController controller;
     private HashMap<String, Collateral> colMap;
 
     public GUILoan(User u, Account a) {
         setContentPane(loanPanel);
+        this.u = u;
         this.a = a;
         controller = new LoanAccountController((LoanAccount) a);
         // this UI will only generated when account is loan account
@@ -42,6 +44,7 @@ public class GUILoan extends JFrame {
         // get collateral back panel only visible when exists collateral
         this.accBalance.setText(String.valueOf(a.getBalance()));
         this.accCurType.setText(String.valueOf(a.getCurrency()));
+//        this.colComboBox = new JComboBox<>(getColKeys(colMap));
 
         if (colMap.size() == 0) {
             getColBackPanel.setVisible(false);
@@ -258,4 +261,10 @@ public class GUILoan extends JFrame {
         return loanPanel;
     }
 
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        colComboBox = new JComboBox<>();
+        colMap = getColMap(this.u);
+        this.colComboBox.setModel(new DefaultComboBoxModel<String>(getColKeys(colMap)));
+    }
 }
