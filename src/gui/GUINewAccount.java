@@ -6,6 +6,7 @@ import controller.AccountOverviewController;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.PopupMenuListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -64,6 +65,10 @@ public class GUINewAccount extends JFrame {
                             } else {
                                 System.out.println("type");
                                 System.out.println(accTypeMap.get(accType.getSelectedItem()));
+                                System.out.println(accType.getSelectedItem());
+                                System.out.println(curTypeMap.get(accCurType.getSelectedItem()));
+                                System.out.println(accCurType.getSelectedItem());
+
 
                                 Account.AccountType type = accTypeMap.get(accType.getSelectedItem());
                                 Account.CurrencyType cur = curTypeMap.get(accCurType.getSelectedItem());
@@ -83,6 +88,14 @@ public class GUINewAccount extends JFrame {
             }
         });
         update();
+        accType.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == accType){
+                    System.out.println(accType.getSelectedItem());
+                }
+            }
+        });
     }
 
     public JPanel getNewAccPanel() {

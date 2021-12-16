@@ -14,12 +14,11 @@ import java.util.List;
 
 public class GUIStockManagement extends JFrame {
     private JPanel stocksPanel;
-    private JTextField idInput;
     private JTextField nameInput;
     private JTextField priceInput;
     private JTextField qtyInput;
     private JButton addStockButton;
-    private JScrollPane scrollStocksPanel;
+    private JPanel scrollStocksPanel;
     private ManagerController controller;
 
 
@@ -30,12 +29,11 @@ public class GUIStockManagement extends JFrame {
         addStockButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String id = idInput.getText();
                 String name = nameInput.getText();
                 String strPrice = priceInput.getText();
                 String strQuantity = qtyInput.getText();
 
-                if (id == "" || name == "") {
+                if (name == "") {
                     JOptionPane.showMessageDialog(null,
                             "Missing Stock id or name.", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
@@ -43,42 +41,38 @@ public class GUIStockManagement extends JFrame {
                         JOptionPane.showMessageDialog(null,
                                 "Missing price or quantity.", "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        int sid = Integer.parseInt(id);
                         double price = Double.parseDouble(strPrice);
                         int qty = Integer.parseInt(strQuantity);
                         if (price <= 0 || qty <= 0) {
                             JOptionPane.showMessageDialog(null,
                                     "price and quantity must be positive.", "Error", JOptionPane.ERROR_MESSAGE);
                         } else {
-                            controller.addStock(sid, name, price, qty);
+                            controller.addStock(0, name, price, qty);
                         }
                     }
                 }
             }
         });
 
-        JPanel stockList = new JPanel();
         List<Stock> stocks = controller.getStockList();
-        stockList.setLayout(new GridLayout(stocks.size(), 1));
+        this.scrollStocksPanel.setLayout(new GridLayout(stocks.size(), 1));
         for (Stock s : stocks) {
             GUIStock stock = new GUIStock(s);
-            stockList.add(stock.getStockPanel());
+            scrollStocksPanel.add(stock.getStockPanel());
         }
-        this.scrollStocksPanel = new JScrollPane(stockList);
 
+        update();
 
     }
 
     public void update() {
-        setContentPane(stocksPanel);
-        JPanel stockList = new JPanel();
+        scrollStocksPanel.removeAll();
         List<Stock> stocks = controller.getStockList();
-        stockList.setLayout(new GridLayout(stocks.size(), 1));
+        this.scrollStocksPanel.setLayout(new GridLayout(stocks.size(), 1));
         for (Stock s : stocks) {
             GUIStock stock = new GUIStock(s);
-            stockList.add(stock.getStockPanel());
         }
-        this.scrollStocksPanel = new JScrollPane(stockList);
+
     }
 
     public JPanel getStocksPanel() {
