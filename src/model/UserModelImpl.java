@@ -86,7 +86,7 @@ public class UserModelImpl implements UserModel {
     public boolean updateUser(User user) {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            String sql = String.format("UPDATE user SET username=%s, pwd=%s  WHERE uid=%s",
+            String sql = String.format("UPDATE user SET username='%s', pwd='%s'  WHERE uid='%s'",
                     user.getUsername(), user.getPwd(), user.getUid());
             int result = statement.executeUpdate(sql);
             statement.close();
