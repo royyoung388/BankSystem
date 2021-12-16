@@ -71,8 +71,8 @@ public class GUIStockManagement extends JFrame {
         this.scrollStocksPanel.setLayout(new GridLayout(stocks.size(), 1));
         for (Stock s : stocks) {
             GUIStock stock = new GUIStock(s);
+            scrollStocksPanel.add(stock.getStockPanel());
         }
-
     }
 
     public JPanel getStocksPanel() {
