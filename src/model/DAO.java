@@ -20,7 +20,6 @@ public class DAO {
             createStock();
             createHolding();
             createCollateral();
-            createManager();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -39,8 +38,10 @@ public class DAO {
     public static DAO getInstance() {
         if (baseDAO == null)
             synchronized (DAO.class) {
-                if (baseDAO == null)
+                if (baseDAO == null) {
                     baseDAO = new DAO();
+                    createManager();
+                }
             }
         return baseDAO;
     }
@@ -135,7 +136,7 @@ public class DAO {
         statement.close();
     }
 
-    public void createManager() {
+    public static void createManager() {
         UserModelImpl userModel = new UserModelImpl();
         if (userModel.isUserExists("admin"))
             return;
@@ -148,6 +149,7 @@ public class DAO {
     }
 
     public static void main(String[] args) {
-        DAO.getInstance().createManager();
+        DAO.getInstance();
+        createManager();
     }
 }
