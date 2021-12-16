@@ -53,7 +53,7 @@ public class GUISetting extends JFrame {
                     String old = u.getUsername();
                     u.setUsername(newUserName);
                     if (controller.updateUser(u)) {
-                        curUserNameTxt.setText(newUserName);
+                        curUserName.setText(newUserName);
                         controller.updateUser(u);
                     } else {
                         u.setUsername(old);

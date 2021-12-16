@@ -30,10 +30,10 @@ public class GUIHomePage extends JFrame {
 
     public GUIHomePage(User u, GUIMain home) {
         setContentPane(this.mainPanel);
-        setTitle("Home page.");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        pack();
-        setVisible(true);
+//        setTitle("Home page.");
+//        setDefaultCloseOperation(EXIT_ON_CLOSE);
+//        pack();
+//        setVisible(false);
 
         this.user = u;
         this.managerTabs = new JTabbedPane();

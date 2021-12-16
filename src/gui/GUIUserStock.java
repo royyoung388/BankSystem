@@ -68,108 +68,110 @@ public class GUIUserStock extends JFrame {
             notAvail.setVisible(false);
             this.secAccMap = getSecAccMap(u);
             this.stockMap = getStockMap();
-        }
 
-        secAccInput.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (secAccInput.getSelectedItem() == null) {
-                    JOptionPane.showMessageDialog(null,
-                            "Missing security account selection.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    SecurityAccount s = secAccMap.get(secAccInput.getSelectedItem());
-                    updateSecAcc(s);
-                }
-            }
-        });
-
-        stockInput.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (stockInput.getSelectedItem() == null) {
-                    JOptionPane.showMessageDialog(null,
-                            "Missing stock selection.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    Stock s = stockMap.get(stockInput.getSelectedItem());
-                    updateStock(s);
-                }
-            }
-        });
-
-        buyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String strStockQty = stockQtyInput.getText();
-                if (strStockQty == null) {
-                    JOptionPane.showMessageDialog(null,
-                            "Missing stock quantity.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    Integer stockQty = Integer.parseInt(strStockQty);
-                    if (stockQty <= 0) {
+            secAccInput.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (secAccInput.getSelectedItem() == null) {
                         JOptionPane.showMessageDialog(null,
-                                "Please enter positive stock quantity.",
+                                "Missing security account selection.",
                                 "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        SecurityAccountController controller = new SecurityAccountController(securityAccount);
-                        if (controller.buyStock(stock.getSid(), stockQty)) {
-                            controller.updateList();
+                        SecurityAccount s = secAccMap.get(secAccInput.getSelectedItem());
+                        updateSecAcc(s);
+                    }
+                }
+            });
+
+            stockInput.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (stockInput.getSelectedItem() == null) {
+                        JOptionPane.showMessageDialog(null,
+                                "Missing stock selection.",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        Stock s = stockMap.get(stockInput.getSelectedItem());
+                        updateStock(s);
+                    }
+                }
+            });
+
+            buyButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String strStockQty = stockQtyInput.getText();
+                    if (strStockQty == null) {
+                        JOptionPane.showMessageDialog(null,
+                                "Missing stock quantity.",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        Integer stockQty = Integer.parseInt(strStockQty);
+                        if (stockQty <= 0) {
                             JOptionPane.showMessageDialog(null,
-                                    "Stock buy success.",
-                                    "Success", JOptionPane.PLAIN_MESSAGE);
-                        } else {
-                            JOptionPane.showMessageDialog(null,
-                                    "Stock buy failed.",
+                                    "Please enter positive stock quantity.",
                                     "Error", JOptionPane.ERROR_MESSAGE);
+                        } else {
+                            SecurityAccountController controller = new SecurityAccountController(securityAccount);
+                            if (controller.buyStock(stock.getSid(), stockQty)) {
+                                controller.updateList();
+                                JOptionPane.showMessageDialog(null,
+                                        "Stock buy success.",
+                                        "Success", JOptionPane.PLAIN_MESSAGE);
+                            } else {
+                                JOptionPane.showMessageDialog(null,
+                                        "Stock buy failed.",
+                                        "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                    }
+
+                }
+            });
+
+            sellButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String strStockQty = stockQtyInput.getText();
+                    if (strStockQty == null) {
+                        JOptionPane.showMessageDialog(null,
+                                "Missing stock quantity.",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        Integer stockQty = Integer.parseInt(strStockQty);
+                        if (stockQty <= 0) {
+                            JOptionPane.showMessageDialog(null,
+                                    "Please enter positive stock quantity.",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                        } else {
+                            SecurityAccountController controller = new SecurityAccountController(securityAccount);
+                            if (controller.sellStock(stock.getSid(), stockQty)) {
+                                controller.updateList();
+                                JOptionPane.showMessageDialog(null,
+                                        "Stock sell success.",
+                                        "Success", JOptionPane.PLAIN_MESSAGE);
+                            } else {
+                                JOptionPane.showMessageDialog(null,
+                                        "Stock sell failed.",
+                                        "Error", JOptionPane.ERROR_MESSAGE);
+                            }
                         }
                     }
                 }
+            });
+            JPanel stockList = new JPanel();
+            SecurityAccountController secController = new SecurityAccountController(this.securityAccount);
+            userStocks = secController.getStockHolding();
 
+            stockList.setLayout(new GridLayout(userStocks.size(), 1));
+            for (StockHolding s : userStocks) {
+                GUIStockHolding stock = new GUIStockHolding(s, stocks);
+                stockList.add(stock.getStockHoldPanel());
             }
-        });
-
-        sellButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String strStockQty = stockQtyInput.getText();
-                if (strStockQty == null) {
-                    JOptionPane.showMessageDialog(null,
-                            "Missing stock quantity.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    Integer stockQty = Integer.parseInt(strStockQty);
-                    if (stockQty <= 0) {
-                        JOptionPane.showMessageDialog(null,
-                                "Please enter positive stock quantity.",
-                                "Error", JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        SecurityAccountController controller = new SecurityAccountController(securityAccount);
-                        if (controller.sellStock(stock.getSid(), stockQty)) {
-                            controller.updateList();
-                            JOptionPane.showMessageDialog(null,
-                                    "Stock sell success.",
-                                    "Success", JOptionPane.PLAIN_MESSAGE);
-                        } else {
-                            JOptionPane.showMessageDialog(null,
-                                    "Stock sell failed.",
-                                    "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
-                }
-            }
-        });
-        JPanel stockList = new JPanel();
-        SecurityAccountController secController = new SecurityAccountController(this.securityAccount);
-        userStocks = secController.getStockHolding();
-
-        stockList.setLayout(new GridLayout(userStocks.size(), 1));
-        for (StockHolding s : userStocks) {
-            GUIStockHolding stock = new GUIStockHolding(s, stocks);
-            stockList.add(stock.getStockHoldPanel());
+            this.holdPanel = new JScrollPane(stockList);
         }
-        this.holdPanel = new JScrollPane(stockList);
+
+
     }
 
     public void updateSecAcc(SecurityAccount s) {
