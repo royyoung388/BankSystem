@@ -57,6 +57,27 @@ public class Utils {
         return array;
     }
 
+    public static String[][] showTransactionInfoToArray(List<Transaction> transactionList) {
+        String[][] array = new String[transactionList.size()][];
+        for (int i = 0; i < transactionList.size(); i++) {
+            Transaction transaction = transactionList.get(i);
+//            String[] strings = {transaction.getToAid() < 0 ? "In-person" : String.valueOf(transaction.getToAid()),
+//                    String.valueOf(transaction.getType()), String.valueOf(transaction.getCurrencyType()),
+//                    String.valueOf(transaction.getAmount()), String.valueOf(transaction.getFee()),
+//                    transaction.getDetail(), transaction.getTime().format(DateTimeFormatter.ISO_DATE)};
+//
+            String[] strings = {String.valueOf(transaction.getTid()), String.valueOf(transaction.getUid()),
+                    transaction.getFromAid() < 0 ? "In-person" : String.valueOf(transaction.getFromAid()),
+                    transaction.getToAid() < 0 ? "In-person" : String.valueOf(transaction.getToAid()),
+                    transaction.getType().toString(), transaction.getCurrencyType().toString(),
+                    String.valueOf(transaction.getAmount()), String.valueOf(transaction.getFee()),
+                    String.valueOf(transaction.getFee()), transaction.getDetail(),
+                    transaction.getTime().format(DateTimeFormatter.ISO_DATE)
+            };
+            array[i] = strings;
+        }
+        return array;
+    }
 
     public static String[][] userToArray(List<Customer> userList) {
         String[][] array = new String[userList.size()][];

@@ -47,10 +47,11 @@ public abstract class AbstractAccountController implements AccountControllerInte
 
     public boolean withdraw(double amount, double fee) {
         fee = round(fee);
-        boolean status = decreaseBalance(amount + fee);
+        boolean status = decreaseBalance(amount);
         if (status) {
+
             Transaction trans = new Transaction(-1, account.getUid(), account.getAid(), -1, Transaction.TransType.WITHDRAW,
-                    account.getCurrency(), amount, fee, "withdraw: " + amount, LocalDateTime.now());
+                    account.getCurrency(), amount, fee, "withdraw: " + amount + " get " + (amount - fee), LocalDateTime.now());
             transactionModel.insertTransaction(trans);
             if (fee > 0) {
                 int toid;
@@ -103,10 +104,11 @@ public abstract class AbstractAccountController implements AccountControllerInte
         if (toAccount.getCurrency() != account.getCurrency()) {
             return false;
         }
-        if (account.getBalance() < amount + fee) {
+        if (account.getBalance() < amount) {
             return false;
         }
-        decreaseBalance(amount + fee);
+        decreaseBalance(amount);
+        amount = amount - fee;
         accountModel.deposit(toID, amount);
 //        Transaction trans = new Transaction(-1, account.getUid(), account.getAid(), toID, Transaction.TransType.TRANSFER,
 //                account.getCurrency(), amount, fee, "", LocalDateTime.now());

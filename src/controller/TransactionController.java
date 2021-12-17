@@ -17,8 +17,12 @@ public class TransactionController {
         int fromUid=accountModel.queryAccount(fromAid).getUid();
         int toUid=accountModel.queryAccount(toAid).getUid();
         Transaction transaction1 = new Transaction(-1, fromUid, fromAid, toAid, transType, currency, amount, fee, detail, time);
-        Transaction transaction2 = new Transaction(-1, toUid, fromAid, toAid, transType, currency, amount, fee, detail, time);
-        return transactionModel.insertTransaction(transaction1) && transactionModel.insertTransaction(transaction2);
+        if(fromUid!=toUid){
+            Transaction transaction2 = new Transaction(-1, toUid, fromAid, toAid, transType, currency, amount, fee, detail, time);
+            return transactionModel.insertTransaction(transaction1) && transactionModel.insertTransaction(transaction2);
+        }
+        return transactionModel.insertTransaction(transaction1);
+
     }
 
 
