@@ -51,6 +51,9 @@ public class MainPage {
     private JPanel stockPanel;
     private JPanel marketPanel;
     private JPanel settingPanel;
+    private JButton logOutButton;
+    private JTextField textField3;
+    private JButton changeButton;
 
     private AccountOverviewController controller;
     private User user;
@@ -83,7 +86,7 @@ public class MainPage {
 
                 double money = Double.parseDouble(deposit);
 
-                if (controller.addAccount(user.getUid(), Account.AccountType.valueOf(type),
+                if (!controller.addAccount(user.getUid(), Account.AccountType.valueOf(type),
                         money, Account.CurrencyType.valueOf(currency), name)) {
                     JOptionPane.showMessageDialog(null,
                             "Can't create account.",
