@@ -6,6 +6,7 @@ import controller.ManagerController;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.util.List;
 
@@ -32,10 +33,26 @@ public class ManagerPage {
 
         ManagerController managerController = new ManagerController();
         // show user
-        List<Customer> userList = managerController.showCustomers();
-        userTable.setModel(new DefaultTableModel());
+        String[] title = {"UserID", "Username", "Password"};
+        TableModel dataModel = new DefaultTableModel(userToArray(managerController.showCustomers()), title) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        userTable.setModel(dataModel);
 
         // show account
+    }
+
+    private String[][] userToArray(List<Customer> userList) {
+        String[][] array = new String[userList.size()][];
+        for (int i = 0; i < userList.size(); i++) {
+            User user = userList.get(i);
+            String[] strings = {String.valueOf(user.getUid()), user.getUsername(), user.getPwd()};
+            array[i] = strings;
+        }
+        return array;
     }
 
     {

@@ -221,8 +221,8 @@ public class MainPage {
 
         // update cb
         marketStockCB.removeAll();
-        for (StockHolding holding : securityController.getStockHolding()) {
-            marketStockCB.addItem(holding.getStock().getSid());
+        for (Stock stock : securityAccount.getStockMarketList()) {
+            marketStockCB.addItem(stock.getSid());
         }
     }
 
