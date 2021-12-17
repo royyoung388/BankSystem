@@ -249,7 +249,8 @@ public class MainPage {
         marketTable.setModel(dataModel);
 
         // update cb
-        marketStockCB.removeAll();
+//        marketStockCB.removeAll();
+        marketStockCB.removeAllItems();
         for (Stock stock : securityAccount.getStockMarketList()) {
             marketStockCB.addItem(stock.getSid());
         }
@@ -276,7 +277,8 @@ public class MainPage {
         stockHoldingTable.setModel(dataModel);
 
         // update cb
-        sellStockCB.removeAll();
+//        sellStockCB.removeAll();
+        sellStockCB.removeAllItems();
         for (StockHolding holding : securityController.getStockHolding()) {
             sellStockCB.addItem(holding.getStock().getSid());
         }
