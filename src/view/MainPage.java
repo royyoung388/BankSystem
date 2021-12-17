@@ -1,9 +1,9 @@
 package view;
 
+import bean.Collateral;
 import bean.Stock;
 import bean.StockHolding;
 import bean.account.Account;
-import bean.account.LoanAccount;
 import bean.account.SecurityAccount;
 import bean.user.User;
 import controller.AccountOverviewController;
@@ -214,18 +214,83 @@ public class MainPage {
         refreshCollateralBt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (loanAccountController == null)
+                    return;
+                updateCollateral();
+            }
+        });
+        getLoanButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (loanAccountController == null) {
+                    createLoan();
+                }
+                String collateral = collateralInput.getText().strip();
+                String value = valueInput.getText().strip();
 
+                if (collateral.isEmpty() || value.isEmpty()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Empty collateral or value",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                loanAccountController.addCollateralList(new Collateral(collateral, user.getUid(), Double.parseDouble(value)));
+                loanAccountController.getLoan(Double.parseDouble(value));
+                updateCollateral();
+            }
+        });
+        getBackButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (loanAccountController == null) {
+                    JOptionPane.showMessageDialog(null,
+                            "Don't have a loan account.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (collateralCB.getSelectedItem() == null) {
+                    JOptionPane.showMessageDialog(null,
+                            "No collateral ID chosen.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                int collateralID = (int) collateralCB.getSelectedItem();
+                Collateral collateral = loanAccountController.getCollateral(collateralID);
+                loanAccountController.removeCollateralList(collateral);
+                loanAccountController.payBack(collateral.getValue());
+                updateCollateral();
             }
         });
         updateCollateral();
     }
 
+    private void createLoan() {
+        accountOverviewController.addAccount(user.getUid(), Account.AccountType.LOAN, 0, Account.CurrencyType.USD, "Loan");
+        loanAccountController = new LoanAccountController(accountOverviewController.getLoanAccount());
+    }
+
     private void updateCollateral() {
-        LoanAccount loanAccount = accountOverviewController.getLoanAccount();
-        if (loanAccount == null)
+        if (loanAccountController == null)
             return;
 
+        List<Collateral> collaterals = loanAccountController.getCollateralList();
+        // show cb
+        collateralCB.removeAllItems();
+        for (Collateral collateral : collaterals)
+            collateralCB.addItem(collateral.getcID());
 
+        // show list
+        String[] title = {"CollateralID", "Name", "Price"};
+        TableModel dataModel = new DefaultTableModel(collateralToArray(collaterals), title) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        collateralTable.setModel(dataModel);
     }
 
     private void updateMarket() {
@@ -410,7 +475,7 @@ public class MainPage {
         refreshCollateralBt.setText("Refresh");
         loanPanel.add(refreshCollateralBt, new com.intellij.uiDesigner.core.GridConstraints(7, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label7 = new JLabel();
-        label7.setText("Collateral");
+        label7.setText("CollateralID");
         loanPanel.add(label7, new com.intellij.uiDesigner.core.GridConstraints(5, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         collateralCB = new JComboBox();
         loanPanel.add(collateralCB, new com.intellij.uiDesigner.core.GridConstraints(5, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));

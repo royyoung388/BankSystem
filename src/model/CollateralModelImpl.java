@@ -1,7 +1,6 @@
 package model;
 
 import bean.Collateral;
-import bean.Stock;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollateralModelImpl implements CollateralModel{
+public class CollateralModelImpl implements CollateralModel {
 
     @Override
     public boolean addCollateral(Collateral collateral) {
@@ -33,7 +32,7 @@ public class CollateralModelImpl implements CollateralModel{
             Statement statement = DAO.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM collateral where uid=" + uID);
             while (rs.next()) {
-                result.add(new Collateral(rs.getInt(2), uID, rs.getString(3),
+                result.add(new Collateral(rs.getInt(1), uID, rs.getString(3),
                         rs.getFloat(4)));
             }
             rs.close();
@@ -48,11 +47,9 @@ public class CollateralModelImpl implements CollateralModel{
     public boolean deleteCollateral(int cID) {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("DELETE FROM collateral where id=" + cID);
-            boolean result = rs.next();
-            rs.close();
+            int result = statement.executeUpdate("DELETE FROM collateral where id=" + cID);
             statement.close();
-            return result;
+            return result == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         }

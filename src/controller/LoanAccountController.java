@@ -23,13 +23,22 @@ public class LoanAccountController extends AbstractAccountController {
         return ((LoanAccount) account).getCollateralList();
     }
 
+    public Collateral getCollateral(int cId) {
+        for (Collateral collateral : getCollateralList()) {
+            if (collateral.getcID() == cId)
+                return collateral;
+        }
+        return null;
+    }
+
     public boolean addCollateralList(Collateral collateral) {
         return collateralModel.addCollateral(collateral);
     }
 
     public boolean removeCollateralList(Collateral collateral) {
         int totalValue = 0;
-        for (Collateral c : ((LoanAccount) account).getCollateralList()) {
+
+        for (Collateral c : getCollateralList()) {
             totalValue += c.getValue();
         }
         if (totalValue - collateral.getValue() + account.getBalance() < 0) {
@@ -43,7 +52,7 @@ public class LoanAccountController extends AbstractAccountController {
     public boolean getLoan(double amount) {
         amount = -amount;
         int totalValue = 0;
-        for (Collateral c : ((LoanAccount) account).getCollateralList()) {
+        for (Collateral c : getCollateralList()) {
             totalValue += c.getValue();
         }
         if (totalValue + account.getBalance() - amount < 0) {

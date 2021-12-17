@@ -1,5 +1,6 @@
 package utils;
 
+import bean.Collateral;
 import bean.Stock;
 import bean.StockHolding;
 import bean.Transaction;
@@ -95,6 +96,16 @@ public class Utils {
             StockHolding holding = stockList.get(i);
             String[] strings = {String.valueOf(holding.getStock().getSid()), holding.getStock().getName(),
                     String.valueOf(holding.getStock().getPrice()), String.valueOf(holding.getQuantity())};
+            array[i] = strings;
+        }
+        return array;
+    }
+
+    public static String[][] collateralToArray(List<Collateral> collaterals) {
+        String[][] array = new String[collaterals.size()][];
+        for (int i = 0; i < collaterals.size(); i++) {
+            Collateral collateral = collaterals.get(i);
+            String[] strings = {String.valueOf(collateral.getcID()), collateral.getName(), String.valueOf(collateral.getValue())};
             array[i] = strings;
         }
         return array;
