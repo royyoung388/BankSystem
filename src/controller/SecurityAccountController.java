@@ -34,6 +34,9 @@ public class SecurityAccountController extends AbstractAccountController {
         if (stock.getQuantity() < quantity) {
             return false;
         }
+        if(quantity*stock.getPrice()>account.getBalance()){
+            return false;
+        }
         boolean status = stockMarketModel.buyStock(account.getAid(), stockID, quantity);
         if (!status) {
             return false;

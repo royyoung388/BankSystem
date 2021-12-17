@@ -157,7 +157,7 @@ public class ManagerPage {
 
     private void updateTransaction(List<Transaction> transactionList) {
         String[] title = {"TransactionID", "UserID", "FromAid", "ToAid", "Type", "Currency", "Amount", "Fee", "Detail", "Time"};
-        TableModel dataModel = new DefaultTableModel(transactionToArray(transactionList), title) {
+        TableModel dataModel = new DefaultTableModel(showTransactionInfoToArray(transactionList), title) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
