@@ -6,6 +6,8 @@ import controller.AccountOverviewController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 public class GUIAllAccounts extends JFrame {
@@ -34,28 +36,24 @@ public class GUIAllAccounts extends JFrame {
 
         for (int i = 0; i < accounts.size(); i++) {
             Account a = accounts.get(i);
-            JButton aBtn = new JButton(a.toString());
+            JButton aBtn = new JButton(a.toString() + " #" + String.valueOf(i));
+            aBtn.setName(a.toString() + " #" + String.valueOf(i));
             accountsPanel.add(aBtn);
 
-            GUIAccount acc = new GUIAccount(a, this);
-            mainPanel.add(String.valueOf(i), acc.getMainPanel());
+//            GUIAccount acc = new GUIAccount(a, this);
+//            mainPanel.add(acc.getMainPanel(), String.valueOf(i));
+//            cards.s
 //            mainPanel.add(acc.getMainPanel(), i);
 
-            acc.getGoBackButton().addActionListener(e -> cards.show(mainPanel, "All Accounts"));
-
-            acc.getDeleteAccountButton().addActionListener(e -> {
-                // only delete account when balance == 0
-                if (a.getBalance() != 0) {
-                    JOptionPane.showMessageDialog(null, "Cannot delete account with nonzero balance.", "Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    accountOverviewController.deleteAccount(a.getAid());
-                    accountsPanel.remove(aBtn);
-                    cards.show(mainPanel, "All Accounts");
-                    home.update();
+            aBtn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+//                    String i = aBtn.getName().split("#")[-1];
+//                    int index = Integer.parseInt(i);
+                    GUIAccount acc = new GUIAccount(a);
                 }
             });
 
-            aBtn.addActionListener(e -> cards.show(mainPanel, String.valueOf("i")));
         }
 
         mainPanel.add(accountsPanel, "All Accounts");

@@ -40,6 +40,7 @@ public class GUINewAccount extends JFrame {
         this.accTypeMap = getAccTypeMap();
         setContentPane(newAccPanel);
         createUIComponents();
+
         createAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

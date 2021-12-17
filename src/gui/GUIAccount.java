@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 public class GUIAccount extends JFrame {
     private Account account;
-    private GUIAllAccounts home;
     private JButton goBackButton;
     private JButton deleteAccountButton;
     private JButton depositButton;
@@ -35,11 +34,14 @@ public class GUIAccount extends JFrame {
     private GUIWithdraw withdraw;
 
 
-    public GUIAccount(Account a, GUIAllAccounts home) {
-        setContentPane(mainPanel);
+    public GUIAccount(Account a) {
+        JFrame frame = new JFrame(a.getAccountName());
+        frame.setContentPane(mainPanel);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
         this.u = u;
         this.account = a;
-        this.home = home;
         controller = new AbstractAccountController(a) {
         };
 
@@ -51,19 +53,20 @@ public class GUIAccount extends JFrame {
 
         updateTransactions();
 
-        goBackButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                home.getCards().show(mainPanel, "All Accounts");
-            }
-        });
+//        goBackButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                home.getCards().show(mainPanel, "All Accounts");
+//            }
+//        });
 
         deleteAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AccountOverviewController overviewController = new AccountOverviewController(u.getUid(), u.getUsername());
                 overviewController.deleteAccount(a.getAid());
-                home.getCards().show(mainPanel, "HomePage");
+//                this.
+//                home.getCards().show(mainPanel, "HomePage");
             }
         });
 
@@ -81,6 +84,16 @@ public class GUIAccount extends JFrame {
                         updateTransactions();
                     }
                 });
+            }
+        });
+
+        getDeleteAccountButton().addActionListener(e -> {
+            // only delete account when balance == 0
+            AccountOverviewController accountOverviewController = new AccountOverviewController(u.getUid(), u.getUsername());
+            if (a.getBalance() != 0) {
+                JOptionPane.showMessageDialog(null, "Cannot delete account with nonzero balance.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                accountOverviewController.deleteAccount(a.getAid());
             }
         });
 

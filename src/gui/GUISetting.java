@@ -13,8 +13,6 @@ public class GUISetting extends JFrame {
     private JTextField usernameInput;
     private JLabel curUserNameTxt;
     private JLabel curPwdTxt;
-    private JButton change1;
-    private JButton submit1;
     private JButton change2;
     private JButton submit2;
     private JPanel setPanel;
@@ -31,43 +29,9 @@ public class GUISetting extends JFrame {
 
         curUserName.setText(u.getUsername());
         curPwd.setText(u.getPwd());
-        usernameInput.setVisible(false);
-        submit1.setVisible(false);
         pwdInput.setVisible(false);
         submit2.setVisible(false);
 
-        change1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                usernameInput.setVisible(true);
-                change1.setVisible(false);
-                submit1.setVisible(true);
-            }
-        });
-
-        submit1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String newUserName = usernameInput.getText();
-                if (newUserName != "") {
-                    String old = u.getUsername();
-                    u.setUsername(newUserName);
-                    if (controller.updateUser(u)) {
-                        curUserName.setText(newUserName);
-                        controller.updateUser(u);
-                    } else {
-                        u.setUsername(old);
-                        JOptionPane.showMessageDialog(null, "User name already exists.", "Error", JOptionPane.WARNING_MESSAGE);
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Empty user name.", "Error", JOptionPane.WARNING_MESSAGE);
-                }
-                curUserNameTxt.setVisible(true);
-                usernameInput.setVisible(false);
-                change1.setVisible(true);
-                submit1.setVisible(false);
-            }
-        });
 
         change2.addActionListener(new ActionListener() {
             @Override
@@ -106,11 +70,9 @@ public class GUISetting extends JFrame {
 
     public void update() {
         this.setContentPane(setPanel);
-
         curUserName.setText(u.getUsername());
         curPwd.setText(u.getPwd());
         usernameInput.setVisible(false);
-        submit1.setVisible(false);
         pwdInput.setVisible(false);
         submit2.setVisible(false);
     }
@@ -149,15 +111,6 @@ public class GUISetting extends JFrame {
         curPwd = new JLabel();
         curPwd.setText("p");
         setPanel.add(curPwd, new com.intellij.uiDesigner.core.GridConstraints(3, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        change1 = new JButton();
-        change1.setActionCommand("Button");
-        change1.setText("Change");
-        setPanel.add(change1, new com.intellij.uiDesigner.core.GridConstraints(0, 4, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        usernameInput = new JTextField();
-        setPanel.add(usernameInput, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        submit1 = new JButton();
-        submit1.setText("Submit");
-        setPanel.add(submit1, new com.intellij.uiDesigner.core.GridConstraints(1, 4, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         change2 = new JButton();
         change2.setText("Change");
         setPanel.add(change2, new com.intellij.uiDesigner.core.GridConstraints(3, 4, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
