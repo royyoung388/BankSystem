@@ -67,4 +67,18 @@ public class LoanAccountController extends AbstractAccountController {
         ((LoanAccount) account).updateList();
     }
 
+
+    @Override
+    public boolean deposit(double amount) {
+        return false;
+    }
+
+    @Override
+    public boolean withdraw(double amount) {
+        return false;
+    }
+
+    public boolean transfer(double amount){
+        return false;
+    }
 }

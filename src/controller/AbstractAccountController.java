@@ -11,7 +11,7 @@ import model.TransactionModelImpl;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public abstract class AbstractAccountController {
+public abstract class AbstractAccountController implements AccountControllerInterface{
 
     public static final double WITHDRAW_RATE = 0.01;
     public static final double CHECKING_RATE = 0.01;

@@ -1,8 +1,8 @@
 # Team
 |name|work|ID|Email|
 |----|----|----|----|
-|Zhihao Gu|Controller, Model, DB|||
-|Pengchao Yuan|Model, DB|U50962567|yuanpc@bu.edu|
+|Zhihao Gu|Controller, Model, Documentation|U55787297|zhihao97@bu.edu|
+|Pengchao Yuan|Model, DB, Documentation|U50962567|yuanpc@bu.edu|
 |Huiwen He|GUI|||
 
 # File structure
