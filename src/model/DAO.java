@@ -158,7 +158,7 @@ public class DAO {
         Stock stock1=new Stock(-1,"Apple",100,100);
 
         Stock stock2=new Stock(-1,"Google",200,100);
-        System.out.println("1111111111");
+        System.out.println("generateDefaultStock");
         List<Stock> stockList=new ArrayList<>();
         stockList.add(stock1);
         stockList.add(stock2);

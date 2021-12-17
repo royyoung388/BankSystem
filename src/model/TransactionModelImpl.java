@@ -37,7 +37,7 @@ public class TransactionModelImpl implements TransactionModel {
             Statement statement = DAO.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM txn WHERE uid=" + uid);
             while (rs.next()) {
-                LocalDateTime time = Instant.ofEpochMilli(rs.getLong(10)).atZone(ZoneId.systemDefault()).toLocalDateTime();
+                LocalDateTime time = Instant.ofEpochMilli(rs.getLong(10) * 1000).atZone(ZoneId.systemDefault()).toLocalDateTime();
                 transactions.add(new Transaction(rs.getInt(1), rs.getInt(2), rs.getInt(3),
                         rs.getInt(4), rs.getString(5), rs.getString(6),
                         rs.getFloat(7), rs.getFloat(8), rs.getString(9), time));
@@ -55,13 +55,13 @@ public class TransactionModelImpl implements TransactionModel {
         List<Transaction> transactions = new ArrayList<>();
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            long timestamp = time.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() / 1000;
-            long timestamp2 = time.plusDays(1).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() / 1000;
+            long timestamp = time.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() / 1000000;
+            long timestamp2 = time.plusDays(1).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() / 1000000;
 
             String sql = String.format("SELECT * FROM txn WHERE time>=%d AND time<=%d", timestamp, timestamp2);
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
-                LocalDateTime localDateTime = Instant.ofEpochMilli(rs.getLong(10)).atZone(ZoneId.systemDefault()).toLocalDateTime();
+                LocalDateTime localDateTime = Instant.ofEpochMilli(rs.getLong(10) * 1000).atZone(ZoneId.systemDefault()).toLocalDateTime();
                 transactions.add(new Transaction(rs.getInt(1), rs.getInt(2), rs.getInt(3),
                         rs.getInt(4), rs.getString(5), rs.getString(6),
                         rs.getFloat(7), rs.getFloat(8), rs.getString(9), localDateTime));
@@ -82,7 +82,7 @@ public class TransactionModelImpl implements TransactionModel {
             String sql = "SELECT * FROM txn";
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
-                LocalDateTime localDateTime = Instant.ofEpochMilli(rs.getLong(10)).atZone(ZoneId.systemDefault()).toLocalDateTime();
+                LocalDateTime localDateTime = Instant.ofEpochMilli(rs.getLong(10) * 1000).atZone(ZoneId.systemDefault()).toLocalDateTime();
                 transactions.add(new Transaction(rs.getInt(1), rs.getInt(2), rs.getInt(3),
                         rs.getInt(4), rs.getString(5), rs.getString(6),
                         rs.getFloat(7), rs.getFloat(8), rs.getString(9), localDateTime));
@@ -100,13 +100,13 @@ public class TransactionModelImpl implements TransactionModel {
         List<Transaction> transactions = new ArrayList<>();
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            long timestamp = startTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() / 1000;
-            long timestamp2 = endTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() / 1000;
+            long timestamp = startTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() / 1000000;
+            long timestamp2 = endTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() / 1000000;
             String sql = String.format("SELECT * FROM txn WHERE time>=%d AND time<=%d AND (fromaid = %d OR toaid = %d) " +
                     "AND uid=%d ORDER BY time DESC", timestamp, timestamp2, aid, aid, uid);
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
-                LocalDateTime localDateTime = Instant.ofEpochMilli(rs.getLong(10)).atZone(ZoneId.systemDefault()).toLocalDateTime();
+                LocalDateTime localDateTime = Instant.ofEpochMilli(rs.getLong(10) * 1000).atZone(ZoneId.systemDefault()).toLocalDateTime();
                 transactions.add(new Transaction(rs.getInt(1), rs.getInt(2), rs.getInt(3),
                         rs.getInt(4), rs.getString(5), rs.getString(6),
                         rs.getFloat(7), rs.getFloat(8), rs.getString(9), localDateTime));
@@ -128,7 +128,7 @@ public class TransactionModelImpl implements TransactionModel {
             String sql = String.format("SELECT * FROM txn WHERE (fromaid = %d OR toaid = %d) and uid=%d ORDER BY time DESC", aid, aid, uid);
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
-                LocalDateTime localDateTime = Instant.ofEpochMilli(rs.getLong(10)).atZone(ZoneId.systemDefault()).toLocalDateTime();
+                LocalDateTime localDateTime = Instant.ofEpochMilli(rs.getLong(10) * 1000).atZone(ZoneId.systemDefault()).toLocalDateTime();
                 transactions.add(new Transaction(rs.getInt(1), rs.getInt(2), rs.getInt(3),
                         rs.getInt(4), rs.getString(5), rs.getString(6),
                         rs.getFloat(7), rs.getFloat(8), rs.getString(9), localDateTime));

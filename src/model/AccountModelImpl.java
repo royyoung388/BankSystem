@@ -65,7 +65,8 @@ public class AccountModelImpl implements AccountModel {
         List<LoanAccount> accounts = new ArrayList<>();
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM account WHERE status=1 AND type=" + Account.AccountType.LOAN);
+            String sql = String.format("SELECT * FROM account WHERE status=1 AND type='%s'", Account.AccountType.LOAN);
+            ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
                 accounts.add(new LoanAccount(rs.getInt(1), rs.getInt(2),
                         rs.getString(3), rs.getDouble(5), rs.getString(6)));
@@ -83,7 +84,8 @@ public class AccountModelImpl implements AccountModel {
         List<SavingAccount> accounts = new ArrayList<>();
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM account WHERE status=1 AND type=" + Account.AccountType.SAVING);
+            String sql = String.format("SELECT * FROM account WHERE status=1 AND type='%s'", Account.AccountType.SAVING);
+            ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
                 accounts.add(new SavingAccount(rs.getInt(1), rs.getInt(2),
                         rs.getString(3), rs.getDouble(5), rs.getString(6)));
@@ -181,13 +183,13 @@ public class AccountModelImpl implements AccountModel {
         return withdraw(fromBAid, amount) && deposit(toBAid, amount);
     }
 
-    public int getLastInsertAccount(){
-        int aID=0;
+    public int getLastInsertAccount() {
+        int aID = 0;
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("Select last_insert_rowid();");
             if (rs.next()) {
-                aID=rs.getInt(1);
+                aID = rs.getInt(1);
             }
             rs.close();
             statement.close();

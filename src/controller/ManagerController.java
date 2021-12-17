@@ -42,6 +42,14 @@ public class ManagerController {
         return EUR_ACCOUNT;
     }
 
+    public List<Account> getAllBankAccount() {
+        List<Account> accounts = new ArrayList<>();
+        accounts.add(getUSD_ACCOUNT());
+        accounts.add(getRMB_ACCOUNT());
+        accounts.add(getEUR_ACCOUNT());
+        return accounts;
+    }
+
     public List<Customer> showCustomers() {
         UserModelImpl userModel = new UserModelImpl();
 

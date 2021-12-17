@@ -2,6 +2,7 @@ package view;
 
 import bean.Stock;
 import bean.Transaction;
+import bean.account.Account;
 import bean.user.Customer;
 import bean.user.User;
 import controller.AccountOverviewController;
@@ -24,7 +25,7 @@ public class ManagerPage {
     private JTable transactionTable;
     private JTextField textField1;
     private JButton queryButton;
-    private JButton calculateInterestButton;
+    private JButton interestBt;
     private JTable bankTable;
     private JTable stockTable;
     private JPanel manager;
@@ -55,6 +56,40 @@ public class ManagerPage {
 
         // show stock
         updateStock();
+
+        // show bank account
+        updateBank();
+        interestBt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                managerController.giveSavingInterest(0.01, 100);
+                managerController.increaseLoanInterest(0.01);
+                updateStock();
+            }
+        });
+    }
+
+    private void updateBank() {
+        // show account
+        String[] title = {"AccountID", "Name", "Type", "Balance", "Currency"};
+        TableModel dataModel = new DefaultTableModel(accountToArray(managerController.getAllBankAccount()), title) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        bankTable.setModel(dataModel);
+    }
+
+    private String[][] accountToArray(List<Account> accountList) {
+        String[][] array = new String[accountList.size()][];
+        for (int i = 0; i < accountList.size(); i++) {
+            Account account = accountList.get(i);
+            String[] strings = {String.valueOf(account.getAid()), account.getAccountName(), String.valueOf(account.getType()),
+                    String.valueOf(account.getBalance()), String.valueOf(account.getCurrency())};
+            array[i] = strings;
+        }
+        return array;
     }
 
     private void updateStock() {
@@ -97,9 +132,6 @@ public class ManagerPage {
                 updateStock();
             }
         });
-
-        // show bank account
-
     }
 
     private List<Stock> arrayToStock(TableModel model) {
@@ -254,9 +286,9 @@ public class ManagerPage {
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         tabbedPane1.addTab("Interest", panel4);
-        calculateInterestButton = new JButton();
-        calculateInterestButton.setText("Calculate Interest");
-        panel4.add(calculateInterestButton, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        interestBt = new JButton();
+        interestBt.setText("Calculate Interest");
+        panel4.add(interestBt, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane4 = new JScrollPane();
         panel4.add(scrollPane4, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         bankTable = new JTable();
