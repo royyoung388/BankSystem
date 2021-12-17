@@ -188,7 +188,7 @@ public class MainPage {
             sellStockBt.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if(sellStockCB.getSelectedItem()==null){
+                    if (sellStockCB.getSelectedItem() == null) {
                         JOptionPane.showMessageDialog(null,
                                 "Empty stock id or quantity",
                                 "Error", JOptionPane.ERROR_MESSAGE);

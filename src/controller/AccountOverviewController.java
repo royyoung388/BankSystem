@@ -57,8 +57,7 @@ public class AccountOverviewController {
         }
         updateAccountList();
         if (type == Account.AccountType.SECURITY) {
-            for (Account account: accountList
-                 ) {
+            for (Account account: accountList) {
                 if(account.getType()==Account.AccountType.SECURITY){
                     return false;
                 }
@@ -66,7 +65,7 @@ public class AccountOverviewController {
             if (currency != Account.CurrencyType.USD) {
                 return false;
             }
-            if (balance < 1010) {
+            if (balance < 10) {
                 return false;
             }
             int totalValue = 0;
