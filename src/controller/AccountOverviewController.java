@@ -2,6 +2,7 @@ package controller;
 
 import bean.Transaction;
 import bean.account.Account;
+import bean.account.LoanAccount;
 import bean.account.SecurityAccount;
 import model.AccountModel;
 import model.AccountModelImpl;
@@ -34,6 +35,14 @@ public class AccountOverviewController {
         for (Account account : accountList) {
             if (account.getType() == Account.AccountType.SECURITY)
                 return (SecurityAccount) account;
+        }
+        return null;
+    }
+
+    public LoanAccount getLoanAccount() {
+        for (Account account : accountList) {
+            if (account.getType() == Account.AccountType.LOAN)
+                return (LoanAccount) account;
         }
         return null;
     }

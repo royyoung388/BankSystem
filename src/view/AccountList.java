@@ -10,6 +10,8 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 import java.util.List;
 
+import static utils.Utils.accountToArray;
+
 public class AccountList {
     private JTable accountTable;
     private JPanel accountList;
@@ -29,17 +31,6 @@ public class AccountList {
             }
         };
         accountTable.setModel(dataModel);
-    }
-
-    private String[][] accountToArray(List<Account> accountList) {
-        String[][] array = new String[accountList.size()][];
-        for (int i = 0; i < accountList.size(); i++) {
-            Account account = accountList.get(i);
-            String[] strings = {String.valueOf(account.getAid()), account.getAccountName(), String.valueOf(account.getType()),
-                    String.valueOf(account.getBalance()), String.valueOf(account.getCurrency())};
-            array[i] = strings;
-        }
-        return array;
     }
 
     {

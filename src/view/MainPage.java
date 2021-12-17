@@ -3,9 +3,11 @@ package view;
 import bean.Stock;
 import bean.StockHolding;
 import bean.account.Account;
+import bean.account.LoanAccount;
 import bean.account.SecurityAccount;
 import bean.user.User;
 import controller.AccountOverviewController;
+import controller.LoanAccountController;
 import controller.SecurityAccountController;
 import controller.UserController;
 
@@ -20,6 +22,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import static utils.Utils.*;
+
 public class MainPage {
     private JTabbedPane tab;
     private JPanel MainPage;
@@ -30,10 +34,10 @@ public class MainPage {
     private JTextField nameText;
     private JButton createBt;
     private JButton refreshStock;
-    private JTextField textField1;
-    private JTextField textField2;
+    private JTextField collateralInput;
+    private JTextField valueInput;
     private JButton getLoanButton;
-    private JButton refreshButton2;
+    private JButton refreshCollateralBt;
     private JComboBox marketStockCB;
     private JTextField marketQuantityInput;
     private JButton buyStockButton;
@@ -55,9 +59,13 @@ public class MainPage {
     private JButton logOutButton;
     private JTextField newPwdInput;
     private JButton changePwdBt;
+    private JComboBox collateralCB;
+    private JButton getBackButton;
+    private JTable collateralTable;
 
     private AccountOverviewController accountOverviewController;
     private UserController userController;
+    private LoanAccountController loanAccountController;
 
     private User user;
 
@@ -71,6 +79,8 @@ public class MainPage {
         this.user = user;
         userController = new UserController();
         accountOverviewController = new AccountOverviewController(user.getUid());
+        if (accountOverviewController.getLoanAccount() != null)
+            loanAccountController = new LoanAccountController(accountOverviewController.getLoanAccount());
 
         // create account
         createBt.addActionListener(new ActionListener() {
@@ -197,6 +207,23 @@ public class MainPage {
                 }
             });
         }
+
+        // show collateral
+        refreshCollateralBt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        updateCollateral();
+    }
+
+    private void updateCollateral() {
+        LoanAccount loanAccount = accountOverviewController.getLoanAccount();
+        if (loanAccount == null)
+            return;
+
+
     }
 
     private void updateMarket() {
@@ -226,18 +253,6 @@ public class MainPage {
         }
     }
 
-    private String[][] stockToArray(List<Stock> stockList) {
-        String[][] array = new String[stockList.size()][];
-        for (int i = 0; i < stockList.size(); i++) {
-            Stock stock = stockList.get(i);
-            String[] strings = {String.valueOf(stock.getSid()), stock.getName(),
-                    String.valueOf(stock.getPrice()), String.valueOf(stock.getQuantity())};
-            array[i] = strings;
-        }
-        return array;
-    }
-
-
     private void updateStockHolding() {
         accountOverviewController.updateAccountList();
         SecurityAccount securityAccount = accountOverviewController.getSecurityAccount();
@@ -265,16 +280,6 @@ public class MainPage {
         }
     }
 
-    private String[][] holdingToArray(List<StockHolding> stockList) {
-        String[][] array = new String[stockList.size()][];
-        for (int i = 0; i < stockList.size(); i++) {
-            StockHolding holding = stockList.get(i);
-            String[] strings = {String.valueOf(holding.getStock().getSid()), holding.getStock().getName(),
-                    String.valueOf(holding.getStock().getPrice()), String.valueOf(holding.getQuantity())};
-            array[i] = strings;
-        }
-        return array;
-    }
 
     private void updateAccount() {
         // init account
@@ -309,17 +314,6 @@ public class MainPage {
             if (aid == account.getAid())
                 return account;
         return null;
-    }
-
-    private String[][] accountToArray(List<Account> accountList) {
-        String[][] array = new String[accountList.size()][];
-        for (int i = 0; i < accountList.size(); i++) {
-            Account account = accountList.get(i);
-            String[] strings = {String.valueOf(account.getAid()), account.getAccountName(), String.valueOf(account.getType()),
-                    String.valueOf(account.getBalance()), String.valueOf(account.getCurrency())};
-            array[i] = strings;
-        }
-        return array;
     }
 
     {
@@ -392,17 +386,17 @@ public class MainPage {
         loanPanel = new JPanel();
         loanPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(7, 2, new Insets(0, 0, 0, 0), -1, -1));
         tab.addTab("Loan", loanPanel);
-        textField1 = new JTextField();
-        textField1.setText("");
-        loanPanel.add(textField1, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 2, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        collateralInput = new JTextField();
+        collateralInput.setText("");
+        loanPanel.add(collateralInput, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 2, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label5 = new JLabel();
         label5.setText("Collateral");
         loanPanel.add(label5, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 2, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label6 = new JLabel();
         label6.setText("Value");
         loanPanel.add(label6, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 2, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        textField2 = new JTextField();
-        loanPanel.add(textField2, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 2, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        valueInput = new JTextField();
+        loanPanel.add(valueInput, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 2, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JScrollPane scrollPane2 = new JScrollPane();
         loanPanel.add(scrollPane2, new com.intellij.uiDesigner.core.GridConstraints(6, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JLabel label7 = new JLabel();
@@ -411,9 +405,9 @@ public class MainPage {
         getLoanButton = new JButton();
         getLoanButton.setText("Get Loan");
         loanPanel.add(getLoanButton, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        refreshButton2 = new JButton();
-        refreshButton2.setText("Refresh");
-        loanPanel.add(refreshButton2, new com.intellij.uiDesigner.core.GridConstraints(5, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        refreshCollateralBt = new JButton();
+        refreshCollateralBt.setText("Refresh");
+        loanPanel.add(refreshCollateralBt, new com.intellij.uiDesigner.core.GridConstraints(5, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         stockPanel = new JPanel();
         stockPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(6, 2, new Insets(0, 0, 0, 0), -1, -1));
         tab.addTab("Stock", stockPanel);
