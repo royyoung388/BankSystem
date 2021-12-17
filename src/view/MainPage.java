@@ -297,7 +297,7 @@ public class MainPage {
         };
         accountTable.setModel(dataModel);
         accountTable.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent mouseEvent) {
+            public void mouseClicked(MouseEvent mouseEvent) {
                 JTable table = (JTable) mouseEvent.getSource();
                 Point point = mouseEvent.getPoint();
                 int row = table.rowAtPoint(point);

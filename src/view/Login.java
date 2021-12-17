@@ -25,7 +25,7 @@ public class Login {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setSize(300, 250);
+        frame.setSize(400, 250);
         frame.setVisible(true);
 
         controller = new UserController();

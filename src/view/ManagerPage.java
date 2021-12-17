@@ -1,8 +1,6 @@
 package view;
 
 import bean.Stock;
-import bean.Transaction;
-import bean.account.Account;
 import bean.user.Customer;
 import bean.user.User;
 import controller.AccountOverviewController;
@@ -16,8 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import static utils.Utils.*;
@@ -25,7 +23,7 @@ import static utils.Utils.*;
 public class ManagerPage {
     private JTable userTable;
     private JTable transactionTable;
-    private JTextField textField1;
+    private JTextField dateInput;
     private JButton queryButton;
     private JButton interestBt;
     private JTable bankTable;
@@ -57,6 +55,22 @@ public class ManagerPage {
         updateUser();
 
         // show transaction
+        queryButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String date = dateInput.getText().strip();
+                if (date.isEmpty()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Empty date",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                LocalDateTime.now();
+//                (DateTimeFormatter.ISO_DATE.format(date);
+
+            }
+        });
         updateTransaction();
 
         // show stock
@@ -160,7 +174,7 @@ public class ManagerPage {
         };
         userTable.setModel(dataModel);
         userTable.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent mouseEvent) {
+            public void mouseClicked(MouseEvent mouseEvent) {
                 JTable table = (JTable) mouseEvent.getSource();
                 Point point = mouseEvent.getPoint();
                 int row = table.rowAtPoint(point);
@@ -210,10 +224,11 @@ public class ManagerPage {
         transactionTable = new JTable();
         scrollPane2.setViewportView(transactionTable);
         final JLabel label1 = new JLabel();
-        label1.setText("Date");
+        label1.setText("Date (dd-MM-yyyy)");
         panel2.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        textField1 = new JTextField();
-        panel2.add(textField1, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        dateInput = new JTextField();
+        dateInput.setText("");
+        panel2.add(dateInput, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         queryButton = new JButton();
         queryButton.setText("Query");
         panel2.add(queryButton, new com.intellij.uiDesigner.core.GridConstraints(0, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
