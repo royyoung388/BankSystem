@@ -7,6 +7,7 @@ import bean.account.SecurityAccount;
 import bean.user.User;
 import controller.AccountOverviewController;
 import controller.SecurityAccountController;
+import controller.UserController;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -52,10 +53,12 @@ public class MainPage {
     private JPanel marketPanel;
     private JPanel settingPanel;
     private JButton logOutButton;
-    private JTextField textField3;
-    private JButton changeButton;
+    private JTextField newPwdInput;
+    private JButton changePwdBt;
 
-    private AccountOverviewController controller;
+    private AccountOverviewController accountOverviewController;
+    private UserController userController;
+
     private User user;
 
     public MainPage(User user) {
@@ -66,8 +69,8 @@ public class MainPage {
         frame.setVisible(true);
 
         this.user = user;
-        controller = new AccountOverviewController(user.getUid(), user.getUsername());
-
+        userController = new UserController();
+        accountOverviewController = new AccountOverviewController(user.getUid(), user.getUsername());
 
         // create account
         createBt.addActionListener(new ActionListener() {
@@ -82,15 +85,17 @@ public class MainPage {
                     JOptionPane.showMessageDialog(null,
                             "Empty name or deposit",
                             "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
 
                 double money = Double.parseDouble(deposit);
 
-                if (!controller.addAccount(user.getUid(), Account.AccountType.valueOf(type),
+                if (!accountOverviewController.addAccount(user.getUid(), Account.AccountType.valueOf(type),
                         money, Account.CurrencyType.valueOf(currency), name)) {
                     JOptionPane.showMessageDialog(null,
                             "Can't create account.",
                             "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 } else {
                     if (Account.AccountType.valueOf(type) == Account.AccountType.SECURITY) {
                         // show stock and market
@@ -98,6 +103,29 @@ public class MainPage {
                         tab.addTab("Market", marketPanel);
                     }
                 }
+            }
+        });
+
+        // setting
+        changePwdBt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String newPwd = newPwdInput.getText().strip();
+                if (newPwd.isEmpty()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Empty new password.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                user.setPwd(newPwd);
+                userController.updateUser(user);
+            }
+        });
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Login();
+                frame.dispose();
             }
         });
 
@@ -110,7 +138,7 @@ public class MainPage {
             }
         });
 
-        if (controller.getSecurityAccount() == null) {
+        if (accountOverviewController.getSecurityAccount() == null) {
             // no security account
             tab.removeTabAt(3);
             tab.removeTabAt(3);
@@ -132,8 +160,9 @@ public class MainPage {
                         JOptionPane.showMessageDialog(null,
                                 "Empty stock id or quantity",
                                 "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
                     }
-                    SecurityAccount securityAccount = controller.getSecurityAccount();
+                    SecurityAccount securityAccount = accountOverviewController.getSecurityAccount();
                     SecurityAccountController securityController = new SecurityAccountController(securityAccount);
                     securityController.updateList();
                     securityController.sellStock(stockid, Integer.parseInt(quantity));
@@ -158,8 +187,9 @@ public class MainPage {
                         JOptionPane.showMessageDialog(null,
                                 "Empty stock id or quantity",
                                 "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
                     }
-                    SecurityAccount securityAccount = controller.getSecurityAccount();
+                    SecurityAccount securityAccount = accountOverviewController.getSecurityAccount();
                     SecurityAccountController securityController = new SecurityAccountController(securityAccount);
                     securityController.updateList();
                     securityController.buyStock(stockid, Integer.parseInt(quantity));
@@ -170,8 +200,8 @@ public class MainPage {
     }
 
     private void updateMarket() {
-        controller.updateAccountList();
-        SecurityAccount securityAccount = controller.getSecurityAccount();
+        accountOverviewController.updateAccountList();
+        SecurityAccount securityAccount = accountOverviewController.getSecurityAccount();
 
         // update balance
         sellBalanceText.setText(String.valueOf(securityAccount.getBalance()));
@@ -209,8 +239,8 @@ public class MainPage {
 
 
     private void updateStockHolding() {
-        controller.updateAccountList();
-        SecurityAccount securityAccount = controller.getSecurityAccount();
+        accountOverviewController.updateAccountList();
+        SecurityAccount securityAccount = accountOverviewController.getSecurityAccount();
 
         // update balance
         sellBalanceText.setText(String.valueOf(securityAccount.getBalance()));
@@ -248,8 +278,8 @@ public class MainPage {
 
     private void updateAccount() {
         // init account
-        controller.updateAccountList();
-        List<Account> accountList = controller.getAccountList();
+        accountOverviewController.updateAccountList();
+        List<Account> accountList = accountOverviewController.getAccountList();
 
         String[] title = {"AccountID", "Name", "Type", "Balance", "Currency"};
         TableModel dataModel = new DefaultTableModel(userToArray(accountList), title) {
@@ -275,7 +305,7 @@ public class MainPage {
     }
 
     private Account getAccount(int aid) {
-        for (Account account : controller.getAccountList())
+        for (Account account : accountOverviewController.getAccountList())
             if (aid == account.getAid())
                 return account;
         return null;
@@ -447,16 +477,16 @@ public class MainPage {
         tab.addTab("Setting", settingPanel);
         logOutButton = new JButton();
         logOutButton.setText("Log out");
-        settingPanel.add(logOutButton, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        settingPanel.add(logOutButton, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label14 = new JLabel();
         label14.setText("New password:");
         settingPanel.add(label14, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        textField3 = new JTextField();
-        textField3.setText("");
-        settingPanel.add(textField3, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        changeButton = new JButton();
-        changeButton.setText("Change");
-        settingPanel.add(changeButton, new com.intellij.uiDesigner.core.GridConstraints(0, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        newPwdInput = new JTextField();
+        newPwdInput.setText("");
+        settingPanel.add(newPwdInput, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        changePwdBt = new JButton();
+        changePwdBt.setText("Change");
+        settingPanel.add(changePwdBt, new com.intellij.uiDesigner.core.GridConstraints(0, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
