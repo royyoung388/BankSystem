@@ -65,6 +65,8 @@ public abstract class AbstractAccountController implements AccountControllerInte
                 } else {
                     toid = Manager.EUR_ACCOUNT_ID;
                 }
+                double mBalance = accountModel.queryAccount(toid).getBalance();
+                accountModel.updateBalance(toid, mBalance + fee);
                 Transaction managerIncome = new Transaction(-1, 1, account.getAid(), toid, Transaction.TransType.FEE,
                         account.getCurrency(), fee, 0, "withdraw fee income " + fee, LocalDateTime.now());
                 transactionModel.insertTransaction(managerIncome);
@@ -89,6 +91,8 @@ public abstract class AbstractAccountController implements AccountControllerInte
                 } else {
                     toid = Manager.EUR_ACCOUNT_ID;
                 }
+                double mBalance = accountModel.queryAccount(toid).getBalance();
+                accountModel.updateBalance(toid, mBalance + fee);
                 Transaction managerIncome = new Transaction(-1, 1, account.getAid(), toid, Transaction.TransType.FEE,
                         account.getCurrency(), fee, 0, "deposit fee income " + fee, LocalDateTime.now());
                 transactionModel.insertTransaction(managerIncome);
@@ -127,6 +131,8 @@ public abstract class AbstractAccountController implements AccountControllerInte
             } else {
                 toid = Manager.EUR_ACCOUNT_ID;
             }
+            double mBalance=accountModel.queryAccount(toid).getBalance();
+            accountModel.updateBalance(toid,mBalance+fee);
             Transaction managerIncome = new Transaction(-1, 1, account.getAid(), toid, Transaction.TransType.FEE,
                     account.getCurrency(), fee, 0, "transfer fee income " + fee, LocalDateTime.now());
             transactionModel.insertTransaction(managerIncome);
