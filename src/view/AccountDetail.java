@@ -56,7 +56,7 @@ public class AccountDetail {
         updateTransaction();
 
         // hide withdraw and deposit: loan and security
-        if (account.getType() != Account.AccountType.SAVING || account.getType() != Account.AccountType.CHECKING) {
+        if (account.getType() != Account.AccountType.SAVING && account.getType() != Account.AccountType.CHECKING) {
             withdrawLabel.setVisible(false);
             withdrawInput.setVisible(false);
             withdrawButton.setVisible(false);
