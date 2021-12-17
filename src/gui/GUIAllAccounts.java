@@ -50,7 +50,7 @@ public class GUIAllAccounts extends JFrame {
                 public void actionPerformed(ActionEvent e) {
 //                    String i = aBtn.getName().split("#")[-1];
 //                    int index = Integer.parseInt(i);
-                    GUIAccount acc = new GUIAccount(a);
+                    GUIAccount acc = new GUIAccount(a, user);
                 }
             });
 

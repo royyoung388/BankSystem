@@ -34,7 +34,7 @@ public class GUIAccount extends JFrame {
     private GUIWithdraw withdraw;
 
 
-    public GUIAccount(Account a) {
+    public GUIAccount(Account a, User u) {
         JFrame frame = new JFrame(a.getAccountName());
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
