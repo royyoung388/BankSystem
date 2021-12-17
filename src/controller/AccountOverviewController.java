@@ -65,9 +65,6 @@ public class AccountOverviewController {
             if (currency != Account.CurrencyType.USD) {
                 return false;
             }
-            if (balance < 10) {
-                return false;
-            }
             int totalValue = 0;
             for (Account a : accountList) {
 
