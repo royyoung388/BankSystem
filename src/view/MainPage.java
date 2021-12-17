@@ -136,6 +136,9 @@ public class MainPage {
                 }
                 user.setPwd(newPwd);
                 userController.updateUser(user);
+                JOptionPane.showMessageDialog(null,
+                        "Update Success",
+                        "Update Password", JOptionPane.INFORMATION_MESSAGE);
             }
         });
         logOutButton.addActionListener(new ActionListener() {
@@ -205,7 +208,15 @@ public class MainPage {
                     SecurityAccount securityAccount = accountOverviewController.getSecurityAccount();
                     SecurityAccountController securityController = new SecurityAccountController(securityAccount);
                     securityController.updateList();
-                    securityController.sellStock(stockid, Integer.parseInt(quantity));
+                    if(securityController.sellStock(stockid, Integer.parseInt(quantity))){
+                        JOptionPane.showMessageDialog(null,
+                                "Success",
+                                "Sell Stock", JOptionPane.INFORMATION_MESSAGE);
+                    }else{
+                        JOptionPane.showMessageDialog(null,
+                                "Fail",
+                                "Sell Stock", JOptionPane.ERROR_MESSAGE);
+                    }
                     updateStockHolding();
                 }
             });
@@ -232,8 +243,17 @@ public class MainPage {
                     SecurityAccount securityAccount = accountOverviewController.getSecurityAccount();
                     SecurityAccountController securityController = new SecurityAccountController(securityAccount);
                     securityController.updateList();
-                    securityController.buyStock(stockid, Integer.parseInt(quantity));
+                    if(securityController.buyStock(stockid, Integer.parseInt(quantity))){
+                        JOptionPane.showMessageDialog(null,
+                                "Success",
+                                "Buy Stock", JOptionPane.INFORMATION_MESSAGE);
+                    }else{
+                        JOptionPane.showMessageDialog(null,
+                                "Fail",
+                                "Buy Stock", JOptionPane.ERROR_MESSAGE);
+                    }
                     updateMarket();
+
                 }
             });
         }
