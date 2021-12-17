@@ -62,7 +62,7 @@ public class AccountOverviewController {
         return accountModel.deleteAccount(aid);
     }
 
-    private void updateAccountList() {
+    public void updateAccountList() {
         accountList = accountModel.queryAllAccount(uID);
     }
 

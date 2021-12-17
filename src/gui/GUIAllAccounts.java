@@ -19,7 +19,6 @@ public class GUIAllAccounts extends JFrame {
 
     public GUIAllAccounts(User u, GUIHomePage home) {
         this.home = home;
-        mainPanel = new JPanel();
         cards = new CardLayout();
         mainPanel.setLayout(cards);
         this.user = u;
@@ -29,6 +28,7 @@ public class GUIAllAccounts extends JFrame {
 
     public void update() {
         mainPanel.removeAll();
+        accountOverviewController.updateAccountList();
         List<Account> accounts = accountOverviewController.getAccountList();
 
         accountsPanel = new JPanel();
