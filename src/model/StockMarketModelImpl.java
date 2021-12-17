@@ -17,7 +17,8 @@ public class StockMarketModelImpl implements StockMarketModel {
             Statement statement = DAO.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM stock");
             while (rs.next()) {
-                stocks.add(new Stock(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getInt(4)));
+                stocks.add(new Stock(rs.getInt(1), rs.getString(2), rs.getDouble(3),
+                        rs.getInt(4)));
             }
             rs.close();
             statement.close();
@@ -34,7 +35,8 @@ public class StockMarketModelImpl implements StockMarketModel {
             Statement statement = DAO.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM stock WHERE sid=" + sid);
             if (rs.next()) {
-                stock = new Stock(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getInt(4));
+                stock = new Stock(rs.getInt(1), rs.getString(2), rs.getDouble(3),
+                        rs.getInt(4));
             }
             rs.close();
             statement.close();
@@ -59,11 +61,11 @@ public class StockMarketModelImpl implements StockMarketModel {
     public boolean updateStock(Stock stock) {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            String sql = String.format("UPDATE stock SET name='%s', price=%f, quantity=%d WHERE sid=%d",
+            String sql = String.format("UPDATE stock SET name='%s', price=%f, quantity=%d WHERE sid=%d;",
                     stock.getName(), stock.getPrice(), stock.getQuantity(), stock.getSid());
-            statement.executeUpdate(sql);
+            int result = statement.executeUpdate(sql);
             statement.close();
-            return true;
+            return result == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -85,6 +87,20 @@ public class StockMarketModelImpl implements StockMarketModel {
             e.printStackTrace();
         }
         return count;
+    }
+
+    @Override
+    public boolean deleteStock(int id){
+        try {
+            Statement statement = DAO.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("DELETE * FROM stock WHERE sid=" + id);
+            rs.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     @Override

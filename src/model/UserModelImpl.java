@@ -7,6 +7,8 @@ import bean.user.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserModelImpl implements UserModel {
     @Override
@@ -14,7 +16,7 @@ public class UserModelImpl implements UserModel {
         User user = null;
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            String sql = String.format("SELECT * FROM user WHERE username='%s' AND pwd='%s'", username, pwd);
+            String sql = String.format("SELECT * FROM user WHERE status=1 AND username='%s' AND pwd='%s'", username, pwd);
             ResultSet rs = statement.executeQuery(sql);
             if (rs.next()) {
                 int type = rs.getInt("type");
@@ -46,14 +48,14 @@ public class UserModelImpl implements UserModel {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
     @Override
     public boolean signUp(int type, String username, String pwd) {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            String sql = String.format("INSERT INTO user VALUES (NULL, %d, '%s', '%s')", type, username, pwd);
+            String sql = String.format("INSERT INTO user VALUES (NULL, %d, '%s', '%s', 1)", type, username, pwd);
             statement.executeUpdate(sql);
             statement.close();
             return true;
@@ -68,7 +70,7 @@ public class UserModelImpl implements UserModel {
         User manager = null;
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM user WHERE type=" + User.MANAGER);
+            ResultSet rs = statement.executeQuery("SELECT * FROM user WHERE status=1 AND type =" + User.MANAGER);
             if (rs.next()) {
                 manager = new Manager(rs.getInt(1), rs.getString(2), rs.getString(3));
             }
@@ -80,9 +82,58 @@ public class UserModelImpl implements UserModel {
         return manager;
     }
 
+    @Override
+    public boolean updateUser(User user) {
+        try {
+            Statement statement = DAO.getInstance().getConnection().createStatement();
+            String sql = String.format("UPDATE user SET username='%s', pwd='%s'  WHERE uid='%s'",
+                    user.getUsername(), user.getPwd(), user.getUid());
+            int result = statement.executeUpdate(sql);
+            statement.close();
+            return result > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public List<Customer> queryAllCustomer() {
+        List<Customer> result = new ArrayList<>();
+        try {
+            Statement statement = DAO.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM user WHERE status=1 AND type =" + User.CUSTOMER);
+            if (rs.next()) {
+                result.add(new Customer(rs.getInt(1), rs.getString(2), rs.getString(3)));
+            }
+            rs.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+//    @Override
+//    public boolean deleteUser(int uid) {
+//        try {
+//            Statement statement = DAO.getInstance().getConnection().createStatement();
+//            String sql = String.format("UPDATE user SET status=0 WHERE uid=%s", uid);
+//            int result = statement.executeUpdate(sql);
+//            statement.close();
+//            return result > 0;
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
+
+
     public static void main(String[] args) {
         UserModel userModel = new UserModelImpl();
         userModel.signUp(User.CUSTOMER, "test1", "test1");
+        System.out.println(userModel.isUserExists("test1"));
+
         userModel.signUp(User.CUSTOMER, "test2", "test2");
         userModel.signUp(User.MANAGER, "m1", "m1");
 

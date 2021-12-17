@@ -7,12 +7,12 @@ public class StockHolding {
     // who holding the stock
     private int uid;
     // stock id
-    private int sid;
+    private Stock stock;
     private int quantity;
 
-    public StockHolding(int uid, int sid, int quantity) {
+    public StockHolding(int uid, Stock stock, int quantity) {
         this.uid = uid;
-        this.sid = sid;
+        this.stock = stock;
         this.quantity = quantity;
     }
 
@@ -20,8 +20,8 @@ public class StockHolding {
         return uid;
     }
 
-    public int getSid() {
-        return sid;
+    public Stock getStock() {
+        return stock;
     }
 
     public int getQuantity() {
@@ -36,7 +36,7 @@ public class StockHolding {
     public String toString() {
         return "StockHolding{" +
                 "uid=" + uid +
-                ", sid=" + sid +
+                ", stock=" + stock +
                 ", quantity=" + quantity +
                 '}';
     }

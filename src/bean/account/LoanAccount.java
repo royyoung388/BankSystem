@@ -1,11 +1,31 @@
 package bean.account;
 
+import bean.Collateral;
+import model.CollateralModel;
+import model.CollateralModelImpl;
+
+import java.util.List;
+
 public class LoanAccount extends Account {
-    public LoanAccount(int aid, int uid, int balance, CurrencyType currency) {
-        super(aid, uid, AccountType.LOAN, balance, currency);
+
+
+    private List<Collateral> collateralList;
+    CollateralModel collateralModel = new CollateralModelImpl();
+
+    public LoanAccount(int aid, int uid, String accountName, double balance, CurrencyType currency) {
+        super(aid, uid, accountName, AccountType.LOAN, balance, currency);
     }
 
-    public LoanAccount(int aid, int uid, int balance, String currency) {
-        super(aid, uid, AccountType.LOAN, balance, currency);
+    public LoanAccount(int aid, int uid, String accountName, double balance, String currency) {
+        super(aid, uid, accountName, AccountType.LOAN, balance, currency);
+    }
+
+    public List<Collateral> getCollateralList() {
+
+        return collateralList;
+    }
+
+    public void updateList() {
+        collateralList = collateralModel.queryAllCollateral(uid);
     }
 }

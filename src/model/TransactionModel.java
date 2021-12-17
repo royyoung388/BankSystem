@@ -3,12 +3,12 @@ package model;
 import bean.Transaction;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 public interface TransactionModel {
     /**
      * insert a transaction record
+     *
      * @param transaction
      * @return
      */
@@ -16,7 +16,8 @@ public interface TransactionModel {
 
     /**
      * query transaction
-     * @param uid  user id
+     *
+     * @param uid user id
      * @return
      */
     List<Transaction> queryTransactionByUser(int uid);
@@ -28,4 +29,28 @@ public interface TransactionModel {
      * @return
      */
     List<Transaction> queryTransactionByDay(LocalDateTime time);
+
+    /***
+     * query all transaction
+     * @return
+     */
+    List<Transaction> queryAllTransaction();
+
+    /***
+     *
+     * @param startTime
+     * @param endTime
+     * @param aid
+     * @param uid
+     * @return
+     */
+    List<Transaction> queryTransactionByAccountAndTime(LocalDateTime startTime, LocalDateTime endTime, int aid, int uid);
+
+    /***
+     *
+     * @param aid
+     * @param uid
+     * @return
+     */
+    List<Transaction> queryTransactionByAccount(int aid, int uid);
 }

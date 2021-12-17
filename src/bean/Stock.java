@@ -11,9 +11,9 @@ public class Stock {
     private double price;
     private int quantity;
 
-    public Stock(int sid, String sname, double price, int quantity) {
+    public Stock(int sid, String name, double price, int quantity) {
         this.sid = sid;
-        this.name = sname;
+        this.name = name;
         this.price = price;
         this.quantity = quantity;
     }

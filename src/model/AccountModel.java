@@ -1,6 +1,8 @@
 package model;
 
 import bean.account.Account;
+import bean.account.LoanAccount;
+import bean.account.SavingAccount;
 
 import java.util.List;
 
@@ -13,7 +15,7 @@ public interface AccountModel {
      * @param currency  currency type
      * @return
      */
-    boolean createAccount(int uid, Account.AccountType type, Account.CurrencyType currency);
+    boolean createAccount(int uid, String accountName, Account.AccountType type, double balance, Account.CurrencyType currency);
 
     /***
      * query someone's all bank account
@@ -23,11 +25,30 @@ public interface AccountModel {
     List<Account> queryAllAccount(int uid);
 
     /***
+     * query loan account
+     * @return
+     */
+    List<LoanAccount> queryLoanAccounts();
+
+    /***
+     * query saving account
+     * @return
+     */
+    List<SavingAccount> querySavingAccounts();
+
+    /***
      * query specific bank account
      * @param aid
      * @return
      */
     Account queryAccount(int aid);
+
+    /***
+     * delete account
+     * @param aid
+     * @return
+     */
+    boolean deleteAccount(int aid);
 
     /***
      * update balance. Be used at {@link AccountModel#withdraw} and {@link AccountModel#deposit}
@@ -60,5 +81,7 @@ public interface AccountModel {
      * @param amount
      * @return
      */
-    boolean transfer(int fromAid, int toAid, int amount);
+    boolean transfer(int fromAid, int toAid, double amount);
+
+    int getLastInsertAccount();
 }
