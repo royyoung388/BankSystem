@@ -1,5 +1,3 @@
-import gui.GUIHomePage;
-import gui.GUIMain;
 import view.Login;
 
 public class main {

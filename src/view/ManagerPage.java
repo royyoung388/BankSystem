@@ -24,7 +24,7 @@ public class ManagerPage {
     private JTable transactionTable;
     private JTextField textField1;
     private JButton queryButton;
-    private JButton giveInterestButton;
+    private JButton calculateInterestButton;
     private JTable bankTable;
     private JTable stockTable;
     private JPanel manager;
@@ -45,7 +45,7 @@ public class ManagerPage {
         frame.setVisible(true);
 
         managerController = new ManagerController();
-        accountOverviewController = new AccountOverviewController(user.getUid(), user.getUsername());
+        accountOverviewController = new AccountOverviewController(user.getUid());
 
         // show user
         updateUser();
@@ -97,6 +97,9 @@ public class ManagerPage {
                 updateStock();
             }
         });
+
+        // show bank account
+
     }
 
     private List<Stock> arrayToStock(TableModel model) {
@@ -251,9 +254,9 @@ public class ManagerPage {
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         tabbedPane1.addTab("Interest", panel4);
-        giveInterestButton = new JButton();
-        giveInterestButton.setText("Give Interest");
-        panel4.add(giveInterestButton, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        calculateInterestButton = new JButton();
+        calculateInterestButton.setText("Calculate Interest");
+        panel4.add(calculateInterestButton, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane4 = new JScrollPane();
         panel4.add(scrollPane4, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         bankTable = new JTable();

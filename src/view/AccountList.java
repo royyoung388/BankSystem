@@ -20,7 +20,7 @@ public class AccountList {
         frame.pack();
         frame.setVisible(true);
 
-        AccountOverviewController controller = new AccountOverviewController(user.getUid(), user.getUsername());
+        AccountOverviewController controller = new AccountOverviewController(user.getUid());
         String[] title = {"AccountID", "Name", "Type", "Balance", "Currency"};
         TableModel dataModel = new DefaultTableModel(accountToArray(controller.getAccountList()), title) {
             @Override

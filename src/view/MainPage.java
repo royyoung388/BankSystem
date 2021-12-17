@@ -70,7 +70,7 @@ public class MainPage {
 
         this.user = user;
         userController = new UserController();
-        accountOverviewController = new AccountOverviewController(user.getUid(), user.getUsername());
+        accountOverviewController = new AccountOverviewController(user.getUid());
 
         // create account
         createBt.addActionListener(new ActionListener() {
