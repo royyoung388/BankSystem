@@ -287,7 +287,7 @@ public class MainPage {
     }
 
     private void createLoan() {
-        accountOverviewController.addAccount(user.getUid(), Account.AccountType.LOAN, 0, Account.CurrencyType.USD, "Loan");
+        accountOverviewController.addAccount(user.getUid(), Account.AccountType.LOAN, 10, Account.CurrencyType.USD, "Loan");
         loanAccountController = new LoanAccountController(accountOverviewController.getLoanAccount());
     }
 

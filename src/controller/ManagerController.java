@@ -14,9 +14,9 @@ import java.util.List;
 
 public class ManagerController {
 
-    private final SavingAccount USD_ACCOUNT;
-    private final SavingAccount RMB_ACCOUNT;
-    private final SavingAccount EUR_ACCOUNT;
+    private SavingAccount USD_ACCOUNT;
+    private SavingAccount RMB_ACCOUNT;
+    private SavingAccount EUR_ACCOUNT;
 
     private AccountModel accountModel;
     private StockMarketModel stockMarketModel;
@@ -28,6 +28,12 @@ public class ManagerController {
         this.USD_ACCOUNT = (SavingAccount) accountModel.queryAccount(1);
         this.RMB_ACCOUNT = (SavingAccount) accountModel.queryAccount(2);
         this.EUR_ACCOUNT = (SavingAccount) accountModel.queryAccount(3);
+    }
+
+    public void updateAccount() {
+        USD_ACCOUNT = (SavingAccount) accountModel.queryAccount(1);
+        RMB_ACCOUNT = (SavingAccount) accountModel.queryAccount(2);
+        EUR_ACCOUNT = (SavingAccount) accountModel.queryAccount(3);
     }
 
     public SavingAccount getUSD_ACCOUNT() {
@@ -43,6 +49,7 @@ public class ManagerController {
     }
 
     public List<Account> getAllBankAccount() {
+        updateAccount();
         List<Account> accounts = new ArrayList<>();
         accounts.add(getUSD_ACCOUNT());
         accounts.add(getRMB_ACCOUNT());
