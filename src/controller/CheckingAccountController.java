@@ -8,11 +8,11 @@ public class CheckingAccountController extends AbstractAccountController {
     }
 
     public boolean withdraw(double amount) {
-        return false;
+        return super.withdraw(amount, amount * WITHDRAW_RATE);
     }
 
     public boolean deposit(double amount) {
-        return false;
+        return super.deposit(amount, amount * CHECKING_RATE);
     }
 
     public boolean transfer(int toID, double amount) {

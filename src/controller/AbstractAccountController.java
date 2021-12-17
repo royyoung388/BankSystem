@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public abstract class AbstractAccountController implements AccountControllerInterface{
+public abstract class AbstractAccountController implements AccountControllerInterface {
 
     public static final double WITHDRAW_RATE = 0.01;
     public static final double CHECKING_RATE = 0.01;
@@ -46,7 +46,7 @@ public abstract class AbstractAccountController implements AccountControllerInte
     }
 
     public boolean withdraw(double amount, double fee) {
-        fee=round(fee);
+        fee = round(fee);
         boolean status = decreaseBalance(amount + fee);
         if (status) {
             Transaction trans = new Transaction(-1, account.getUid(), account.getAid(), -1, Transaction.TransType.WITHDRAW,
@@ -70,7 +70,7 @@ public abstract class AbstractAccountController implements AccountControllerInte
     }
 
     public boolean deposit(double amount, double fee) {
-        fee=round(fee);
+        fee = round(fee);
         boolean status = increaseBalance(amount - fee);
         if (status) {
             Transaction trans = new Transaction(-1, account.getUid(), account.getAid(), -1, Transaction.TransType.DEPOSIT,
@@ -95,7 +95,7 @@ public abstract class AbstractAccountController implements AccountControllerInte
 
 
     public boolean transfer(int toID, double amount, double fee) {
-        fee=round(fee);
+        fee = round(fee);
         Account toAccount = accountModel.queryAccount(toID);
         if (toAccount == null) {
             return false;
@@ -108,9 +108,11 @@ public abstract class AbstractAccountController implements AccountControllerInte
         }
         decreaseBalance(amount + fee);
         accountModel.deposit(toID, amount);
-        Transaction trans = new Transaction(-1, account.getUid(), account.getAid(), toID, Transaction.TransType.TRANSFER,
-                account.getCurrency(), amount, fee, "", LocalDateTime.now());
-        transactionModel.insertTransaction(trans);
+//        Transaction trans = new Transaction(-1, account.getUid(), account.getAid(), toID, Transaction.TransType.TRANSFER,
+//                account.getCurrency(), amount, fee, "", LocalDateTime.now());
+//        transactionModel.insertTransaction(trans);
+        TransactionController.duoSideTransaction(account.getAid(), toID, Transaction.TransType.TRANSFER.toString(),
+                account.getCurrency().toString(), amount, fee, "transfer", LocalDateTime.now());
         if (fee > 0) {
             int toid;
             if (account.getCurrency() == Account.CurrencyType.USD) {
@@ -135,8 +137,8 @@ public abstract class AbstractAccountController implements AccountControllerInte
         return transactionModel.queryTransactionByAccount(account.getAid(), account.getUid());
     }
 
-    private double round(double value){
-        return (double) (Math.round(value*100)/100);
+    private double round(double value) {
+        return (double) (Math.round(value * 100) / 100);
     }
 
 }
