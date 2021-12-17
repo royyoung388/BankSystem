@@ -66,13 +66,12 @@ public class Utils {
 //                    String.valueOf(transaction.getType()), String.valueOf(transaction.getCurrencyType()),
 //                    String.valueOf(transaction.getAmount()), String.valueOf(transaction.getFee()),
 //                    transaction.getDetail(), transaction.getTime().format(DateTimeFormatter.ISO_DATE)};
-//
             String[] strings = {String.valueOf(transaction.getTid()), String.valueOf(transaction.getUid()),
                     transaction.getFromAid() < 0 ? "In-person" : String.valueOf(transaction.getFromAid()),
                     transaction.getToAid() < 0 ? "In-person" : String.valueOf(transaction.getToAid()),
                     transaction.getType().toString(), transaction.getCurrencyType().toString(),
                     String.valueOf(transaction.getAmount()), String.valueOf(transaction.getFee()),
-                    String.valueOf(transaction.getFee()), transaction.getDetail(),
+                    transaction.getDetail(),
                     transaction.getTime().format(DateTimeFormatter.ISO_DATE)
             };
             array[i] = strings;

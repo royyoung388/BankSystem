@@ -52,6 +52,9 @@ public class AccountOverviewController {
 //    }
 
     public boolean addAccount(int uid, Account.AccountType type, double balance, Account.CurrencyType currency, String accountName) {
+        if(balance<10){
+            return false;
+        }
         if (type == Account.AccountType.SECURITY) {
             if (currency != Account.CurrencyType.USD) {
                 return false;
