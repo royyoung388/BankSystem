@@ -111,7 +111,8 @@ public class ManagerController {
                         account.getCurrency(), interest, 0, "get interest", LocalDateTime.now());
                 transactionModel.insertTransaction(trans);
                 // update manager account
-                accountModel.updateBalance(fromID, balance - interest);
+                double mBalance=accountModel.queryAccount(fromID).getBalance();
+                accountModel.updateBalance(fromID, mBalance - interest);
                 Transaction trans2 = new Transaction(-1, 1, fromID, account.getAid(), Transaction.TransType.INTEREST,
                         account.getCurrency(), interest, 0, "give interest to customer: " + account.getUid(),
                         LocalDateTime.now());
@@ -126,7 +127,7 @@ public class ManagerController {
         for (LoanAccount account : accounts
         ) {
             double balance = account.getBalance();
-            if (balance >= 0) {
+            if (balance <= 0) {
                 continue;
             }
             double interest = round(balance * rate);

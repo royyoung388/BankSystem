@@ -242,7 +242,11 @@ public class MainPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (loanAccountController == null) {
-                    createLoan();
+//                    createLoan();
+                    JOptionPane.showMessageDialog(null,
+                            "Empty collateral or value",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
                 String collateral = collateralInput.getText().strip();
                 String value = valueInput.getText().strip();

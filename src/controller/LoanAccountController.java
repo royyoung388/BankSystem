@@ -50,7 +50,7 @@ public class LoanAccountController extends AbstractAccountController {
     // amount is positive value
     // loanAccount balance is negative value
     public boolean getLoan(double amount) {
-        amount = -amount;
+//        amount = -amount;
         int totalValue = 0;
         for (Collateral c : getCollateralList()) {
             totalValue += c.getValue();
