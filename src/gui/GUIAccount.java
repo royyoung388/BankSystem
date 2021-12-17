@@ -37,7 +37,7 @@ public class GUIAccount extends JFrame {
     public GUIAccount(Account a) {
         JFrame frame = new JFrame(a.getAccountName());
         frame.setContentPane(mainPanel);
-        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
         this.u = u;
@@ -50,7 +50,6 @@ public class GUIAccount extends JFrame {
         } else {
             loanButton.setVisible(false);
         }
-
         updateTransactions();
 
 //        goBackButton.addActionListener(new ActionListener() {
@@ -156,7 +155,8 @@ public class GUIAccount extends JFrame {
 
     public JPanel newMainPanel(JPanel newPanel) {
         JPanel homePage = this.mainPanel;
-        this.mainPanel = newPanel;
+        this.mainPanel.removeAll();
+        this.mainPanel.add(newPanel);
         return homePage;
     }
 
@@ -164,14 +164,18 @@ public class GUIAccount extends JFrame {
         accBalance.setText(String.valueOf(account.getBalance()));
         accCurType.setText(String.valueOf(account.getCurrency()));
         java.util.List<Transaction> transactionList = controller.showTransactionByAccount();
+
         if (!transactionList.isEmpty()) {
-            transactionsPanel.setLayout(new GridLayout(transactionList.size() + 1, 1));
-            // title
-            transactionsPanel.add(new GUITransaction().getTransactionPanel());
-            // panels of transaction
+            JPanel newPanel = new JPanel();
+            newPanel.setLayout(new GridLayout(transactionList.size() + 1, 1));
+            newPanel.add(new GUITransaction().getTransactionPanel());
             for (Transaction t : transactionList) {
                 transactionsPanel.add(new GUITransaction(t).getTransactionPanel());
             }
+            transactionsPanel.removeAll();
+            transactionsPanel.add(newPanel);
+            transactionsPanel.validate();
+            transactionsPanel.repaint();
         }
     }
 
