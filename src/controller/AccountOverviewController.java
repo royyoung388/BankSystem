@@ -52,18 +52,26 @@ public class AccountOverviewController {
 //    }
 
     public boolean addAccount(int uid, Account.AccountType type, double balance, Account.CurrencyType currency, String accountName) {
-        if(balance<10){
+        if (balance < 10) {
             return false;
         }
+        updateAccountList();
         if (type == Account.AccountType.SECURITY) {
+            for (Account account: accountList
+                 ) {
+                if(account.getType()==Account.AccountType.SECURITY){
+                    return false;
+                }
+            }
             if (currency != Account.CurrencyType.USD) {
                 return false;
             }
-            if(balance<1010){
+            if (balance < 1010) {
                 return false;
             }
             int totalValue = 0;
             for (Account a : accountList) {
+
                 if (a.getType() == Account.AccountType.SAVING && a.getCurrency() == Account.CurrencyType.USD) {
                     totalValue += a.getBalance();
                 }
@@ -72,12 +80,25 @@ public class AccountOverviewController {
                 return false;
             }
         }
-        balance=balance-10;//fee
+        if (type == Account.AccountType.LOAN ) {
+            if(currency!= Account.CurrencyType.USD){
+                return false;
+            }
+            for (Account account: accountList
+            ) {
+                System.out.println(account.getType());
+                if(account.getType()==Account.AccountType.LOAN){
+                    return false;
+                }
+            }
+            return false;
+        }
+        balance = balance - 10;//fee
         if (accountModel.createAccount(uid, accountName, type, balance, currency)) {
             updateAccountList();
-            int accountID=accountModel.getLastInsertAccount();
-            boolean transSuc=TransactionController.openAccountTransaction(uid,accountModel.getLastInsertAccount(),balance,currency.toString());
-            if (!transSuc){
+            int accountID = accountModel.getLastInsertAccount();
+            boolean transSuc = TransactionController.openAccountTransaction(uid, accountModel.getLastInsertAccount(), balance, currency.toString());
+            if (!transSuc) {
                 System.out.println("fail to write trans");
             }
             return true;
