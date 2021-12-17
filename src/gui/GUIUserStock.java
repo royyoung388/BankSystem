@@ -50,12 +50,19 @@ public class GUIUserStock extends JFrame {
         this.secAccounts = new ArrayList<>();
         this.stocks = getStocks();
 
+        // todo add stock
+        for (Stock s : stocks) {
+            stockInput.addItem(s.toString());
+        }
 
         List<Account> accounts = controller.getAccountList();
 
         for (Account a : accounts) {
             if (a.getType() == Account.AccountType.SECURITY) {
                 secAccounts.add((SecurityAccount) a);
+                // todo add security account
+                securityAccount = (SecurityAccount) a;
+                secAccInput.addItem(securityAccount.getAccountName() + "(" + securityAccount.getAid() + ")");
             }
         }
 
@@ -77,6 +84,7 @@ public class GUIUserStock extends JFrame {
                                 "Missing security account selection.",
                                 "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
+                        //todo: get account
                         SecurityAccount s = secAccMap.get(secAccInput.getSelectedItem());
                         updateSecAcc(s);
                     }
@@ -91,12 +99,14 @@ public class GUIUserStock extends JFrame {
                                 "Missing stock selection.",
                                 "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
+                        // todo: get stock
                         Stock s = stockMap.get(stockInput.getSelectedItem());
                         updateStock(s);
                     }
                 }
             });
 
+            //todo: buy
             buyButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -129,6 +139,7 @@ public class GUIUserStock extends JFrame {
                 }
             });
 
+            // todo: sell
             sellButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -160,7 +171,7 @@ public class GUIUserStock extends JFrame {
                 }
             });
             JPanel stockList = new JPanel();
-            SecurityAccountController secController = new SecurityAccountController(this.securityAccount);
+            SecurityAccountController secController = new SecurityAccountController(securityAccount);
             userStocks = secController.getStockHolding();
 
             stockList.setLayout(new GridLayout(userStocks.size(), 1));
