@@ -242,7 +242,6 @@ public class MainPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (loanAccountController == null) {
-//                    createLoan();
                     JOptionPane.showMessageDialog(null,
                             "Empty collateral or value",
                             "Error", JOptionPane.ERROR_MESSAGE);
@@ -288,11 +287,6 @@ public class MainPage {
             }
         });
         updateCollateral();
-    }
-
-    private void createLoan() {
-        accountOverviewController.addAccount(user.getUid(), Account.AccountType.LOAN, 10, Account.CurrencyType.USD, "Loan");
-        loanAccountController = new LoanAccountController(accountOverviewController.getLoanAccount());
     }
 
     private void updateCollateral() {

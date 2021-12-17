@@ -92,8 +92,7 @@ public class ManagerController {
 
     public boolean giveSavingInterest(double rate, double minBalance) {
         List<SavingAccount> accounts = accountModel.querySavingAccounts();
-        for (SavingAccount account : accounts
-        ) {
+        for (SavingAccount account : accounts) {
             double balance = account.getBalance();
             if (balance >= minBalance) {
                 double interest = round(balance * rate);

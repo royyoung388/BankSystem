@@ -152,6 +152,7 @@ public class AccountDetail {
     }
 
     private void updateTransaction() {
+        account = controller.update();
         balanceText.setText(String.valueOf(account.getBalance()));
         // transaction
         List<Transaction> transactionList = controller.showTransactionByAccount();

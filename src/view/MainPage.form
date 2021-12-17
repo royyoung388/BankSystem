@@ -66,6 +66,7 @@
                   <model>
                     <item value="CHECKING"/>
                     <item value="SAVING"/>
+                    <item value="LOAN"/>
                     <item value="SECURITY"/>
                   </model>
                 </properties>

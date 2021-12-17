@@ -8,7 +8,6 @@ import model.AccountModelImpl;
 import model.TransactionModel;
 import model.TransactionModelImpl;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,6 +23,10 @@ public abstract class AbstractAccountController implements AccountControllerInte
 
     public AbstractAccountController(Account account) {
         this.account = account;
+    }
+
+    public Account update() {
+        return accountModel.queryAccount(account.getAid());
     }
 
     public boolean increaseBalance(double amount) {
