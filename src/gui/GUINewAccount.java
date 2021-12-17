@@ -6,7 +6,6 @@ import controller.AccountOverviewController;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.PopupMenuListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,11 +18,11 @@ import java.util.List;
 public class GUINewAccount extends JFrame {
     private JPanel newAccPanel;
     private JButton createAccountButton;
-    private JComboBox<String> accType;
-    private JComboBox<String> accCurType;
     private JTextField accBalanceInput;
     private JTextField accNameInput;
     private JPanel accTypePanel;
+    private JComboBox accType;
+    private JComboBox accCurType;
     private JPanel accTypeCB;
     private AccountOverviewController controller;
     private User u;
@@ -39,7 +38,6 @@ public class GUINewAccount extends JFrame {
         this.curTypeMap = getCurTypeMap();
         this.accTypeMap = getAccTypeMap();
         setContentPane(newAccPanel);
-        createUIComponents();
         createAccountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -84,8 +82,8 @@ public class GUINewAccount extends JFrame {
                                         {
                                             if(e.getStateChange() == ItemEvent.SELECTED)
                                             {
-                                                JComboBox<String> accType = (JComboBox<String>) e.getSource();
-                                                String newSelection = (String) accType.getSelectedItem();
+                                                JComboBox<String> accTypecm1 = (JComboBox<String>) e.getSource();
+                                                String newSelection = (String) accTypecm1.getSelectedItem();
                                                 System.out.println("newSelection: " + newSelection);
                                             }
                                         }
@@ -178,8 +176,6 @@ public class GUINewAccount extends JFrame {
         final JLabel label1 = new JLabel();
         label1.setText("Select Account Type: ");
         panel1.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        accType = new JComboBox();
-        panel1.add(accType, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         newAccPanel.add(panel2, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -187,8 +183,6 @@ public class GUINewAccount extends JFrame {
         final JLabel label2 = new JLabel();
         label2.setText("Select Account Currency: ");
         panel2.add(label2, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        accCurType = new JComboBox();
-        panel2.add(accCurType, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         newAccPanel.add(panel3, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -222,7 +216,7 @@ public class GUINewAccount extends JFrame {
         this.controller = new AccountOverviewController(u.getUid(), u.getUsername());
         this.curTypeMap = getCurTypeMap();
         this.accTypeMap = getAccTypeMap();
-        createUIComponents();
+//        createUIComponents();
 //        this.accTypeInput = new JComboBox<String>();
 //        for (String s : getAccTypeKeys(accTypeMap)){
 //            System.out.println(s);
@@ -230,15 +224,15 @@ public class GUINewAccount extends JFrame {
 //        }
 //        this.accCurType = new JComboBox<>(getCurTypeKeys(curTypeMap));
     }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-        accType = new JComboBox<>();
-        accTypeMap = getAccTypeMap();
-        this.accType.setModel(new DefaultComboBoxModel<String>(getAccTypeKeys(accTypeMap)));
-
-        accCurType = new JComboBox<>();
-        curTypeMap = getCurTypeMap();
-        this.accCurType.setModel(new DefaultComboBoxModel<String>(getCurTypeKeys(curTypeMap)));
-    }
+//
+//    private void createUIComponents() {
+//        // TODO: place custom component creation code here
+////        accType = new JComboBox<>();
+//        accTypeMap = getAccTypeMap();
+//        this.accType.setModel(new DefaultComboBoxModel<String>(getAccTypeKeys(accTypeMap)));
+//
+////        accCurType = new JComboBox<>();
+//        curTypeMap = getCurTypeMap();
+//        this.accCurType.setModel(new DefaultComboBoxModel<String>(getCurTypeKeys(curTypeMap)));
+//    }
 }
