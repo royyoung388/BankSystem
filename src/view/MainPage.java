@@ -97,7 +97,6 @@ public class MainPage {
                         tab.addTab("Stock", stockPanel);
                         tab.addTab("Market", marketPanel);
                     }
-                    frame.dispose();
                 }
             }
         });
