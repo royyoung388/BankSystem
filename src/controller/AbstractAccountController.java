@@ -39,9 +39,9 @@ public abstract class AbstractAccountController implements AccountControllerInte
 
     public boolean decreaseBalance(double amount) {
         double balance = account.getBalance();
-        if (balance < amount) {
-            return false;
-        }
+//        if (balance < amount) {
+//            return false;
+//        }
         balance -= amount;
         account.setBalance(balance);
         accountModel.updateBalance(account.getAid(), balance);

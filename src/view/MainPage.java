@@ -243,7 +243,7 @@ public class MainPage {
             public void actionPerformed(ActionEvent e) {
                 if (accountOverviewController.getLoanAccount() == null) {
                     JOptionPane.showMessageDialog(null,
-                            "Empty collateral or value",
+                            "No Loan Account",
                             "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }

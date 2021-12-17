@@ -126,7 +126,7 @@ public class ManagerController {
         for (LoanAccount account : accounts
         ) {
             double balance = account.getBalance();
-            if (balance <= 0) {
+            if (balance >= 0) {
                 continue;
             }
             double interest = round(balance * rate);

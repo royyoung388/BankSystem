@@ -51,13 +51,13 @@ public class LoanAccountController extends AbstractAccountController {
     // loanAccount balance is negative value
     public boolean getLoan(double amount) {
 //        amount = -amount;
-        int totalValue = 0;
-        for (Collateral c : getCollateralList()) {
-            totalValue += c.getValue();
-        }
-        if (totalValue + account.getBalance() - amount < 0) {
-            return false;
-        }
+//        int totalValue = 0;
+//        for (Collateral c : getCollateralList()) {
+//            totalValue += c.getValue();
+//        }
+//        if (totalValue + account.getBalance() - amount < 0) {
+//            return false;
+//        }
         decreaseBalance(amount);
         Transaction trans = new Transaction(-1, account.getUid(), account.getAid(), -1, Transaction.TransType.LOAN,
                 account.getCurrency(), amount, 0, "", LocalDateTime.now());
