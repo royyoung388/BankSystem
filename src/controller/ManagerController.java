@@ -89,7 +89,7 @@ public class ManagerController {
         ) {
             double balance = account.getBalance();
             if (balance >= minBalance) {
-                double interest = balance * rate;
+                double interest = round(balance * rate);
                 int fromID;
                 if (account.getCurrency() == Account.CurrencyType.USD) {
                     fromID = USD_ACCOUNT.getAid();
@@ -119,10 +119,10 @@ public class ManagerController {
         for (LoanAccount account : accounts
         ) {
             double balance = account.getBalance();
-            if(balance>=0){
+            if (balance >= 0) {
                 continue;
             }
-            double interest = balance * rate;
+            double interest = round(balance * rate);
             // update customer account
             accountModel.updateBalance(account.getAid(), balance + interest);
             Transaction trans = new Transaction(-1, account.getUid(), account.getAid(), account.getAid(), Transaction.TransType.INTEREST,
@@ -132,7 +132,7 @@ public class ManagerController {
         return true;
     }
 
-    public List<Transaction> showTransactionByDay(LocalDateTime day){
+    public List<Transaction> showTransactionByDay(LocalDateTime day) {
         return transactionModel.queryTransactionByDay(day);
     }
 
@@ -140,4 +140,7 @@ public class ManagerController {
         return transactionModel.queryAllTransaction();
     }
 
+    private double round(double value) {
+        return (double) (Math.round(value * 100) / 100);
+    }
 }

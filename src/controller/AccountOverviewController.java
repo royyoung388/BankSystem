@@ -59,6 +59,9 @@ public class AccountOverviewController {
             if (currency != Account.CurrencyType.USD) {
                 return false;
             }
+            if(balance<1010){
+                return false;
+            }
             int totalValue = 0;
             for (Account a : accountList) {
                 if (a.getType() == Account.AccountType.SAVING && a.getCurrency() == Account.CurrencyType.USD) {
