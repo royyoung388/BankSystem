@@ -36,6 +36,7 @@ public class ManagerPage {
     private JTextField priceText;
     private JTextField quantityText;
     private JButton addStockBt;
+    private JButton logOutButton;
 
     private ManagerController managerController;
     private AccountOverviewController accountOverviewController;
@@ -45,6 +46,8 @@ public class ManagerPage {
         frame.setContentPane(manager);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setSize(700, 500);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
         managerController = new ManagerController();
@@ -69,6 +72,15 @@ public class ManagerPage {
                 updateStock();
             }
         });
+
+        // log out
+        logOutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Login();
+                frame.dispose();
+            }
+        });
     }
 
     private void updateBank() {
@@ -82,7 +94,6 @@ public class ManagerPage {
         };
         bankTable.setModel(dataModel);
     }
-
 
 
     private void updateStock() {
@@ -244,6 +255,12 @@ public class ManagerPage {
         panel4.add(scrollPane4, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         bankTable = new JTable();
         scrollPane4.setViewportView(bankTable);
+        final JPanel panel5 = new JPanel();
+        panel5.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        tabbedPane1.addTab("Setting", panel5);
+        logOutButton = new JButton();
+        logOutButton.setText("Log out");
+        panel5.add(logOutButton, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

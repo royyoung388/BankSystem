@@ -41,6 +41,8 @@ public class AccountDetail {
         JFrame frame = new JFrame("AccountDetail");
         frame.setContentPane(transaction);
         frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setSize(700, 500);
         frame.setVisible(true);
 
         this.account = account;

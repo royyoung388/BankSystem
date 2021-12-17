@@ -1,6 +1,5 @@
 package view;
 
-import bean.account.Account;
 import bean.user.User;
 import controller.AccountOverviewController;
 
@@ -8,7 +7,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
-import java.util.List;
 
 import static utils.Utils.accountToArray;
 
@@ -20,6 +18,8 @@ public class AccountList {
         JFrame frame = new JFrame("AccountList");
         frame.setContentPane(accountList);
         frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setSize(700, 500);
         frame.setVisible(true);
 
         AccountOverviewController controller = new AccountOverviewController(user.getUid());
