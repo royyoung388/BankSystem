@@ -23,6 +23,11 @@ public class SecurityAccountController extends AbstractAccountController {
         return ((SecurityAccount) account).getStockHoldingList();
     }
 
+    public List<Stock> getMarket() {
+        ((SecurityAccount) account).updateStockMarketList();
+        return ((SecurityAccount) account).getStockMarketList();
+    }
+
     public boolean buyStock(int stockID, int quantity) {
         double before = account.getBalance();
         Stock stock = stockMarketModel.queryStock(stockID);
