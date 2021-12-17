@@ -435,6 +435,7 @@ public class MainPage {
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         defaultComboBoxModel1.addElement("CHECKING");
         defaultComboBoxModel1.addElement("SAVING");
+        defaultComboBoxModel1.addElement("LOAN");
         defaultComboBoxModel1.addElement("SECURITY");
         typeCB.setModel(defaultComboBoxModel1);
         createPanel.add(typeCB, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 2, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));

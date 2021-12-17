@@ -1,8 +1,8 @@
 # Team
 |name|work|ID|Email|
 |----|----|----|----|
-|Zhihao Gu|Controller, Model, Documentation|U55787297|zhihao97@bu.edu|
-|Pengchao Yuan|Model, DB, Documentation|U50962567|yuanpc@bu.edu|
+|Zhihao Gu|GUI, Controller, Model, Documentation|U55787297|zhihao97@bu.edu|
+|Pengchao Yuan|GUI, Controller, Model, DB, Documentation|U50962567|yuanpc@bu.edu|
 |Huiwen He|GUI|U96391336|huiwenhe@bu.edu|
 
 # Run in the src folder
