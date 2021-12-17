@@ -241,11 +241,14 @@ public class MainPage {
         getLoanButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (loanAccountController == null) {
+                if (accountOverviewController.getLoanAccount() == null) {
                     JOptionPane.showMessageDialog(null,
                             "Empty collateral or value",
                             "Error", JOptionPane.ERROR_MESSAGE);
                     return;
+                }
+                if (loanAccountController == null) {
+                    loanAccountController = new LoanAccountController(accountOverviewController.getLoanAccount());
                 }
                 String collateral = collateralInput.getText().strip();
                 String value = valueInput.getText().strip();
