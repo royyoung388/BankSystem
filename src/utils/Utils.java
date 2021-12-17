@@ -39,8 +39,8 @@ public class Utils {
     public static List<Stock> arrayToStock(TableModel model) {
         List<Stock> stockList = new ArrayList<>(model.getRowCount());
         for (int i = 0; i < model.getRowCount(); i++) {
-            stockList.add(new Stock((int) model.getValueAt(i, 0), (String) model.getValueAt(i, 1),
-                    (double) model.getValueAt(i, 2), (int) model.getValueAt(i, 3)));
+            stockList.add(new Stock(Integer.parseInt((String) model.getValueAt(i, 0)), (String) model.getValueAt(i, 1),
+                    Double.parseDouble((String) model.getValueAt(i, 2)), Integer.parseInt((String) model.getValueAt(i, 3))));
         }
         return stockList;
     }

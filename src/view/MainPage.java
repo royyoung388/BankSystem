@@ -143,6 +143,22 @@ public class MainPage {
 
         // show account
         updateAccount();
+        // double click
+        accountTable.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent mouseEvent) {
+                JTable table = (JTable) mouseEvent.getSource();
+                Point point = mouseEvent.getPoint();
+                int row = table.rowAtPoint(point);
+                if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
+                    // your valueChanged overridden method
+                    int aid = Integer.parseInt((String) accountTable.getModel().getValueAt(row, 0));
+                    System.out.println("double click: " + aid);
+                    new AccountDetail(getAccount(aid));
+                }
+            }
+        });
+
+        // refresh
         refreshAccount.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -150,6 +166,7 @@ public class MainPage {
             }
         });
 
+        // show market and stock
         if (accountOverviewController.getSecurityAccount() == null) {
             // no security account
             tab.removeTabAt(3);
@@ -349,7 +366,6 @@ public class MainPage {
         }
     }
 
-
     private void updateAccount() {
         // init account
         accountOverviewController.updateAccountList();
@@ -363,19 +379,6 @@ public class MainPage {
             }
         };
         accountTable.setModel(dataModel);
-        accountTable.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent mouseEvent) {
-                JTable table = (JTable) mouseEvent.getSource();
-                Point point = mouseEvent.getPoint();
-                int row = table.rowAtPoint(point);
-                if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
-                    // your valueChanged overridden method
-                    int aid = Integer.parseInt((String) accountTable.getModel().getValueAt(row, 0));
-                    System.out.println("double click: " + aid);
-                    new AccountDetail(getAccount(aid));
-                }
-            }
-        });
     }
 
     private Account getAccount(int aid) {

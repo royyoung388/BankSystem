@@ -76,6 +76,37 @@ public class ManagerPage {
         updateTransaction(managerController.showAllTransaction());
 
         // show stock
+        // update
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<Stock> stockList = arrayToStock(stockTable.getModel());
+                for (Stock stock : stockList) {
+                    managerController.updateStock(stock);
+                }
+                updateStock();
+            }
+        });
+
+        // add new stock
+        addStockBt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = nameText.getText().strip();
+                String price = priceText.getText().strip();
+                String quantity = quantityText.getText().strip();
+
+                if (name.isEmpty() || price.isEmpty() || quantity.isEmpty()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Empty name, price or quantity",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                managerController.addStock(name, Double.parseDouble(price), Integer.parseInt(quantity));
+                updateStock();
+            }
+        });
         updateStock();
 
         // show bank account
@@ -121,37 +152,6 @@ public class ManagerPage {
             }
         };
         stockTable.setModel(dataModel);
-
-        // update
-        updateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                List<Stock> stockList = arrayToStock(stockTable.getModel());
-                for (Stock stock : stockList) {
-                    managerController.updateStock(stock);
-                }
-            }
-        });
-
-        // add new stock
-        addStockBt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String name = nameText.getText().strip();
-                String price = priceText.getText().strip();
-                String quantity = quantityText.getText().strip();
-
-                if (name.isEmpty() || price.isEmpty() || quantity.isEmpty()) {
-                    JOptionPane.showMessageDialog(null,
-                            "Empty name, price or quantity",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                managerController.addStock(name, Double.parseDouble(price), Integer.parseInt(quantity));
-                updateStock();
-            }
-        });
     }
 
 

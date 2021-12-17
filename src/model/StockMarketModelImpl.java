@@ -61,11 +61,11 @@ public class StockMarketModelImpl implements StockMarketModel {
     public boolean updateStock(Stock stock) {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            String sql = String.format("UPDATE stock SET name='%s', price=%f, quantity=%d WHERE sid=%d",
+            String sql = String.format("UPDATE stock SET name='%s', price=%f, quantity=%d WHERE sid=%d;",
                     stock.getName(), stock.getPrice(), stock.getQuantity(), stock.getSid());
-            statement.executeUpdate(sql);
+            int result = statement.executeUpdate(sql);
             statement.close();
-            return true;
+            return result == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         }
