@@ -62,16 +62,14 @@ public class AccountOverviewController {
                 return false;
             }
         }
-
+        balance=balance-10;//fee
         if (accountModel.createAccount(uid, accountName, type, balance, currency)) {
             updateAccountList();
             int accountID=accountModel.getLastInsertAccount();
-//            TransactionModelImpl transactionModel=new TransactionModelImpl();
-//            Transaction trans = new Transaction(-1, uid, account.getAid(), -1, Transaction.TransType.WITHDRAW,
-//                    account.getCurrency(), amount, fee, "withdraw: " + amount, LocalDateTime.now());
-//            transactionModel.insertTransaction(trans);
-
-
+            boolean transSuc=TransactionController.openAccountTransaction(uid,accountModel.getLastInsertAccount(),balance,currency.toString());
+            if (!transSuc){
+                System.out.println("fail to write trans");
+            }
             return true;
         }
         return false;
