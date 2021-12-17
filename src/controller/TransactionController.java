@@ -3,6 +3,7 @@ package controller;
 import bean.Transaction;
 import bean.account.Account;
 import bean.user.Manager;
+import model.AccountModel;
 import model.AccountModelImpl;
 import model.TransactionModelImpl;
 
@@ -43,6 +44,9 @@ public class TransactionController {
         }else {
             toAid=Manager.EUR_ACCOUNT_ID;
         }
+        AccountModelImpl accountModel=new AccountModelImpl();
+        double mbalance =accountModel.queryAccount(toAid).getBalance();
+        accountModel.updateBalance(toAid,mbalance+10);
         Transaction transaction1 = new Transaction(-1, 1,fromAid, toAid, Transaction.TransType.FEE.toString(), currency, 10, 0, "Open new account fee "+fromAid,  LocalDateTime.now());
         Transaction transaction2=new Transaction(-1,uid,-1,fromAid,Transaction.TransType.DEPOSIT.toString(),currency,amount,10,"open account deposit "+amount+" fee "+ "10.0",LocalDateTime.now());
         return transactionModel.insertTransaction(transaction1) && transactionModel.insertTransaction(transaction2);

@@ -1,14 +1,11 @@
 package controller;
 
-import bean.Transaction;
 import bean.account.Account;
 import bean.account.LoanAccount;
 import bean.account.SecurityAccount;
 import model.AccountModel;
 import model.AccountModelImpl;
-import model.TransactionModelImpl;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class AccountOverviewController {
@@ -57,8 +54,8 @@ public class AccountOverviewController {
         }
         updateAccountList();
         if (type == Account.AccountType.SECURITY) {
-            for (Account account: accountList) {
-                if(account.getType()==Account.AccountType.SECURITY){
+            for (Account account : accountList) {
+                if (account.getType() == Account.AccountType.SECURITY) {
                     return false;
                 }
             }
@@ -76,14 +73,14 @@ public class AccountOverviewController {
                 return false;
             }
         }
-        if (type == Account.AccountType.LOAN ) {
-            if(currency!= Account.CurrencyType.USD){
+        if (type == Account.AccountType.LOAN) {
+            if (currency != Account.CurrencyType.USD) {
                 return false;
             }
-            for (Account account: accountList
+            for (Account account : accountList
             ) {
                 System.out.println(account.getType());
-                if(account.getType()==Account.AccountType.LOAN){
+                if (account.getType() == Account.AccountType.LOAN) {
                     return false;
                 }
             }
