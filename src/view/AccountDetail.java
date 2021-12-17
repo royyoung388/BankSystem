@@ -81,8 +81,12 @@ public class AccountDetail {
                 if (amount.isEmpty())
                     return;
                 double money = Double.parseDouble(amount);
-                controller.withdraw(money);
-                updateTransaction();
+                if (controller.withdraw(money))
+                    updateTransaction();
+                else
+                    JOptionPane.showMessageDialog(null,
+                            "Withdraw failed",
+                            "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -94,8 +98,12 @@ public class AccountDetail {
                 if (amount.isEmpty())
                     return;
                 double money = Double.parseDouble(amount);
-                controller.deposit(money);
-                updateTransaction();
+                if (controller.deposit(money))
+                    updateTransaction();
+                else
+                    JOptionPane.showMessageDialog(null,
+                            "Deposit failed",
+                            "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -111,8 +119,12 @@ public class AccountDetail {
                             "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                controller.transfer(Integer.parseInt(toaid), Double.parseDouble(amount));
-                updateTransaction();
+                if (controller.transfer(Integer.parseInt(toaid), Double.parseDouble(amount)))
+                    updateTransaction();
+                else
+                    JOptionPane.showMessageDialog(null,
+                            "Transfer failed",
+                            "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
