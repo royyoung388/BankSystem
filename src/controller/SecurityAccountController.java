@@ -85,4 +85,8 @@ public class SecurityAccountController extends AbstractAccountController {
         return transfer(toID, amount, 0);
     }
 
+    public static void main(String[] args) {
+        SecurityAccountController securityAccountController = new SecurityAccountController(new SecurityAccount(1, 2, "1", 111, "USD"));
+        System.out.println(securityAccountController.getMarket());
+    }
 }

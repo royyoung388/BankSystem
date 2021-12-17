@@ -82,4 +82,6 @@ public interface AccountModel {
      * @return
      */
     boolean transfer(int fromAid, int toAid, double amount);
+
+    int getLastInsertAccount();
 }

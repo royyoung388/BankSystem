@@ -181,18 +181,35 @@ public class AccountModelImpl implements AccountModel {
         return withdraw(fromBAid, amount) && deposit(toBAid, amount);
     }
 
+    public int getLastInsertAccount(){
+        int aID=0;
+        try {
+            Statement statement = DAO.getInstance().getConnection().createStatement();
+            ResultSet rs = statement.executeQuery("Select last_insert_rowid();");
+            if (rs.next()) {
+                aID=rs.getInt(1);
+            }
+            rs.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return aID;
+    }
+
 
     public static void main(String[] args) {
-        AccountModel accountModel = new AccountModelImpl();
-        System.out.println(accountModel.createAccount(1, "test1", Account.AccountType.SECURITY, 0, Account.CurrencyType.USD));
-        System.out.println(accountModel.createAccount(1, "test2", Account.AccountType.SAVING, 0, Account.CurrencyType.USD));
-        System.out.println(accountModel.queryAllAccount(1));
-        System.out.println(accountModel.queryAccount(1));
-        System.out.println(accountModel.deposit(1, 100));
-        System.out.println(accountModel.queryAccount(1));
-        System.out.println(accountModel.withdraw(1, 10));
-        System.out.println(accountModel.queryAccount(1));
-        System.out.println(accountModel.transfer(1, 2, 50));
-        System.out.println(accountModel.queryAllAccount(1));
+        AccountModelImpl accountModel = new AccountModelImpl();
+        System.out.println(accountModel.createAccount(1, "test1", Account.AccountType.SAVING, 0, Account.CurrencyType.USD));
+//        System.out.println(accountModel.createAccount(1, "test2", Account.AccountType.SAVING, 0, Account.CurrencyType.USD));
+//        System.out.println(accountModel.queryAllAccount(1));
+//        System.out.println(accountModel.queryAccount(1));
+//        System.out.println(accountModel.deposit(1, 100));
+//        System.out.println(accountModel.queryAccount(1));
+//        System.out.println(accountModel.withdraw(1, 10));
+//        System.out.println(accountModel.queryAccount(1));
+//        System.out.println(accountModel.transfer(1, 2, 50));
+//        System.out.println(accountModel.queryAllAccount(1));
+        System.out.println(accountModel.getLastInsertAccount());
     }
 }

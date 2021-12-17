@@ -1,11 +1,14 @@
 package model;
 
+import bean.Stock;
 import bean.account.Account;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DAO {
     private static volatile DAO baseDAO;
@@ -41,6 +44,7 @@ public class DAO {
                 if (baseDAO == null) {
                     baseDAO = new DAO();
                     createManager();
+
                 }
             }
         return baseDAO;
@@ -140,12 +144,25 @@ public class DAO {
         UserModelImpl userModel = new UserModelImpl();
         if (userModel.isUserExists("admin"))
             return;
+        generateDefaultStock();
         userModel.signUp(0, "admin", "admin");
         int userID = userModel.queryManager().getUid();
         AccountModelImpl accountModel = new AccountModelImpl();
         accountModel.createAccount(userID, "USD", Account.AccountType.SAVING, 100000, Account.CurrencyType.USD);
         accountModel.createAccount(userID, "RMB", Account.AccountType.SAVING, 100000, Account.CurrencyType.RMB);
         accountModel.createAccount(userID, "EUR", Account.AccountType.SAVING, 100000, Account.CurrencyType.EUR);
+    }
+
+    public static void generateDefaultStock(){
+        StockMarketModelImpl stockMarketModel=new StockMarketModelImpl();
+        Stock stock1=new Stock(-1,"Apple",100,100);
+
+        Stock stock2=new Stock(-1,"Google",200,100);
+        System.out.println("1111111111");
+        List<Stock> stockList=new ArrayList<>();
+        stockList.add(stock1);
+        stockList.add(stock2);
+        stockMarketModel.insertStocks(stockList);
     }
 
     public static void main(String[] args) {

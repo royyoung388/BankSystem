@@ -1,10 +1,13 @@
 package controller;
 
+import bean.Transaction;
 import bean.account.Account;
 import bean.account.SecurityAccount;
 import model.AccountModel;
 import model.AccountModelImpl;
+import model.TransactionModelImpl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class AccountOverviewController {
@@ -59,8 +62,16 @@ public class AccountOverviewController {
                 return false;
             }
         }
+
         if (accountModel.createAccount(uid, accountName, type, balance, currency)) {
             updateAccountList();
+            int accountID=accountModel.getLastInsertAccount();
+//            TransactionModelImpl transactionModel=new TransactionModelImpl();
+//            Transaction trans = new Transaction(-1, uid, account.getAid(), -1, Transaction.TransType.WITHDRAW,
+//                    account.getCurrency(), amount, fee, "withdraw: " + amount, LocalDateTime.now());
+//            transactionModel.insertTransaction(trans);
+
+
             return true;
         }
         return false;

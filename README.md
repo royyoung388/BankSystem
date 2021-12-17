@@ -3,12 +3,16 @@
 |----|----|----|----|
 |Zhihao Gu|Controller, Model, Documentation|U55787297|zhihao97@bu.edu|
 |Pengchao Yuan|Model, DB, Documentation|U50962567|yuanpc@bu.edu|
-|Huiwen He|GUI|||
+|Huiwen He|GUI|U96391336|huiwenhe@bu.edu|
 
+# Run in the src folder
+- Execution
+  java Main.java
 # File structure
-see: tree.txt
+Refer to tree.txt
 
 # Design
+Refer to Online Bank Design Documentation.pdf
 
 ## MVC pattern
 The project is organized by MVC pattern.  
@@ -39,3 +43,4 @@ Account is abstract class.  Can create new type of account by extend it.
 
 # Future
 
+Allow multiple users use the 
