@@ -23,6 +23,18 @@ public class SavingAccountController extends AbstractAccountController {
                 return false;
             }
         }
+        System.out.println("saving transfer");
         return transfer(toID, amount, 0);
+    }
+
+    public static void main(String[] args) {
+        SavingAccountController savingAccountController=new SavingAccountController(new SavingAccount(11,6," ",80,"USD"));
+//        System.out.println(savingAccountController.transfer(12,10));
+//        System.out.println(savingAccountController.withdraw(10));
+//        System.out.println(savingAccountController.deposit(10));
+
+
+
+
     }
 }
