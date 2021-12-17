@@ -136,11 +136,8 @@ public class GUIAccount extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (a.getType() == Account.AccountType.LOAN) {
-
                     loan = new GUILoan(u, a);
-
                     JPanel homePage = newMainPanel(loan.getLoanPanel());
-
                     loan.getGoBackButton().addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
