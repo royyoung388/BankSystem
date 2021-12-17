@@ -113,6 +113,8 @@ public class MainPage {
                         // show stock and market
                         tab.addTab("Stock", stockPanel);
                         tab.addTab("Market", marketPanel);
+                        updateStockHolding();
+                        updateMarket();
                     }
                 }
             }

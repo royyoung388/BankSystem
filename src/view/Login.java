@@ -69,7 +69,9 @@ public class Login {
                 if (!controller.signUp(username, pwd, User.CUSTOMER)) {
                     JOptionPane.showMessageDialog(frame, "Register failed", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
-                }
+                } else
+                    JOptionPane.showMessageDialog(frame, "Register success!", "Error", JOptionPane.INFORMATION_MESSAGE);
+
             }
         });
     }

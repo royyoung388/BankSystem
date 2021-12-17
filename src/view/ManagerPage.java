@@ -55,6 +55,21 @@ public class ManagerPage {
 
         // show user
         updateUser();
+        // double click
+        userTable.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent mouseEvent) {
+                JTable table = (JTable) mouseEvent.getSource();
+                Point point = mouseEvent.getPoint();
+                int row = table.rowAtPoint(point);
+                if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
+                    // your valueChanged overridden method
+                    int uid = Integer.parseInt((String) userTable.getModel().getValueAt(row, 0));
+                    String username = (String) userTable.getModel().getValueAt(row, 1);
+                    System.out.println("double click: " + uid);
+                    new AccountList(new Customer(uid, username, null));
+                }
+            }
+        });
 
         // show transaction
         queryButton.addActionListener(new ActionListener() {
@@ -175,20 +190,6 @@ public class ManagerPage {
             }
         };
         userTable.setModel(dataModel);
-        userTable.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent mouseEvent) {
-                JTable table = (JTable) mouseEvent.getSource();
-                Point point = mouseEvent.getPoint();
-                int row = table.rowAtPoint(point);
-                if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
-                    // your valueChanged overridden method
-                    int uid = Integer.parseInt((String) userTable.getModel().getValueAt(row, 0));
-                    String username = (String) userTable.getModel().getValueAt(row, 1);
-                    System.out.println("double click: " + uid);
-                    new AccountList(new Customer(uid, username, null));
-                }
-            }
-        });
     }
 
 
