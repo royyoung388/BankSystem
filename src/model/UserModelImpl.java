@@ -103,7 +103,7 @@ public class UserModelImpl implements UserModel {
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM user WHERE status=1 AND type =" + User.CUSTOMER);
-            if (rs.next()) {
+            while (rs.next()) {
                 result.add(new Customer(rs.getInt(1), rs.getString(2), rs.getString(3)));
             }
             rs.close();
