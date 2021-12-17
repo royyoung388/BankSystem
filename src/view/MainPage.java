@@ -109,6 +109,9 @@ public class MainPage {
                             "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 } else {
+                    JOptionPane.showMessageDialog(null,
+                            "Create Success",
+                            "Account created", JOptionPane.INFORMATION_MESSAGE);
                     if (Account.AccountType.valueOf(type) == Account.AccountType.SECURITY) {
                         // show stock and market
                         tab.addTab("Stock", stockPanel);

@@ -139,6 +139,7 @@ public class AccountDetail {
                     return;
                 }
                 overviewController.deleteAccount(account.getAid());
+                frame.dispose();
             }
         });
 
