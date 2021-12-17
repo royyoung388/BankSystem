@@ -57,7 +57,7 @@ public class MainPage {
     private JPanel marketPanel;
     private JPanel settingPanel;
     private JButton logOutButton;
-    private JTextField newPwdInput;
+    private JPasswordField newPwdInput;
     private JButton changePwdBt;
     private JComboBox collateralCB;
     private JButton getBackButton;
@@ -208,11 +208,11 @@ public class MainPage {
                     SecurityAccount securityAccount = accountOverviewController.getSecurityAccount();
                     SecurityAccountController securityController = new SecurityAccountController(securityAccount);
                     securityController.updateList();
-                    if(securityController.sellStock(stockid, Integer.parseInt(quantity))){
+                    if (securityController.sellStock(stockid, Integer.parseInt(quantity))) {
                         JOptionPane.showMessageDialog(null,
                                 "Success",
                                 "Sell Stock", JOptionPane.INFORMATION_MESSAGE);
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null,
                                 "Fail",
                                 "Sell Stock", JOptionPane.ERROR_MESSAGE);
@@ -243,11 +243,11 @@ public class MainPage {
                     SecurityAccount securityAccount = accountOverviewController.getSecurityAccount();
                     SecurityAccountController securityController = new SecurityAccountController(securityAccount);
                     securityController.updateList();
-                    if(securityController.buyStock(stockid, Integer.parseInt(quantity))){
+                    if (securityController.buyStock(stockid, Integer.parseInt(quantity))) {
                         JOptionPane.showMessageDialog(null,
                                 "Success",
                                 "Buy Stock", JOptionPane.INFORMATION_MESSAGE);
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null,
                                 "Fail",
                                 "Buy Stock", JOptionPane.ERROR_MESSAGE);
@@ -587,12 +587,11 @@ public class MainPage {
         final JLabel label14 = new JLabel();
         label14.setText("New password:");
         settingPanel.add(label14, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        newPwdInput = new JTextField();
-        newPwdInput.setText("");
-        settingPanel.add(newPwdInput, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         changePwdBt = new JButton();
         changePwdBt.setText("Change");
         settingPanel.add(changePwdBt, new com.intellij.uiDesigner.core.GridConstraints(0, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        newPwdInput = new JPasswordField();
+        settingPanel.add(newPwdInput, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
     }
 
     /**

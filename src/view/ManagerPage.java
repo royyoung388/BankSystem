@@ -107,6 +107,9 @@ public class ManagerPage {
                     managerController.updateStock(stock);
                 }
                 updateStock();
+                JOptionPane.showMessageDialog(null,
+                        "Update stock success!",
+                        "Success", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 

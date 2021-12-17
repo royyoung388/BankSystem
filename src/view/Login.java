@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 public class Login {
     private JPanel login;
     private JTextField usernameInput;
-    private JTextField pwdInput;
+    private JPasswordField pwdInput;
     private JButton registerBt;
     private JButton loginBt;
 
@@ -34,7 +34,7 @@ public class Login {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String username = usernameInput.getText().strip();
-                String pwd = pwdInput.getText().strip();
+                String pwd = String.valueOf(pwdInput.getPassword());
                 if (username.isEmpty() || pwd.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "Username or Password can not be empty", "Login Error", JOptionPane.ERROR_MESSAGE);
                     return;
@@ -94,8 +94,6 @@ public class Login {
         login = new JPanel();
         login.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(3, 4, new Insets(0, 0, 0, 0), -1, -1));
         login.setBorder(BorderFactory.createTitledBorder(null, "", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
-        pwdInput = new JTextField();
-        login.add(pwdInput, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label1 = new JLabel();
         label1.setText("Password");
         login.add(label1, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -111,6 +109,8 @@ public class Login {
         loginBt = new JButton();
         loginBt.setText("Login");
         login.add(loginBt, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        pwdInput = new JPasswordField();
+        login.add(pwdInput, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
     }
 
     /**
