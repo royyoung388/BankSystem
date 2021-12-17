@@ -8,6 +8,7 @@ import model.AccountModelImpl;
 import model.TransactionModel;
 import model.TransactionModelImpl;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -45,6 +46,7 @@ public abstract class AbstractAccountController implements AccountControllerInte
     }
 
     public boolean withdraw(double amount, double fee) {
+        fee=round(fee);
         boolean status = decreaseBalance(amount + fee);
         if (status) {
             Transaction trans = new Transaction(-1, account.getUid(), account.getAid(), -1, Transaction.TransType.WITHDRAW,
@@ -68,6 +70,7 @@ public abstract class AbstractAccountController implements AccountControllerInte
     }
 
     public boolean deposit(double amount, double fee) {
+        fee=round(fee);
         boolean status = increaseBalance(amount - fee);
         if (status) {
             Transaction trans = new Transaction(-1, account.getUid(), account.getAid(), -1, Transaction.TransType.DEPOSIT,
@@ -92,6 +95,7 @@ public abstract class AbstractAccountController implements AccountControllerInte
 
 
     public boolean transfer(int toID, double amount, double fee) {
+        fee=round(fee);
         Account toAccount = accountModel.queryAccount(toID);
         if (toAccount == null) {
             return false;
@@ -130,4 +134,9 @@ public abstract class AbstractAccountController implements AccountControllerInte
     public List<Transaction> showTransactionByAccount() {
         return transactionModel.queryTransactionByAccount(account.getAid(), account.getUid());
     }
+
+    private double round(double value){
+        return (double) (Math.round(value*100)/100);
+    }
+
 }
