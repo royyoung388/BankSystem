@@ -130,6 +130,4 @@ public abstract class AbstractAccountController {
     public List<Transaction> showTransactionByAccount() {
         return transactionModel.queryTransactionByAccount(account.getAid(), account.getUid());
     }
-
-
 }

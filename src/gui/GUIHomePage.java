@@ -74,7 +74,6 @@ public class GUIHomePage extends JFrame {
                 public void stateChanged(ChangeEvent e) {
                     System.out.println("change tab");
                     allAccounts.update();
-
                     System.out.println("after event");
                 }
             });

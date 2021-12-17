@@ -1,12 +1,10 @@
+import gui.GUIHomePage;
 import gui.GUIMain;
+import view.Login;
 
 public class main {
 
-    public main(){
-        new GUIMain();
-    }
-
     public static void main(String[] args) {
-        new GUIMain();
+        new Login();
     }
 }
