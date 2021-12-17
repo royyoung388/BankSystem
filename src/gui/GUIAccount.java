@@ -42,8 +42,8 @@ public class GUIAccount extends JFrame {
         frame.setVisible(true);
         this.u = u;
         this.account = a;
-        controller = new AbstractAccountController(a) {
-        };
+//        controller = new AbstractAccountController(a) {
+//        };
 
         if (account.getType() == Account.AccountType.LOAN) {
             loanButton.setVisible(true);

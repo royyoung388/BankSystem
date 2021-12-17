@@ -46,6 +46,7 @@ public class Login {
 
                 //show main page
                 new MainPage(user);
+                frame.dispose();
             }
         });
 

@@ -1,6 +1,7 @@
 package controller;
 
 import bean.account.Account;
+import bean.account.SecurityAccount;
 import model.AccountModel;
 import model.AccountModelImpl;
 
@@ -29,6 +30,14 @@ public class AccountOverviewController {
 
     public List<Account> getAccountList() {
         return accountList;
+    }
+
+    public SecurityAccount getSecurityAccount() {
+        for (Account account : accountList) {
+            if (account.getType() == Account.AccountType.SECURITY)
+                return (SecurityAccount) account;
+        }
+        return null;
     }
 
 //    public boolean createAccount(int uid, Account.AccountType type, double balance, Account.CurrencyType currency, String accountName) {

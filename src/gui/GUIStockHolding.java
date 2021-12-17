@@ -16,7 +16,7 @@ public class GUIStockHolding extends JFrame {
     public GUIStockHolding(StockHolding h, List<Stock> stocks) {
         setContentPane(stockHoldPanel);
         String name = "";
-        int sid = h.getSid();
+        int sid = h.getStock().getSid();
         int qty = h.getQuantity();
         sidTxt.setText(String.valueOf(sid));
         qtyTxt.setText(String.valueOf(qty));

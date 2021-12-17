@@ -7,7 +7,6 @@ import bean.account.SecurityAccount;
 import model.StockHoldingModelImpl;
 import model.StockMarketModelImpl;
 
-import javax.print.attribute.standard.Severity;
 import java.time.LocalDateTime;
 import java.util.List;
 
