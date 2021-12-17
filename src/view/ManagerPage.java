@@ -1,6 +1,7 @@
 package view;
 
 import bean.Stock;
+import bean.Transaction;
 import bean.user.Customer;
 import bean.user.User;
 import controller.AccountOverviewController;
@@ -14,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -66,12 +68,12 @@ public class ManagerPage {
                     return;
                 }
 
-                LocalDateTime.now();
-//                (DateTimeFormatter.ISO_DATE.format(date);
-
+                LocalDateTime day = LocalDateTime.parse(date + " 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                List<Transaction> transactionList = managerController.showTransactionByDay(day);
+                updateTransaction(transactionList);
             }
         });
-        updateTransaction();
+        updateTransaction(managerController.showAllTransaction());
 
         // show stock
         updateStock();
@@ -153,9 +155,9 @@ public class ManagerPage {
     }
 
 
-    private void updateTransaction() {
+    private void updateTransaction(List<Transaction> transactionList) {
         String[] title = {"TransactionID", "UserID", "FromAid", "ToAid", "Type", "Currency", "Amount", "Fee", "Detail", "Time"};
-        TableModel dataModel = new DefaultTableModel(transactionToArray(managerController.showAllTransaction()), title) {
+        TableModel dataModel = new DefaultTableModel(transactionToArray(transactionList), title) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -224,7 +226,7 @@ public class ManagerPage {
         transactionTable = new JTable();
         scrollPane2.setViewportView(transactionTable);
         final JLabel label1 = new JLabel();
-        label1.setText("Date (dd-MM-yyyy)");
+        label1.setText("Date (yyyy-MM-dd)");
         panel2.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         dateInput = new JTextField();
         dateInput.setText("");

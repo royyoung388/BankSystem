@@ -55,8 +55,8 @@ public class TransactionModelImpl implements TransactionModel {
         List<Transaction> transactions = new ArrayList<>();
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            long timestamp = time.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() / 1000000;
-            long timestamp2 = time.plusDays(1).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() / 1000000;
+            long timestamp = time.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() / 1000;
+            long timestamp2 = time.plusDays(1).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() / 1000;
 
             String sql = String.format("SELECT * FROM txn WHERE time>=%d AND time<=%d", timestamp, timestamp2);
             ResultSet rs = statement.executeQuery(sql);
@@ -100,8 +100,8 @@ public class TransactionModelImpl implements TransactionModel {
         List<Transaction> transactions = new ArrayList<>();
         try {
             Statement statement = DAO.getInstance().getConnection().createStatement();
-            long timestamp = startTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() / 1000000;
-            long timestamp2 = endTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() / 1000000;
+            long timestamp = startTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() / 1000;
+            long timestamp2 = endTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() / 1000;
             String sql = String.format("SELECT * FROM txn WHERE time>=%d AND time<=%d AND (fromaid = %d OR toaid = %d) " +
                     "AND uid=%d ORDER BY time DESC", timestamp, timestamp2, aid, aid, uid);
             ResultSet rs = statement.executeQuery(sql);

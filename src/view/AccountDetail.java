@@ -60,7 +60,6 @@ public class AccountDetail {
         }
 
         // show text
-        balanceText.setText(String.valueOf(account.getBalance()));
         currencyText.setText(String.valueOf(account.getCurrency()));
         updateTransaction();
 
@@ -141,6 +140,7 @@ public class AccountDetail {
     }
 
     private void updateTransaction() {
+        balanceText.setText(String.valueOf(account.getBalance()));
         // transaction
         List<Transaction> transactionList = controller.showTransactionByAccount();
         String[] title = {"ToAid", "Type", "Currency", "Amount", "Fee", "Detail", "Time"};
