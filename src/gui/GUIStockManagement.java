@@ -47,7 +47,7 @@ public class GUIStockManagement extends JFrame {
                             JOptionPane.showMessageDialog(null,
                                     "price and quantity must be positive.", "Error", JOptionPane.ERROR_MESSAGE);
                         } else {
-                            controller.addStock(0, name, price, qty);
+                            controller.addStock(name, price, qty);
                         }
                     }
                 }

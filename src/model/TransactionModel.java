@@ -31,6 +31,12 @@ public interface TransactionModel {
     List<Transaction> queryTransactionByDay(LocalDateTime time);
 
     /***
+     * query all transaction
+     * @return
+     */
+    List<Transaction> queryAllTransaction();
+
+    /***
      *
      * @param startTime
      * @param endTime

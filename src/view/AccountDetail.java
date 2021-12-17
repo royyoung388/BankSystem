@@ -27,8 +27,13 @@ public class AccountDetail {
     private JLabel withdrawLabel;
     private JLabel depositLabel;
     private JButton refreshButton;
+    private JButton deleteBt;
+    private JTextField transferInput;
+    private JTextField toAidInput;
+    private JButton transferButton;
 
     private AbstractAccountController controller;
+    private AccountOverviewController overviewController;
     private Account account;
 
     public AccountDetail(Account account) {
@@ -40,6 +45,7 @@ public class AccountDetail {
         this.account = account;
 
         // get controller
+        overviewController = new AccountOverviewController(account.getUid());
         if (account instanceof CheckingAccount) {
             controller = new CheckingAccountController((CheckingAccount) account);
         } else if (account instanceof SavingAccount) {
@@ -89,6 +95,36 @@ public class AccountDetail {
             }
         });
 
+        // transfer
+        transferButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String amount = transferInput.getText().strip();
+                String toaid = toAidInput.getText().strip();
+                if (amount.isEmpty() || toaid.isEmpty()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Empty amount or account id",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                controller.transfer(Integer.parseInt(toaid), Double.parseDouble(amount));
+            }
+        });
+
+        // delete
+        deleteBt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (account.getBalance() != 0) {
+                    JOptionPane.showMessageDialog(null,
+                            "Account balance is not 0!",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                overviewController.deleteAccount(account.getAid());
+            }
+        });
+
         // refresh
         refreshButton.addActionListener(new ActionListener() {
             @Override
@@ -118,7 +154,7 @@ public class AccountDetail {
             String[] strings = {transaction.getToAid() < 0 ? "" : String.valueOf(transaction.getToAid()),
                     String.valueOf(transaction.getType()), String.valueOf(transaction.getCurrencyType()),
                     String.valueOf(transaction.getAmount()), String.valueOf(transaction.getFee()),
-                    transaction.getDetail(), transaction.getTime().format(DateTimeFormatter.BASIC_ISO_DATE)};
+                    transaction.getDetail(), transaction.getTime().format(DateTimeFormatter.ISO_DATE)};
             array[i] = strings;
         }
         return array;

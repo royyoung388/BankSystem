@@ -12,13 +12,11 @@ import java.util.List;
 
 public class AccountOverviewController {
     private int uID;
-    private String userName;
     private List<Account> accountList;
     private AccountModel accountModel;
 
-    public AccountOverviewController(int uID, String userName) {
+    public AccountOverviewController(int uID) {
         this.uID = uID;
-        this.userName = userName;
         accountModel = new AccountModelImpl();
         updateAccountList();
     }
@@ -27,9 +25,6 @@ public class AccountOverviewController {
         return uID;
     }
 
-    public String getUserName() {
-        return userName;
-    }
 
     public List<Account> getAccountList() {
         return accountList;

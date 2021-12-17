@@ -62,9 +62,9 @@ public class ManagerController {
         return stockMarketModel.updateStock(stock);
     }
 
-    public boolean addStock(int sid, String name, double price, int quantity) {
+    public boolean addStock(String name, double price, int quantity) {
         List<Stock> list = new ArrayList<>();
-        list.add(new Stock(sid, name, price, quantity));
+        list.add(new Stock(0, name, price, quantity));
         return stockMarketModel.insertStocks(list) == 1;
     }
 
@@ -128,5 +128,8 @@ public class ManagerController {
         return transactionModel.queryTransactionByDay(day);
     }
 
+    public List<Transaction> showAllTransaction() {
+        return transactionModel.queryAllTransaction();
+    }
 
 }

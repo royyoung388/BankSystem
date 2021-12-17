@@ -75,6 +75,27 @@ public class TransactionModelImpl implements TransactionModel {
     }
 
     @Override
+    public List<Transaction> queryAllTransaction() {
+        List<Transaction> transactions = new ArrayList<>();
+        try {
+            Statement statement = DAO.getInstance().getConnection().createStatement();
+            String sql = "SELECT * FROM txn";
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                LocalDateTime localDateTime = Instant.ofEpochMilli(rs.getLong(10)).atZone(ZoneId.systemDefault()).toLocalDateTime();
+                transactions.add(new Transaction(rs.getInt(1), rs.getInt(2), rs.getInt(3),
+                        rs.getInt(4), rs.getString(5), rs.getString(6),
+                        rs.getFloat(7), rs.getFloat(8), rs.getString(9), localDateTime));
+            }
+            rs.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return transactions;
+    }
+
+    @Override
     public List<Transaction> queryTransactionByAccountAndTime(LocalDateTime startTime, LocalDateTime endTime, int aid, int uid) {
         List<Transaction> transactions = new ArrayList<>();
         try {

@@ -1,5 +1,6 @@
 package view;
 
+import bean.user.Customer;
 import bean.user.User;
 import controller.UserController;
 
@@ -45,7 +46,10 @@ public class Login {
                 }
 
                 //show main page
-                new MainPage(user);
+                if (user instanceof Customer)
+                    new MainPage(user);
+                else
+                    new ManagerPage(user);
                 frame.dispose();
             }
         });

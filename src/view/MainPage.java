@@ -282,7 +282,7 @@ public class MainPage {
         List<Account> accountList = accountOverviewController.getAccountList();
 
         String[] title = {"AccountID", "Name", "Type", "Balance", "Currency"};
-        TableModel dataModel = new DefaultTableModel(userToArray(accountList), title) {
+        TableModel dataModel = new DefaultTableModel(accountToArray(accountList), title) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -311,7 +311,7 @@ public class MainPage {
         return null;
     }
 
-    private String[][] userToArray(List<Account> accountList) {
+    private String[][] accountToArray(List<Account> accountList) {
         String[][] array = new String[accountList.size()][];
         for (int i = 0; i < accountList.size(); i++) {
             Account account = accountList.get(i);
