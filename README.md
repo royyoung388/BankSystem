@@ -1,3 +1,6 @@
+# CS611
+Final project
+
 # external file structure
 dao: store all the .dao file.  
 lib: include the sqlite JDBC.  
